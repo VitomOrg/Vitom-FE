@@ -8,3 +8,6 @@ export * from "./label";
 export * from "./alert-dialog";
 export * from "./table";
 export * from "./dropdown-menu";
+export * from "./skeleton";
+export * from "./chart";
+export * from "./card";

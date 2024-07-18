@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getItem } from "../lib/localStorage";
 
-const baseURL = "http://localhost:3000";
+const baseURL = "https://api.meshy.ai";
 
 export const axiosInstance = axios.create({
   baseURL: baseURL,
