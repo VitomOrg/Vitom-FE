@@ -16,8 +16,15 @@ const FBXViewer: React.FC<FBXViewerProps> = ({
 }) => {
   return (
     <Canvas>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <ambientLight intensity={2} />{" "}
+      {/* Increase the intensity of the ambient light */}
+      {/* Add multiple directional lights from different angles */}
+      <directionalLight position={[5, 5, 5]} intensity={2} />
+      <directionalLight position={[-20, 15, 35]} intensity={1} />
+      <directionalLight position={[15, -20, 15]} intensity={1} />
+      <directionalLight position={[-5, -5, 5]} intensity={1} />
+      {/* Add a point light to illuminate from the center */}
+      <pointLight position={[2, 2, 2]} intensity={1} />
       <FBXModel
         url={modelUrl}
         scale={modelScale}

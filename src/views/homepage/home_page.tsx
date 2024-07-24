@@ -1,40 +1,25 @@
-// import { useEffect, useState } from "react";
-// import { setItem } from "../../lib/localStorage";
-// import { axiosInstance } from "../../configs";
-// import { AI } from "../../models/ai";
-
 import assert from "../../assets";
 import FBXViewer from "./fbx_view";
 
 const HomePage = () => {
-  // const token = "msy_AJgh4u5bKi915Mdy96O8D5tYejf7suR8Z5P5";
-  // const taskId = "0190c0c6-993f-7b8f-bef6-7ae64c96ced7";
+  // const token = "msy_XGcUFCmEHXJKWXLi8ODrmhfd4m4WcWCPGXxq";
 
-  // const [data, setData] = useState<AI | null>(null);
+  // const id = "0190c0c6-993f-7b8f-bef6-7ae64c96ced7";
 
   // setItem("token", token);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axiosInstance.get(`v1/image-to-3d/${taskId}`);
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  // const { data: model } = useFetch<AI>(`/v1/image-to-3d/${id}`);
 
-  //   fetchData();
-  // }, []);
+  // console.log(model);
 
-  const fbxUrl = assert.modelGLB; // Thay bằng đường dẫn tới file FBX của bạn
-  const modelScale = 0.01; // Điều chỉnh kích thước mô hình
-  const modelRotationSpeed = 0.01;
+  const modelScale = 0.01; // Adjust the model's scale
+  const modelRotationSpeed = 0.005;
+  const modelFBX = assert.apos;
 
   return (
-    <div className="flex items-center justify-center w-full h-screen">
+    <div className="flex items-end justify-center w-full h-screen">
       <FBXViewer
-        modelUrl={fbxUrl}
+        modelUrl={modelFBX}
         modelScale={modelScale}
         modelRotationSpeed={modelRotationSpeed}
       />
