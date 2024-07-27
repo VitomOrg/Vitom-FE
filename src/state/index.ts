@@ -10,6 +10,7 @@ export function createGlobalState<T>(
     const { data } = useQuery({
       queryKey: [queryKey],
       queryFn: () => Promise.resolve(initialData),
+      staleTime: Infinity,
       refetchInterval: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
