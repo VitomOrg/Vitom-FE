@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:18-alpine
+FROM node:16-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,15 +8,14 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm i bun
-RUN bun i npm-run-all --save-dev
-RUN bun i --package-lock-only
+RUN npm i npm-run-all --save-dev
+RUN npm i --package-lock-only
 
 # Copy the rest of the application code to the working directory
 COPY . .
 
 # Build the React TypeScript application
-RUN bun run build
+RUN npm run build
 
 # Use a lightweight web server to serve the built application
 FROM nginx:alpine
