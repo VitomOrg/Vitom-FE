@@ -1,3 +1,3 @@
 export * from "./response";
-export * from "./user";
-export * from "./ai";
+export * from "./responses/user";
+export * from "./responses/ai";
