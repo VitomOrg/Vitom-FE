@@ -8,7 +8,7 @@ export function createGlobalState<T>(
   return function () {
     const queryClient = useQueryClient();
 
-    const { data } = useQuery({
+    const { data, error, isLoading } = useQuery({
       queryKey: [queryKey],
       queryFn: queryFn,
       initialData: initialData,
@@ -31,6 +31,6 @@ export function createGlobalState<T>(
       queryClient.refetchQueries({ queryKey: [queryKey] });
     }
 
-    return { data, setData, resetData };
+    return { data, setData, resetData, error, isLoading };
   };
 }

@@ -1,8 +1,8 @@
-import useThemeStore from "@/state/local/theme";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Moon, Sun } from "lucide-react";
-import { Button } from "../ui";
 import { NavLink, useNavigate } from "react-router-dom";
+import useThemeStore from "@/state/theme";
+import { Button } from "../ui";
 
 const menu = [
   {

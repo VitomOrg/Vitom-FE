@@ -1,6 +1,6 @@
+import { env } from "@/lib/env";
+import { getItem } from "@/lib/utils/localStorage";
 import axios from "axios";
-import { getItem } from "../lib/utils/localStorage";
-import { env } from "../lib/env";
 
 export const baseURL = env.VITE_API_URL_BE;
 
