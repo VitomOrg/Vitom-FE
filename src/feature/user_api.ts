@@ -1,7 +1,15 @@
+import axios from "axios";
 import { axiosInstance } from "../configs";
 
 export const userApi = {
-  getProfile: () => axiosInstance.get("/user/profile"),
-  // updateProfile: (data: any) => axiosInstance.put("/user/profile", data),
-  // changePassword: (data: any) => axiosInstance.put("/user/profile/change-password", data),
+  getProfile: async () => {
+    try {
+      const response = await axiosInstance("/user");
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+    }
+  },
 };

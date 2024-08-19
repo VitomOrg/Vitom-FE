@@ -1,9 +1,18 @@
 export interface User {
-  name: string | null;
-  phoneNumber: string | null;
-  id: string | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  isDeleted: boolean | null;
-  deletedAt: string | null;
+  Id: string;
+  Email: string;
+  UserName: string;
+  EmailConfirm: number;
+  PasswordHash: string;
+  FirstName: string;
+  LastName: string;
+  Phone: string;
+  Gender: number;
+  Address: string | null;
+  Code: string | null;
+  Role: number;
+  AccessFailedCount: number;
+  Status: number;
+  OrderGroup: string | null;
+  Orders: string | null;
 }

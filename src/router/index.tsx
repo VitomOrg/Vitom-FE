@@ -1,5 +1,4 @@
 import ErrorPage from "@/components/error_page";
-import MainLayout from "@/components/layout/main_layout";
 import { Loading } from "@/components/loading";
 import Login from "@/views/authpage/login/Login";
 import Register from "@/views/authpage/register/Register";
@@ -7,6 +6,7 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 /*eslint-disable*/
+const MainLayout = lazy(() => import("@/components/layout/main_layout"));
 const HomePage = lazy(() => import("@/views/homepage/home_page"));
 const AboutPage = lazy(() => import("@/views/aboutpage/about_page"));
 const ContactPage = lazy(() => import("@/views/contactpage/contact_page"));
@@ -15,7 +15,11 @@ const ContactPage = lazy(() => import("@/views/contactpage/contact_page"));
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <MainLayout />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

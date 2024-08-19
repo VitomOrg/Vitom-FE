@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function createGlobalState<T>(
   queryKey: unknown,
+  queryFn: () => Promise<T>,
   initialData: T | null = null
 ) {
   return function () {
@@ -9,7 +10,8 @@ export function createGlobalState<T>(
 
     const { data } = useQuery({
       queryKey: [queryKey],
-      queryFn: () => Promise.resolve(initialData),
+      queryFn: queryFn,
+      initialData: initialData,
       staleTime: Infinity,
       refetchInterval: false,
       refetchOnMount: false,
@@ -18,14 +20,10 @@ export function createGlobalState<T>(
       refetchIntervalInBackground: false,
     });
 
-    // function setData(newData: Partial<T>) {
-    //   queryClient.setQueryData([queryKey], (prevData: T) => {
-    //     return { ...prevData, ...newData };
-    //   });
-    // }
-
     function setData(newData: Partial<T>) {
-      queryClient.setQueryData([queryKey], newData);
+      queryClient.setQueryData([queryKey], (prevData: T) => {
+        return { ...prevData, ...newData };
+      });
     }
 
     function resetData() {
