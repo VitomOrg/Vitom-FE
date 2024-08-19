@@ -1,4 +1,4 @@
-import { useUserState } from "@/state/global/useUser";
+import { useUserState } from "@/hooks/fetch";
 
 const HomePage = () => {
   const { data: user } = useUserState();

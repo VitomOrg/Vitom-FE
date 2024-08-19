@@ -1,12 +1,10 @@
 import { useAuth } from "@clerk/clerk-react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useCallback, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { setItem } from "./lib";
 import routes from "./router";
-import useThemeStore from "./state/local/theme";
-
-const queryClient = new QueryClient();
+import useThemeStore from "./state/theme";
+import { Toaster } from "./components/ui";
 
 function App() {
   const { theme } = useThemeStore();
@@ -27,9 +25,10 @@ function App() {
   }, [fetchData]);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <RouterProvider router={routes} />
-    </QueryClientProvider>
+      <Toaster />
+    </>
   );
 }
 
