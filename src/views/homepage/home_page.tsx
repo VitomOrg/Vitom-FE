@@ -1,4 +1,5 @@
 import { useUserState } from "@/hooks/fetch";
+import "./style/index.css";
 
 const HomePage = () => {
   const { data: user } = useUserState();
@@ -6,10 +7,13 @@ const HomePage = () => {
   console.log(user);
 
   return (
-    <div className="w-full h-full">
+    <div className="container">
       <main className="p-4">
-        <h1 className="text-primary">Hello, {user?.UserName}!</h1>
-        <p>This is a simple example of theme switching using Zustand.</p>
+        <div className="flex flex-col items-center justify-center w-full h-40 rounded-lg hero">
+          <h1 className="text-primary">Hello, {user?.UserName}!</h1>
+
+          <p>This is a simple example of theme switching using Zustand.</p>
+        </div>
       </main>
     </div>
   );
