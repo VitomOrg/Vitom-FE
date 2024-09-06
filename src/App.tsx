@@ -3,16 +3,11 @@ import { useCallback, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { setItem } from "./lib";
 import routes from "./router";
-import useThemeStore from "./state/theme";
 import { Toaster } from "./components/ui";
+import { ThemeProvider } from "@/components/theme-provider";
 
 function App() {
-  const { theme } = useThemeStore();
   const auth = useAuth();
-
-  useEffect(() => {
-    document.documentElement.className = theme;
-  }, [theme]);
 
   const fetchData = useCallback(async () => {
     await auth.getToken({ template: "Vitom" }).then((response) => {
@@ -25,10 +20,10 @@ function App() {
   }, [fetchData]);
 
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <RouterProvider router={routes} />
       <Toaster />
-    </>
+    </ThemeProvider>
   );
 }
 
