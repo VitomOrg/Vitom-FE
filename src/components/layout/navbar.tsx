@@ -2,6 +2,10 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui";
 import { ModeToggle } from "@/components/common/mode-toggle";
+import assert from "@/assets";
+
+import IconNote from "@/components/common/icon-note";
+import { DotIcon } from "lucide-react";
 
 const menu = [
   {
@@ -16,28 +20,46 @@ const menu = [
     name: "Contact",
     href: "/contact",
   },
+  {
+    name: "Products",
+    href: "/products",
+  },
 ];
+
+const CustomPage = () => {
+  return (
+    <div>
+      <h1>Custom Page</h1>
+    </div>
+  );
+};
 
 const Navbar = () => {
   const navigator = useNavigate();
 
   return (
     <div className="bg-secondary text-secondary-foreground">
-      <div className="container flex items-center">
-        <div className="flex items-center justify-between w-full h-16 px-4 ">
-          <div className="flex space-x-4">
-            {menu.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.href}
-                className="text-lg font-bold "
-              >
-                {item.name}
-              </NavLink>
-            ))}
-          </div>
+      <div className="container flex items-center justify-between py-4">
+        {/* Add Logo */}
+        <NavLink to="/" className="flex items-center text-2xl font-bold">
+          <img src={assert.logo} alt="logo" className="size-8" />
+          <span className="ml-2">Vitom</span>
+        </NavLink>
+        {/* Add menu */}
+        <div className="flex items-center gap-3 space-x-4">
+          {menu.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.href}
+              className="text-base font-bold "
+            >
+              <span>{item.name}</span>
+            </NavLink>
+          ))}
         </div>
-        <div className="flex gap-3 text-nowrap">
+        {/*  Add ModeToggle and UserButton */}
+        <div className="flex items-center gap-3 text-nowrap">
+          <IconNote />
           <ModeToggle />
           <SignedOut>
             <Button variant="outline" onClick={() => navigator("/sign-in")}>
@@ -48,7 +70,15 @@ const Navbar = () => {
             </Button>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <UserButton>
+              <UserButton.UserProfilePage
+                label="custom page"
+                url="custom"
+                labelIcon={<DotIcon />}
+              >
+                <CustomPage />
+              </UserButton.UserProfilePage>
+            </UserButton>
           </SignedIn>
         </div>
       </div>

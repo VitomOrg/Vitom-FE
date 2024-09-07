@@ -1,5 +1,6 @@
 import { useUserState } from "@/hooks/fetch";
 import "./style/index.css";
+import { Button } from "@/components/ui";
 
 const HomePage = () => {
   const { data: user } = useUserState();
@@ -7,15 +8,16 @@ const HomePage = () => {
   console.log(user);
 
   return (
-    <div className="container">
-      <main className="p-4">
-        <div className="flex flex-col items-center justify-center w-full h-40 rounded-lg hero">
-          <h1 className="text-primary">Hello, {user?.UserName}!</h1>
+    <main className="w-full ">
+      <div className="flex flex-col items-center justify-center w-full rounded-lg h-[600px] hero">
+        <h1>Hello, {user?.UserName}!</h1>
+        <p>Welcome to your dashboard.</p>
 
-          <p>This is a simple example of theme switching using Zustand.</p>
-        </div>
-      </main>
-    </div>
+        <p>This is a simple example of theme switching using Zustand.</p>
+
+        <Button>test</Button>
+      </div>
+    </main>
   );
 };
 
