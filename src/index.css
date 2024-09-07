@@ -5,7 +5,7 @@
 @layer base {
   @layer base {
     :root {
-      --green: 109, 25%, 28%;
+      --green: 117, 50%, 37%, 0.71;
       --background: 0 0% 100%;
       --foreground: 240 10% 3.9%;
       --card: 0 0% 100%;
@@ -36,7 +36,7 @@
     }
 
     .dark {
-      --green: 109, 25%, 28%;
+      --green: 117, 50%, 37%, 0.71;
       --background: 240 10% 3.9%;
       --foreground: 0 0% 98%;
       --card: 240 10% 3.9%;
@@ -97,4 +97,37 @@
   :not(pre) > code {
     @apply px-1 font-normal rounded bg-secondary text-secondary-foreground;
   }
+}
+
+@font-face {
+  font-family: "Glancyr-Regular";
+  src: url("assets/font//Glancyr-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Glancyr-Bold";
+  src: url("assets/font/Glancyr-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Glancyr-Thin";
+  src: url("assets/font/Glancyr-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Glancyr-Light";
+  src: url("assets/font/Glancyr-Light.eot") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+body {
+  font-family: "Glancyr-Regular", sans-serif;
+  font-weight: 400;
 }
