@@ -23,12 +23,20 @@ const FBXModel = ({
     loader.load(filePath, (fbx) => {
       fbx.scale.set(scale, scale, scale);
 
+      fbx.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          (child as THREE.Mesh).castShadow = true;
+          (child as THREE.Mesh).receiveShadow = true;
+        }
+      });
+
       // Set the position of the FBX model so that it sits on the ground
       const boundingBox = new THREE.Box3().setFromObject(fbx);
 
       const height = boundingBox.max.y - boundingBox.min.y;
       fbx.position.y = -boundingBox.min.y - height / 2;
 
+      // Set the reference to the FBX model
       fbxRef.current = fbx;
       setFbx(fbx);
       onModelLoaded?.(fbx);

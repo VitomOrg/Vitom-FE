@@ -1,5 +1,4 @@
-import assert from "@/assets";
-import FbxViewer from "@/components/common/fbx_view";
+import ObjView from "@/components/test";
 import { useUserState } from "@/hooks/fetch";
 
 const Hero = () => {
@@ -13,18 +12,7 @@ const Hero = () => {
 
       {/* <Button onClick={() => setShow((prev) => !prev)}>Click to show 3D</Button> */}
       <div className="flex flex-row w-full h-96">
-        <FbxViewer
-          className="w-full"
-          filePath={assert.model}
-          scale={0.025}
-          showGrid
-        />
-        <FbxViewer
-          className="w-full"
-          filePath={assert.apos}
-          scale={0.025}
-          showGrid
-        />
+        <ObjView />
       </div>
     </div>
   );

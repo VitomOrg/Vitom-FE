@@ -16,13 +16,10 @@ const GridScreen: React.FC<GridScreenProps> = ({ heightObjet }) => {
     const size = 10;
     const divisions = 10;
 
-    // Create the grid helper
+    // Create a grid helper and set its position
     const gridHelper = new THREE.GridHelper(size, divisions);
-
-    // Set the position of the grid helper
     gridHelper.position.y = -heightObjet! / 2 - 0.2;
 
-    // Add the grid helper to the scene
     scene.add(gridHelper);
 
     // Cleanup the grid helper on unmount

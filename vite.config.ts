@@ -24,5 +24,5 @@ export default defineConfig({
       },
     },
   },
-  assetsInclude: ["**/*.fbx"],
+  assetsInclude: ["**/*.fbx", "**/*.glb", "**/*.obj", "**/*.mtl"],
 });

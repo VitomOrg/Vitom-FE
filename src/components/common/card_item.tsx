@@ -1,4 +1,4 @@
-import FbxViewer from "@/components/common/fbx_view";
+import ObjView from "@/components/test";
 import {
   Button,
   Card,
@@ -29,7 +29,7 @@ const CardItem: React.FC<CardItemProps> = ({ filePath }) => {
           >
             <LucideHeart size={24} />
           </Button>
-          <FbxViewer filePath={filePath} scale={0.025} showGrid />
+          <ObjView />
         </div>
       </CardHeader>
       <CardContent>

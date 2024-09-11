@@ -1,4 +1,3 @@
-// src/components/lights/AmbientLight.tsx
 import { useHelper } from "@react-three/drei";
 import React, { useRef } from "react";
 import * as THREE from "three";
@@ -18,8 +17,8 @@ const AmbientLight: React.FC<AmbientLightProps> = () => {
   return (
     <>
       <ambientLight intensity={0.7} />
-      <directionalLight />
-      <hemisphereLight groundColor={0x444444} intensity={1} />
+      <directionalLight position={[5, 5, 5]} />
+      <hemisphereLight groundColor={0x444444} intensity={0.7} />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { Loading } from "@/components/loading";
 import AmbientLight from "@/components/three_ui/ambient_light";
 import CameraController from "@/components/three_ui/camera_controller";
 import GridScreen from "@/components/three_ui/grid_helper";
@@ -29,19 +30,19 @@ const FbxViewer = ({
   };
 
   return (
-    <Canvas className={cn("w-full", className)}>
-      <Suspense fallback={null}>
-        <AmbientLight />
-        {showGrid && <GridScreen positionY={0} heightObjet={height} />}
+    <Canvas className={cn("w-full", className)} shadows>
+      <AmbientLight />
+      {showGrid && <GridScreen positionY={0} heightObjet={height} />}
+      <Suspense fallback={<Loading />}>
         <FBXModel
           filePath={filePath}
           scale={scale}
           onModelLoaded={setModel}
           getHeight={getHeight}
         />
-        {model && <CameraController model={model} distance={1} />}
-        <OrbitControls />
       </Suspense>
+      {model && <CameraController model={model} distance={1} />}
+      <OrbitControls />
     </Canvas>
   );
 };
