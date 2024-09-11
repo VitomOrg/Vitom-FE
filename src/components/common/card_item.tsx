@@ -8,20 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui";
-import { Heart, LucideHeart } from "lucide-react"; // Added filled heart icon
+import { LucideHeart } from "lucide-react"; // Added filled heart icon
 import React from "react";
 
 interface CardItemProps {
-  isFavorite: boolean;
-  handleFavorite: () => void;
   filePath: string;
 }
 
-const CardItem: React.FC<CardItemProps> = ({
-  isFavorite,
-  handleFavorite,
-  filePath,
-}) => {
+const CardItem: React.FC<CardItemProps> = ({ filePath }) => {
   return (
     <Card>
       <CardHeader>
@@ -31,10 +25,9 @@ const CardItem: React.FC<CardItemProps> = ({
             className="absolute z-10 right-2 top-2"
             onClick={(event) => {
               event.preventDefault();
-              handleFavorite();
             }}
           >
-            {isFavorite ? <LucideHeart className="text-red-500" /> : <Heart />}
+            <LucideHeart size={24} />
           </Button>
           <FbxViewer filePath={filePath} scale={0.025} showGrid />
         </div>

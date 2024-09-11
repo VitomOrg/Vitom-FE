@@ -18,11 +18,7 @@ const AmbientLight: React.FC<AmbientLightProps> = () => {
   return (
     <>
       <ambientLight intensity={0.7} />
-      <directionalLight
-        ref={directionalLightRef}
-        // position={[0, 0, 0]}
-        // intensity={0.8}
-      />
+      <directionalLight />
       <hemisphereLight groundColor={0x444444} intensity={1} />
     </>
   );

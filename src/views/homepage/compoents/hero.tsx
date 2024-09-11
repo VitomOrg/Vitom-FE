@@ -13,8 +13,18 @@ const Hero = () => {
 
       {/* <Button onClick={() => setShow((prev) => !prev)}>Click to show 3D</Button> */}
       <div className="flex flex-row w-full h-96">
-        <FbxViewer filePath={assert.model} scale={0.01} showGrid />
-        <FbxViewer filePath={assert.apos} scale={0.01} showGrid />
+        <FbxViewer
+          className="w-full"
+          filePath={assert.model}
+          scale={0.025}
+          showGrid
+        />
+        <FbxViewer
+          className="w-full"
+          filePath={assert.apos}
+          scale={0.025}
+          showGrid
+        />
       </div>
     </div>
   );
