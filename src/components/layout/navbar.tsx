@@ -5,7 +5,6 @@ import { ModeToggle } from "@/components/common/mode-toggle";
 import assert from "@/assets";
 
 import IconNote from "@/components/common/icon-note";
-import { DotIcon } from "lucide-react";
 
 const menu = [
   {
@@ -26,20 +25,12 @@ const menu = [
   },
 ];
 
-const CustomPage = () => {
-  return (
-    <div>
-      <h1>Custom Page</h1>
-    </div>
-  );
-};
-
 const Navbar = () => {
   const navigator = useNavigate();
 
   return (
-    <div className="bg-secondary text-secondary-foreground">
-      <div className="container flex items-center justify-between py-4">
+    <div className="h-fit bg-secondary text-secondary-foreground">
+      <div className="container flex items-center justify-between h-full py-4">
         {/* Add Logo */}
         <NavLink to="/" className="flex items-center text-2xl font-bold">
           <img src={assert.logo} alt="logo" className="size-8" />
@@ -51,7 +42,7 @@ const Navbar = () => {
             <NavLink
               key={item.name}
               to={item.href}
-              className="text-base font-bold "
+              className="h-full text-base font-bold"
             >
               <span>{item.name}</span>
             </NavLink>
@@ -70,15 +61,7 @@ const Navbar = () => {
             </Button>
           </SignedOut>
           <SignedIn>
-            <UserButton>
-              <UserButton.UserProfilePage
-                label="custom page"
-                url="custom"
-                labelIcon={<DotIcon />}
-              >
-                <CustomPage />
-              </UserButton.UserProfilePage>
-            </UserButton>
+            <UserButton />
           </SignedIn>
         </div>
       </div>
