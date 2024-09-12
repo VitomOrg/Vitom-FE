@@ -1,4 +1,3 @@
-import ObjView from "@/components/test";
 import {
   Button,
   Card,
@@ -15,7 +14,7 @@ interface CardItemProps {
   filePath: string;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ filePath }) => {
+const CardItem: React.FC<CardItemProps> = () => {
   return (
     <Card>
       <CardHeader>
@@ -29,7 +28,6 @@ const CardItem: React.FC<CardItemProps> = ({ filePath }) => {
           >
             <LucideHeart size={24} />
           </Button>
-          <ObjView />
         </div>
       </CardHeader>
       <CardContent>

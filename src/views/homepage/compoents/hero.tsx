@@ -1,12 +1,21 @@
 import ObjView from "@/components/test";
-import { useUserState } from "@/hooks/fetch";
+import { userApi } from "@/feature";
+import { User } from "@/models/responses";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
-  const { data: user } = useUserState();
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    userApi
+      .getProfile()
+      .then((data) => setUser(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full rounded-lg h-[600px] hero ">
-      <h1>Hello, {user?.UserName}!</h1>
+      <h1>Hello, {user?.UserName}</h1>
 
       <p>This is a simple example of theme switching using Zustand.</p>
 

@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three-stdlib";
 
-const GLBModel = ({ filePath }: { filePath: string }) => {
+interface GLBModelProps {
+  filePath: string;
+  color?: THREE.Color | string; // Màu sắc bạn muốn áp dụng
+}
+
+const GLBModel = ({ filePath, color = "white" }: GLBModelProps) => {
   const ref = useRef<THREE.Group | null>(null);
   const [model, setModel] = useState<THREE.Group | null>(null);
 
@@ -15,12 +20,25 @@ const GLBModel = ({ filePath }: { filePath: string }) => {
           const mesh = child as THREE.Mesh;
           mesh.castShadow = true;
           mesh.receiveShadow = true;
+
+          // Cập nhật màu sắc của tất cả các material của mesh
+          console.log(mesh.material);
+
+          if (Array.isArray(mesh.material)) {
+            mesh.material.forEach((mat) => {
+              if (mat instanceof THREE.MeshStandardMaterial) {
+                mat.color.set(color);
+              }
+            });
+          } else if (mesh.material instanceof THREE.MeshStandardMaterial) {
+            mesh.material.color.set(color);
+          }
         }
       });
       setModel(model);
       ref.current = model;
     });
-  }, [filePath]);
+  }, [filePath, color]);
 
   return model ? <primitive object={model} /> : null;
 };
