@@ -10,6 +10,8 @@ const MainLayout = lazy(() => import("@/components/layout/main_layout"));
 const HomePage = lazy(() => import("@/views/homepage/home_page"));
 const AboutPage = lazy(() => import("@/views/aboutpage/about_page"));
 const ContactPage = lazy(() => import("@/views/contactpage/contact_page"));
+const ProductsPage = lazy(() => import("@/views/productpage/product_page"));
+const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
 /*eslint-enable*/
 
 const routes = createBrowserRouter([
@@ -43,6 +45,22 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <ContactPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ProductsPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "shopping-cart",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ShoppingPage />
           </Suspense>
         ),
       },

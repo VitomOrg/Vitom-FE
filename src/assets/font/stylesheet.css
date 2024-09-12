@@ -1,0 +1,182 @@
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-Bold.eot');
+    src: local('Glancyr Bold'), local('Glancyr-Bold'),
+        url('Glancyr-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-Bold.woff2') format('woff2'),
+        url('Glancyr-Bold.woff') format('woff'),
+        url('Glancyr-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-Thin.eot');
+    src: local('Glancyr Thin'), local('Glancyr-Thin'),
+        url('Glancyr-Thin.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-Thin.woff2') format('woff2'),
+        url('Glancyr-Thin.woff') format('woff'),
+        url('Glancyr-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-SemiBoldItalic.eot');
+    src: local('Glancyr Semi Bold Italic'), local('Glancyr-SemiBoldItalic'),
+        url('Glancyr-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-SemiBoldItalic.woff2') format('woff2'),
+        url('Glancyr-SemiBoldItalic.woff') format('woff'),
+        url('Glancyr-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-SemiBold.eot');
+    src: local('Glancyr Semi Bold'), local('Glancyr-SemiBold'),
+        url('Glancyr-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-SemiBold.woff2') format('woff2'),
+        url('Glancyr-SemiBold.woff') format('woff'),
+        url('Glancyr-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-Regular.eot');
+    src: local('Glancyr Regular'), local('Glancyr-Regular'),
+        url('Glancyr-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-Regular.woff2') format('woff2'),
+        url('Glancyr-Regular.woff') format('woff'),
+        url('Glancyr-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-ExtraLightItalic.eot');
+    src: local('Glancyr Extra Light Italic'), local('Glancyr-ExtraLightItalic'),
+        url('Glancyr-ExtraLightItalic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-ExtraLightItalic.woff2') format('woff2'),
+        url('Glancyr-ExtraLightItalic.woff') format('woff'),
+        url('Glancyr-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-Italic.eot');
+    src: local('Glancyr Italic'), local('Glancyr-Italic'),
+        url('Glancyr-Italic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-Italic.woff2') format('woff2'),
+        url('Glancyr-Italic.woff') format('woff'),
+        url('Glancyr-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-LightItalic.eot');
+    src: local('Glancyr Light Italic'), local('Glancyr-LightItalic'),
+        url('Glancyr-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-LightItalic.woff2') format('woff2'),
+        url('Glancyr-LightItalic.woff') format('woff'),
+        url('Glancyr-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-BoldItalic.eot');
+    src: local('Glancyr Bold Italic'), local('Glancyr-BoldItalic'),
+        url('Glancyr-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-BoldItalic.woff2') format('woff2'),
+        url('Glancyr-BoldItalic.woff') format('woff'),
+        url('Glancyr-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-MediumItalic.eot');
+    src: local('Glancyr Medium Italic'), local('Glancyr-MediumItalic'),
+        url('Glancyr-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-MediumItalic.woff2') format('woff2'),
+        url('Glancyr-MediumItalic.woff') format('woff'),
+        url('Glancyr-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-ExtraLight.eot');
+    src: local('Glancyr Extra Light'), local('Glancyr-ExtraLight'),
+        url('Glancyr-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-ExtraLight.woff2') format('woff2'),
+        url('Glancyr-ExtraLight.woff') format('woff'),
+        url('Glancyr-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-ThinItalic.eot');
+    src: local('Glancyr Thin Italic'), local('Glancyr-ThinItalic'),
+        url('Glancyr-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-ThinItalic.woff2') format('woff2'),
+        url('Glancyr-ThinItalic.woff') format('woff'),
+        url('Glancyr-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-Light.eot');
+    src: local('Glancyr Light'), local('Glancyr-Light'),
+        url('Glancyr-Light.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-Light.woff2') format('woff2'),
+        url('Glancyr-Light.woff') format('woff'),
+        url('Glancyr-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Glancyr';
+    src: url('Glancyr-Medium.eot');
+    src: local('Glancyr Medium'), local('Glancyr-Medium'),
+        url('Glancyr-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Glancyr-Medium.woff2') format('woff2'),
+        url('Glancyr-Medium.woff') format('woff'),
+        url('Glancyr-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+

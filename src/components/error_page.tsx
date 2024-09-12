@@ -7,7 +7,7 @@ const ErrorPage = () => {
       <h1>404</h1>
       <p>Page not found</p>
       <Link to="/">
-        <Button>Go back to home</Button>
+        <Button variant="outline">Go back to home</Button>
       </Link>
     </div>
   );

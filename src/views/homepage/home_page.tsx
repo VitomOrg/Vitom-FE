@@ -1,21 +1,19 @@
-import { useUserState } from "@/hooks/fetch";
+import Hero from "@/views/homepage/compoents/hero";
 import "./style/index.css";
-
+import CardItem from "@/components/common/card_item";
+import assert from "@/assets";
 const HomePage = () => {
-  const { data: user } = useUserState();
-
-  console.log(user);
-
   return (
-    <div className="container">
-      <main className="p-4">
-        <div className="flex flex-col items-center justify-center w-full h-40 rounded-lg hero">
-          <h1 className="text-primary">Hello, {user?.UserName}!</h1>
+    <main className="w-full ">
+      <Hero />
 
-          <p>This is a simple example of theme switching using Zustand.</p>
+      <div className="flex gap-3 flex-nowrap">
+        <div>{/* <CardItem filePath={assert.model} /> */}</div>
+        <div>
+          <CardItem filePath={assert.apos} />
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
 
