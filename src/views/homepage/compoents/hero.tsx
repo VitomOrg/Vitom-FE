@@ -1,17 +1,11 @@
 import ObjView from "@/components/test";
-import { userApi } from "@/feature";
-import { User } from "@/models/responses";
+import { User } from "@/domains/models/user/user.response";
 import { useEffect, useState } from "react";
 
 const Hero = () => {
   const [user, setUser] = useState<User>();
 
-  useEffect(() => {
-    userApi
-      .getProfile()
-      .then((data) => setUser(data))
-      .catch((err) => console.log(err));
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full rounded-lg h-[600px] hero ">
