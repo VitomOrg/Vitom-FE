@@ -3,7 +3,7 @@ import { Loading } from "./loading";
 
 interface DataRenderProps {
   children: React.ReactNode;
-  error: string | null;
+  error?: string | null;
   isLoading: boolean;
 }
 

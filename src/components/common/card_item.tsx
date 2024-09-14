@@ -18,7 +18,7 @@ const CardItem: React.FC<CardItemProps> = () => {
   return (
     <Card>
       <CardHeader>
-        <div className="rounded-lg bg-secondary h-[350px] relative">
+        <div className="rounded-lg bg-secondary min-h-[350px] relative">
           <Button
             variant="ghost"
             className="absolute z-10 right-2 top-2"

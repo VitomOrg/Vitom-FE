@@ -1,5 +1,5 @@
 export interface RootResponse<T> {
-  value: Value<T>;
+  value: Value<T> | T;
   status: number;
   isSuccess: boolean;
   successMessage: string;
