@@ -25,4 +25,12 @@ export default defineConfig({
     },
   },
   assetsInclude: ["**/*.fbx", "**/*.glb", "**/*.obj", "**/*.mtl"],
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === "EVAL") return;
+        warn(warning);
+      },
+    },
+  },
 });

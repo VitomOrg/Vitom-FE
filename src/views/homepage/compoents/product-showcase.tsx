@@ -5,10 +5,10 @@ import { CircleChevronRight } from "lucide-react";
 
 const ProductShowcase = () => {
   return (
-    <section className="relative flex flex-col w-full py-12 my-10 bg-accent md:flex-row">
-      <div className="container flex gap-3">
-        <div className=" md:w-1/3">
-          <h2 className="space-x-2 text-2xl font-bold">
+    <section className="relative w-full py-24 my-10 bg-accent ">
+      <div className="container grid md:grid-cols-2">
+        <div className="flex flex-col items-start w-2/3 gap-3">
+          <h2 className="space-x-2 text-2xl font-bold ">
             <span>Welcome to</span>
             <span className="uppercase text-primary">Vitom</span>
           </h2>
@@ -22,15 +22,18 @@ const ProductShowcase = () => {
             <span className="font-semibold">View More</span>
           </Button>
         </div>
-        <div className="absolute flex gap-4 right-4">
+
+        {/* Use flex for the list of CardItems */}
+        <div className="absolute flex items-center justify-center gap-4 transform -translate-y-1/2 right-20 top-1/2">
           <CardItem filePath={assert.obj} />
           <CardItem filePath={assert.obj} />
           <CardItem filePath={assert.obj} />
         </div>
       </div>
-      <Button variant="ghost" className="absolute right-5 ">
-        <CircleChevronRight className="size-12" />
-      </Button>
+
+      <button className="absolute transform -translate-y-1/2 right-9 top-1/2 size-fit ">
+        <CircleChevronRight className="size-10 " fill="green" />
+      </button>
     </section>
   );
 };
