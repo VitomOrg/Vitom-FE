@@ -29,7 +29,7 @@ const Navbar = () => {
   const navigator = useNavigate();
 
   return (
-    <header className="sticky top-0 bg-accent text-accent-foreground">
+    <header className="sticky top-0 z-10 bg-accent text-accent-foreground">
       <div className="container flex items-center justify-between h-full py-4">
         {/* Add Logo */}
         <NavLink to="/" className="flex items-center text-2xl font-bold">
@@ -56,7 +56,7 @@ const Navbar = () => {
           <ModeToggle />
           <SignedOut>
             <Button onClick={() => navigator("/sign-in")}>
-              <span>Sign In</span>
+              <span className="font-semibold">Sign In</span>
               <ArrowBigRight className="size-6" />
             </Button>
             {/* <Button variant="outline" onClick={() => navigator("/sign-up")}>
