@@ -1,10 +1,9 @@
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui";
-import { ModeToggle } from "@/components/common/mode-toggle";
 import assert from "@/assets";
-
 import IconNote from "@/components/common/icon-note";
+import { ModeToggle } from "@/components/common/mode-toggle";
 
 const menu = [
   {
@@ -29,22 +28,24 @@ const Navbar = () => {
   const navigator = useNavigate();
 
   return (
-    <div className="h-fit bg-secondary text-secondary-foreground">
+    <header className="sticky top-0 bg-accent text-accent-foreground">
       <div className="container flex items-center justify-between h-full py-4">
         {/* Add Logo */}
         <NavLink to="/" className="flex items-center text-2xl font-bold">
           <img src={assert.logo} alt="logo" className="size-8" />
-          <span className="ml-2">Vitom</span>
+          <span className="ml-2 ">Vitom</span>
         </NavLink>
         {/* Add menu */}
-        <div className="flex items-center gap-3 space-x-4">
+        <div className="flex items-center justify-center h-full gap-3 space-x-4">
           {menu.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
-              className="h-full text-base font-bold"
+              className="font-bold text-center "
             >
-              <span>{item.name}</span>
+              <span className="hover:text-accent-foreground/60">
+                {item.name}
+              </span>
             </NavLink>
           ))}
         </div>
@@ -65,7 +66,7 @@ const Navbar = () => {
           </SignedIn>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

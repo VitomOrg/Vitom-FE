@@ -1,10 +1,10 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import { useAuth } from "@clerk/clerk-react";
 import { useCallback, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
+import { Toaster } from "./components/ui";
 import { setItem } from "./lib";
 import routes from "./router";
-import { Toaster } from "./components/ui";
-import { ThemeProvider } from "@/components/theme-provider";
 
 function App() {
   const auth = useAuth();
