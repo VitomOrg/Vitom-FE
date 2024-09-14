@@ -22,8 +22,6 @@ const GLBModel = ({ filePath, color = "white" }: GLBModelProps) => {
           mesh.receiveShadow = true;
 
           // Cập nhật màu sắc của tất cả các material của mesh
-          console.log(mesh.material);
-
           if (Array.isArray(mesh.material)) {
             mesh.material.forEach((mat) => {
               if (mat instanceof THREE.MeshStandardMaterial) {

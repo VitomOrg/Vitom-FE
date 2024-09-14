@@ -4,6 +4,7 @@ import { Button } from "../ui";
 import assert from "@/assets";
 import IconNote from "@/components/common/icon-note";
 import { ModeToggle } from "@/components/common/mode-toggle";
+import { ArrowBigRight } from "lucide-react";
 
 const menu = [
   {
@@ -54,12 +55,13 @@ const Navbar = () => {
           <IconNote />
           <ModeToggle />
           <SignedOut>
-            <Button variant="outline" onClick={() => navigator("/sign-in")}>
-              Sign In
+            <Button onClick={() => navigator("/sign-in")}>
+              <span>Sign In</span>
+              <ArrowBigRight className="size-6" />
             </Button>
-            <Button variant="outline" onClick={() => navigator("/sign-up")}>
+            {/* <Button variant="outline" onClick={() => navigator("/sign-up")}>
               Sign Up
-            </Button>
+            </Button> */}
           </SignedOut>
           <SignedIn>
             <UserButton />
