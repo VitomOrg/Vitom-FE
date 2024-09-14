@@ -1,23 +1,18 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui";
-import { LucideHeart } from "lucide-react"; // Added filled heart icon
+import ObjView from "@/components/test";
+import { Card } from "@/components/ui";
+import { cn } from "@/lib";
 import React from "react";
 
 interface CardItemProps {
   filePath: string;
+  className?: string;
 }
 
-const CardItem: React.FC<CardItemProps> = () => {
+const CardItem: React.FC<CardItemProps> = ({ className }) => {
   return (
-    <Card>
-      <CardHeader>
+    <Card className={cn("py-14", className)}>
+      <ObjView />
+      {/* <CardHeader>
         <div className="rounded-lg bg-secondary min-h-[350px] relative">
           <Button
             variant="ghost"
@@ -42,7 +37,7 @@ const CardItem: React.FC<CardItemProps> = () => {
           <Button>View</Button>
           <Button>Download</Button>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };
