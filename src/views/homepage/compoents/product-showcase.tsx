@@ -32,7 +32,10 @@ const ProductShowcase = () => {
       </div>
 
       <button className="absolute transform -translate-y-1/2 right-9 top-1/2 size-fit ">
-        <CircleChevronRight className="size-10 " fill="green" />
+        <CircleChevronRight
+          className="size-10 text-primary-foreground"
+          fill="green"
+        />
       </button>
     </section>
   );
