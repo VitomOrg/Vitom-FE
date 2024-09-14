@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui";
-import { Dot } from "lucide-react";
+import { SendHorizonal } from "lucide-react";
 
 const ListReason = [
   {
@@ -48,7 +48,7 @@ const ReasonList = () => {
     <section className="container my-14">
       {/* Section Header */}
       <div className="mb-8 space-y-4 text-center">
-        <h6 className="text-xl font-semibold text-primary-foreground">
+        <h6 className="text-xl font-semibold text-secondary-foreground">
           Why Choose Us?
         </h6>
         <h2 className="text-4xl font-bold text-primary">
@@ -61,8 +61,8 @@ const ReasonList = () => {
         {ListReason.map((reason, index) => (
           <AccordionItem value={index.toString()} key={index}>
             <AccordionTrigger className="py-3 text-lg font-semibold text-left focus:outline-none hover:no-underline">
-              <div className="flex items-center">
-                <Dot className="size-10" />
+              <div className="flex items-center gap-6">
+                <SendHorizonal className="size-5" />
                 <span>{reason.title}</span>
               </div>
             </AccordionTrigger>
