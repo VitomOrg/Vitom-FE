@@ -10,7 +10,7 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ className }) => {
   return (
-    <Card className={cn("py-14", className)}>
+    <Card className={cn("py-14 min-h-[450px] ", className)}>
       <ObjView />
       {/* <CardHeader>
         <div className="rounded-lg bg-secondary min-h-[350px] relative">
