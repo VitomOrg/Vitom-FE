@@ -1,11 +1,11 @@
-import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui";
 import assert from "@/assets";
 import IconNote from "@/components/common/icon-note";
 import { ModeToggle } from "@/components/common/mode-toggle";
 import { ArrowBigRight } from "lucide-react";
-import Show from "@/lib/show";
+// import Show from "@/lib/show";
 
 const menu = [
   {
@@ -28,7 +28,7 @@ const menu = [
 
 const Navbar = () => {
   const navigator = useNavigate();
-  const { isSignedIn } = useAuth();
+  // const { isSignedIn } = useAuth();
 
   return (
     <header className="sticky top-0 z-10 bg-accent text-accent-foreground">
@@ -39,23 +39,23 @@ const Navbar = () => {
           <span className="ml-2 ">Vitom</span>
         </NavLink>
         {/* Add menu */}
-        <Show>
-          <Show.When isTrue={!isSignedIn!}>
-            <div className="flex items-center justify-center h-full gap-3 space-x-4">
-              {menu.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.href}
-                  className="font-bold text-center "
-                >
-                  <span className="hover:text-accent-foreground/60">
-                    {item.name}
-                  </span>
-                </NavLink>
-              ))}
-            </div>
-          </Show.When>
-        </Show>
+        {/* <Show>
+          <Show.When isTrue={!isSignedIn!}> */}
+        <div className="flex items-center justify-center h-full gap-3 space-x-4">
+          {menu.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.href}
+              className="font-bold text-center "
+            >
+              <span className="hover:text-accent-foreground/60">
+                {item.name}
+              </span>
+            </NavLink>
+          ))}
+        </div>
+        {/* </Show.When>
+        </Show> */}
         {/*  Add ModeToggle and UserButton */}
         <div className="flex items-center gap-3 text-nowrap">
           <IconNote />

@@ -5,4 +5,5 @@ export const QueryKey = {
   LIST_REVIEW: "list-review",
 
   LIST_USER: "list-user",
+  USER: "user",
 };
