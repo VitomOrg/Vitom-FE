@@ -1,7 +1,7 @@
 import ErrorPage from "@/components/error_page";
 import { Loading } from "@/components/loading";
-import Login from "@/views/authpage/login/Login";
-import Register from "@/views/authpage/register/Register";
+import Login from "@/views/authpage/login/login";
+import Register from "@/views/authpage/register/register";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 

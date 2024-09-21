@@ -8,7 +8,14 @@ import { useNavigate } from "react-router-dom";
 const ProductPage = () => {
   const navigate = useNavigate();
   const { isSignedIn } = useAuth();
-  const { data, isLoading } = UseListProduct({});
+  const { data, isLoading } = UseListProduct({
+    options: {
+      pageIndex: 1,
+      pageSize: 200,
+      ascByCreatedAt: false,
+      license: "Pro",
+    },
+  });
 
   return (
     <section className="container">
@@ -22,6 +29,10 @@ const ProductPage = () => {
               <div key={product.id} className="flex items-baseline gap-2">
                 <h1>{product.name}</h1>
                 <p>{product.description}</p>
+                {product.imageUrls.map((url) => (
+                  <img key={url} src={url} alt={product.name} />
+                ))}
+
                 <Button onClick={() => navigate(product.id)}>Detail</Button>
               </div>
             ))}

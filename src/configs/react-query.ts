@@ -5,6 +5,14 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 
+/**
+ * Create a global state using react-query
+ * @param queryKey - The key of the query
+ * @param queryFn - The function that will be called to fetch the data
+ * @param initialData - The initial data of the query
+ * @returns The data, setData, resetData, error, and isLoading of the query
+ */
+
 export function createGlobalState<T>(
   queryKey: string[],
   queryFn: QueryFunction<T>,

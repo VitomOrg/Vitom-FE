@@ -1,40 +1,43 @@
 import { Loading } from "@/components/loading";
+import GLBModel from "@/components/test/glb_model";
 import AmbientLight from "@/components/three_ui/ambient_light";
 import CameraController from "@/components/three_ui/camera_controller";
 import GridScreen from "@/components/three_ui/grid_helper";
 import { cn } from "@/lib";
 import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import { Canvas, CanvasProps } from "@react-three/fiber";
+import React, { Suspense, useState } from "react";
 import * as THREE from "three";
-import FBXModel from "./fbx_model";
 
-interface FbxViewerProps {
+interface GlbViewerProps extends CanvasProps {
   filePath: string;
-  scale?: number;
-  showGrid?: boolean;
   className?: string;
+  showGrid?: boolean;
+  scale?: number;
 }
 
-const FbxViewer = ({
+const GlbViewer: React.FC<GlbViewerProps> = ({
   filePath,
-  scale = 1,
-  showGrid,
   className,
-}: FbxViewerProps) => {
+  showGrid,
+  scale = 1,
+  ...props
+}) => {
   const [model, setModel] = useState<THREE.Group | null>(null);
   const [height, setHeight] = useState<number>(0);
 
   const getHeight = (number: number) => {
     setHeight(number);
   };
-
   return (
-    <Canvas className={cn(" rounded-lg shadow-lg", className)} shadows>
+    <Canvas
+      className={cn("rounded-xl shadow-lg shadow-primary ", className)}
+      {...props}
+    >
       <AmbientLight />
       {showGrid && <GridScreen positionY={0} heightObjet={height} />}
       <Suspense fallback={<Loading />}>
-        <FBXModel
+        <GLBModel
           filePath={filePath}
           scale={scale}
           onModelLoaded={setModel}
@@ -47,4 +50,4 @@ const FbxViewer = ({
   );
 };
 
-export default FbxViewer;
+export default GlbViewer;

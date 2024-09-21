@@ -1,20 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./navbar";
 import Footer from "./footer";
-// import { useAuth } from "@clerk/clerk-react";
 
 const MainLayout = () => {
-  // const navigate = useNavigate();
-  // const { isSignedIn } = useAuth();
-
-  // useEffect(() => {
-  //   if (!isSignedIn) {
-  //     navigate("/");
-  //   } else {
-  //     navigate("/products");
-  //   }
-  // }, [isSignedIn, navigate]);
-
   return (
     <div className="relative flex flex-col w-full min-h-screen ">
       <Navbar />
