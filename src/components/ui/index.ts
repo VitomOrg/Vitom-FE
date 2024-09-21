@@ -3,6 +3,7 @@ export * from "./alert-dialog";
 export * from "./avatar";
 export * from "./button";
 export * from "./card";
+export * from "./carousel";
 export * from "./chart";
 export * from "./checkbox";
 export * from "./dropdown-menu";
@@ -23,3 +24,4 @@ export * from "./toast";
 export * from "./toaster";
 export * from "./tooltip";
 export * from "./use-toast";
+

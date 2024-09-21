@@ -6,6 +6,7 @@ export interface ProductResponse {
   name: string;
   description: string;
   types: string[];
+  imageUrls: string[];
   price: number;
   downloadUrl: string;
   totalPurchases: number;

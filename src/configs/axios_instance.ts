@@ -1,6 +1,18 @@
 import { env } from "@/lib/env";
-import { getItem } from "@/lib/utils/localStorage";
+import { getItem } from "@/lib/helper/localStorage";
 import axios from "axios";
+
+/**
+ * baseURL is the base URL for the API
+ * axiosInstance is an instance of axios with baseURL and headers set
+ * axiosInstance is used to make requests to the API
+ * axiosInstance has request and response interceptors
+ * request interceptor adds the token to the headers
+ * response interceptor handles the response and error
+ * response interceptor returns the response or rejects the error
+ * response interceptor is used to handle the response and error globally
+ * response interceptor is used to handle the token expiration error
+ */
 
 export const baseURL = env.VITE_API_URL_BE;
 

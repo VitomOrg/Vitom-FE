@@ -1,14 +1,17 @@
-import PreCard from "@/views/homepage/compoents/pre-card";
+import PreCard from "@/views/homepage/components/pre-card";
 
 const BusinessMetrics = () => {
   return (
-    <section className="container py-12 my-8 rounded-lg bg-secondary text-secondary-foreground">
-      <h1 className="text-4xl font-bold text-center">Our Achievements</h1>
-      <p className="text-center">
+    <section className="container relative py-12 my-8 overflow-hidden text-secondary-foreground">
+      <div className="hero absolute inset-0 bg-secondary h-[60%] rounded-lg"></div>
+      <h1 className="relative z-10 text-4xl font-bold text-center">
+        Our Achievements
+      </h1>
+      <p className="relative z-10 text-center">
         Discover the impact we've made in the 3D model industry. Our dedication
         to quality and innovation is reflected in the numbers.
       </p>
-      <div className="grid grid-cols-1 gap-4 mt-12 md:grid-cols-4 ">
+      <div className="relative z-10 grid grid-cols-1 gap-4 mt-12 md:grid-cols-4">
         <PreCard
           heading="Satisfied Customers"
           value="50k+"

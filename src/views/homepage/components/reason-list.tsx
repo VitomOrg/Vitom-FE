@@ -46,7 +46,6 @@ const ListReason = [
 const ReasonList = () => {
   return (
     <section className="container my-14">
-      {/* Section Header */}
       <div className="mb-8 space-y-4 text-center">
         <h6 className="text-xl font-semibold text-secondary-foreground">
           Why Choose Us?
@@ -56,7 +55,6 @@ const ReasonList = () => {
         </h2>
       </div>
 
-      {/* Reason list */}
       <Accordion type="single" collapsible className="w-full">
         {ListReason.map((reason, index) => (
           <AccordionItem value={index.toString()} key={index}>

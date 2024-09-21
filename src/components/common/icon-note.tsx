@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom";
 const IconNote = () => {
   return (
     <NavLink to="/shopping-cart">
-      <Button variant="ghost" size="icon">
-        <ShoppingCart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all " />
+      <Button size="icon" className="rounded-full">
+        <ShoppingCart className="transition-all scale-100 size-4" />
       </Button>
     </NavLink>
   );

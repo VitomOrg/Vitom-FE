@@ -28,7 +28,6 @@ const menu = [
 
 const Navbar = () => {
   const navigator = useNavigate();
-  // const { isSignedIn } = useAuth();
 
   return (
     <header className="sticky top-0 z-10 bg-accent text-accent-foreground">

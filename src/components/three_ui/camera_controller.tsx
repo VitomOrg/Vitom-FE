@@ -28,11 +28,11 @@ const CameraController: React.FC<CameraControllerProps> = ({
     );
 
     // Look at the model, but at a 45-degree angle
-    camera.lookAt(new THREE.Vector3(0, size / 2, 0));
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // Rotate camera to achieve 45-degree angle
-    camera.rotation.x = -Math.PI / 2;
-    camera.rotation.y = Math.PI / 2;
+    // camera.rotation.x = -Math.PI / 2;
+    // camera.rotation.y = Math.PI / 2;
 
     // Ensure camera is updated
     camera.updateProjectionMatrix();
