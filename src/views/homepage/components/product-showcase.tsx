@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui";
 import CardProductList from "@/views/homepage/components/card-product-list";
+import { NavLink } from "react-router-dom";
 
 const ProductShowcase = () => {
   return (
@@ -16,9 +17,11 @@ const ProductShowcase = () => {
             needs. Whether you're a designer, developer, or hobbyist, you'll
             find our collection to be an invaluable resource for your projects.
           </p>
-          <Button>
-            <span className="font-semibold">View More</span>
-          </Button>
+          <NavLink to="/products">
+            <Button>
+              <span className="font-semibold">View More</span>
+            </Button>
+          </NavLink>
         </div>
 
         <div className="gap-2">

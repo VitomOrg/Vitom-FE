@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui";
 import { ArrowBigRight } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -15,10 +16,12 @@ const Hero = () => {
           Browse, purchase, and download high-quality 3D model files. Unlock
           your creativity with detailed designs, ready for any project.
         </p>
-        <Button className="space-x-2 font-semibold">
-          <span>Get Started</span>
-          <ArrowBigRight className="size-6" />
-        </Button>
+        <NavLink to="/sign-in">
+          <Button className="space-x-2 font-semibold">
+            <span>Get Started</span>
+            <ArrowBigRight className="size-6" />
+          </Button>
+        </NavLink>
       </div>
     </section>
   );

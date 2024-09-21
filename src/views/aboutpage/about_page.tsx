@@ -1,12 +1,12 @@
-import assert from "@/assets";
-import GlbViewer from "@/components/three_ui/glb";
+import Introduction from "@/views/aboutpage/components/introduction";
+import ListTeammate from "@/views/aboutpage/components/list_teammate";
 
 const AboutPage = () => {
   return (
-    <div className="h-96">
-      <GlbViewer className="" filePath={assert.glb} children />
-      About Page
-    </div>
+    <main className="container">
+      <Introduction />
+      <ListTeammate />
+    </main>
   );
 };
 
