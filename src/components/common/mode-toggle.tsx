@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui";
 import { useTheme } from "@/hooks/useTheme";
 import { Moon, Sun } from "lucide-react";
 
@@ -12,7 +13,10 @@ export function ModeToggle() {
 
   return (
     <div className="flex items-center">
-      <label className="relative inline-flex items-center cursor-pointer">
+      <Button variant="ghost" onClick={handleToggle}>
+        {isDarkMode ? <Sun /> : <Moon />}
+      </Button>
+      {/* <label className="relative inline-flex items-center cursor-pointer">
         <input
           type="checkbox"
           checked={isDarkMode}
@@ -33,7 +37,7 @@ export function ModeToggle() {
             <Moon className=" size-6 text-foreground" />
           )}
         </div>
-      </label>
+      </label> */}
     </div>
   );
 }
