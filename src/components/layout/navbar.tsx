@@ -1,6 +1,6 @@
 import assert from "@/assets";
 import IconNote from "@/components/common/icon-note";
-import { ModeToggle } from "@/components/common/mode-toggle";
+// import { ModeToggle } from "@/components/common/mode-toggle";
 import { Button } from "@/components/ui";
 import Show from "@/lib/show";
 import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/clerk-react";
@@ -59,7 +59,7 @@ const Navbar = () => {
               <IconNote />
             </Show.When>
           </Show>
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           <SignedOut>
             <Button onClick={() => navigator("/sign-in")}>
               <span className="font-semibold">Sign In</span>

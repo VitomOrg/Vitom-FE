@@ -1,26 +1,21 @@
 import Search from "@/components/common/search";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
+import { useProductStore } from "@/domains/stores/zustand/products";
 import Filter from "@/views/productpage/product-list/filter";
 import ListItem from "@/views/productpage/product-list/list-item";
 import { useState } from "react";
 
 const ProductIsLogin = () => {
   const [search, setSearch] = useState<string>();
-  const { data, isLoading, error } = UseListProduct({
-    options: {
-      pageSize: 10,
-      pageIndex: 1,
-    },
+  const { filter } = useProductStore();
+  const { data, isLoading } = UseListProduct({
+    options: filter || {},
   });
 
   const handleSearch = (value: string) => {
     setSearch(value);
   };
-
   console.log("search", search);
-  console.log("data", data);
-  console.log("isLoading", isLoading);
-  console.log("error", error?.message);
 
   return (
     <div className="flex gap-4">
@@ -31,7 +26,7 @@ const ProductIsLogin = () => {
         <div className="flex justify-end">
           <Search getValue={handleSearch} placeholder="Search product" />
         </div>
-        <ListItem />
+        <ListItem data={data!} isLoading={isLoading} />
       </section>
     </div>
   );

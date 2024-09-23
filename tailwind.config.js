@@ -25,6 +25,7 @@ export default {
     },
     extend: {
       colors: {
+        overlay: "rgba(0, 0, 0, 0.5)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

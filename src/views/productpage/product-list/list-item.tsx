@@ -1,15 +1,32 @@
-import assert from "@/assets";
-import GlbViewer from "@/components/three_ui/glb";
+import CardItem from "@/components/common/card_item";
+import { Card, CardHeader, Skeleton } from "@/components/ui";
+import { ProductResponse } from "@/domains/models/products/product.response";
+import { Value } from "@/domains/models/root/root.response";
+import React from "react";
 
-const ListItem = () => {
+interface ListItemProps {
+  data: Value<ProductResponse[]>;
+  isLoading: boolean;
+}
+
+const ListItem: React.FC<ListItemProps> = ({ data, isLoading }) => {
+  if (isLoading) {
+    return (
+      <section className="flex flex-wrap justify-start w-full gap-2.5">
+        {[...Array(10)].map((_, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <Skeleton className="" />
+            </CardHeader>
+          </Card>
+        ))}
+      </section>
+    );
+  }
+
   return (
-    <section className="flex flex-wrap h-screen gap-5 p-4">
-      {Array.from({ length: 10 }).map((_, index) => (
-        <div className="flex flex-col items-center">
-          <h3 className="mb-2 text-lg font-semibold">Product {index + 1}</h3>
-          <GlbViewer filePath={assert.glb} children />
-        </div>
-      ))}
+    <section className="flex flex-wrap justify-start w-full gap-2.5">
+      {data && data.data.map((item) => <CardItem key={item.id} data={item} />)}
     </section>
   );
 };
