@@ -65,11 +65,6 @@ const InformationProduct: React.FC<InformationProductProps> = ({
             ${data.price.toFixed(2)}
           </p>
 
-          {/* Mô tả */}
-          <p className="text-lg text-muted-foreground lg:text-xl">
-            {data.description}
-          </p>
-
           {/* Thông tin bổ sung */}
           <div className="flex flex-wrap gap-4 lg:gap-6">
             <div className="flex items-center space-x-2">

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui";
 import { ProductResponse } from "@/domains/models/products/product.response";
 import { useImageError } from "@/hooks";
+import { pastOfDate } from "@/lib/helper";
 import Show from "@/lib/show";
 import {
   DownloadIcon,
@@ -27,14 +28,6 @@ interface CardItemProps {
 const CardItem: React.FC<CardItemProps> = ({ data }) => {
   const navigation = useNavigate();
   const { imgError, handleImageError } = useImageError();
-
-  const getDaysAgo = (dateString: string): string => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return `${diffDays} days ago`;
-  };
 
   return (
     <Card className="relative w-full md:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.5rem)] mb-4">
@@ -92,7 +85,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
         </div>
 
         <div className="text-sm text-muted-foreground">
-          {getDaysAgo(data.createdAt.toString())}
+          {pastOfDate(data.createdAt.toString())}
         </div>
 
         <div className="flex flex-wrap gap-2">
