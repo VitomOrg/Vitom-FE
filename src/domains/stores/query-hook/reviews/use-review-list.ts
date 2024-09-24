@@ -17,6 +17,6 @@ export function UseReviewList({ queryOptions, options }: UseListReviewParams) {
   return useQuery({
     ...queryOptions,
     queryKey: [QueryKey.LIST_REVIEW, options?.productId],
-    queryFn: () => ReviewApi.listReview(options!),
+    queryFn: () => ReviewApi.getReviewByProduct(options!),
   });
 }
