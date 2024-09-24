@@ -1,4 +1,4 @@
-export interface Types {
+export interface TypesRequest {
   name: string;
   description: string;
 }

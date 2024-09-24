@@ -17,6 +17,7 @@ const ProductDetailPage = lazy(
   () => import("@/views/productpage/product-detail/product_detail_page")
 );
 const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
+const BlogPage = lazy(() => import("@/views/blogpage/blog-page"));
 /*eslint-enable*/
 
 const routes = createBrowserRouter([
@@ -70,6 +71,14 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <ShoppingPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "blog",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogPage />
           </Suspense>
         ),
       },

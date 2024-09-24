@@ -1,6 +1,5 @@
 import assert from "@/assets";
 import IconNote from "@/components/common/icon-note";
-// import { ModeToggle } from "@/components/common/mode-toggle";
 import { Button } from "@/components/ui";
 import Show from "@/lib/show";
 import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/clerk-react";
@@ -23,6 +22,10 @@ const menu = [
   {
     name: "Products",
     href: "/products",
+  },
+  {
+    name: "Blog",
+    href: "/blog",
   },
 ];
 

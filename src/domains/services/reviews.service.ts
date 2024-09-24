@@ -1,10 +1,11 @@
 import { ReviewPageRequest } from "@/domains/models/reviews/review-page.request";
+import { ReviewsRequest } from "@/domains/models/reviews/review.request";
 import { ReviewResponse } from "@/domains/models/reviews/review.response";
 import { Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
 
 export const ReviewApi = {
-  listReview: async (
+  getReviewByProduct: async (
     options: ReviewPageRequest
   ): Promise<Value<ReviewResponse[]>> => {
     return handleApiCall<Value<ReviewResponse[]>>(
@@ -16,7 +17,7 @@ export const ReviewApi = {
     ) as Promise<Value<ReviewResponse[]>>;
   },
 
-  createReview: async () => {},
-  updateReview: async () => {},
-  deleteReview: async () => {},
+  createReview: async (data: ReviewsRequest): Promise<null> => {
+    return handleApiCall<null>("post", "/reviews", data) as Promise<null>;
+  },
 };

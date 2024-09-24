@@ -39,6 +39,11 @@ export default defineConfig({
           }
         },
       },
+
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+        robots: path.resolve(__dirname, "robots.txt"),
+      },
     },
 
     chunkSizeWarningLimit: 1024,

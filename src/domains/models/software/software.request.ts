@@ -1,4 +1,4 @@
-export interface Software {
+export interface SoftwareRequest {
   name: string;
   description: string;
 }

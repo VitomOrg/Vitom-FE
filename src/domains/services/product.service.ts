@@ -3,7 +3,7 @@ import {
   ProductFavoriteRequest,
   ProductPageRequest,
 } from "@/domains/models/products/product-page.request";
-import { Product } from "@/domains/models/products/product.request";
+import { ProductRequest } from "@/domains/models/products/product.request";
 import { ProductResponse } from "@/domains/models/products/product.response";
 import { Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
@@ -31,12 +31,12 @@ export const ProductApi = {
     }) as Promise<Value<ProductResponse[]>>;
   },
 
-  createProduct: async (data: Product): Promise<null> => {
+  createProduct: async (data: ProductRequest): Promise<null> => {
     return handleApiCall<null>("post", "/products", data) as Promise<null>;
   },
 
-  updateProduct: async (data: Product): Promise<null> => {
-    return handleApiCall<null>("put", "/products", data) as Promise<null>;
+  updateProduct: async (data: ProductRequest, id: string): Promise<null> => {
+    return handleApiCall<null>("put", `/products/${id}`, data) as Promise<null>;
   },
 
   deleteProduct: async (id: string): Promise<null> => {
