@@ -4,6 +4,7 @@ import { ProductDetail } from "@/domains/models/products/product-detail.response
 import { Button, Card, Skeleton } from "@/components/ui";
 import { Heart, ShoppingCart } from "lucide-react";
 import React from "react";
+import { useCart } from "@/domains/stores/query-hook/carts/add-to-cart";
 
 interface InformationProductProps {
   data: ProductDetail;
@@ -14,6 +15,8 @@ const InformationProduct: React.FC<InformationProductProps> = ({
   data,
   isLoading,
 }) => {
+  const { addToCart } = useCart();
+
   if (isLoading) {
     return (
       <section className="flex flex-col gap-6 p-4 lg:flex-row">
@@ -95,6 +98,7 @@ const InformationProduct: React.FC<InformationProductProps> = ({
             <Button
               className="w-full text-white lg:w-auto bg-secondary"
               variant="outline"
+              onClick={() => addToCart(data.id)}
             >
               Add to cart
             </Button>

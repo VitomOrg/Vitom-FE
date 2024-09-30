@@ -1,5 +1,7 @@
 import {
+  InitialDataFunction,
   QueryFunction,
+  QueryKey,
   useQuery,
   useQueryClient,
   UseQueryOptions,
@@ -14,9 +16,9 @@ import {
  */
 
 export function createGlobalState<T>(
-  queryKey: string[],
+  queryKey: QueryKey,
   queryFn: QueryFunction<T>,
-  initialData: T | (() => T) | null = null
+  initialData?: T | InitialDataFunction<T> | undefined
 ) {
   return function () {
     const queryClient = useQueryClient();

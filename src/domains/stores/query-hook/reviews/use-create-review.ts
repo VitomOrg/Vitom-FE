@@ -23,7 +23,6 @@ const useCreateReview = ({ id, refetch }: CreateReviewProps) => {
 
   const onSubmit = form.handleSubmit(
     async (values: z.infer<typeof ReviewsSchema>) => {
-
       const response = await ReviewApi.createReview(values);
 
       if (response.isSuccess) {
@@ -38,6 +37,8 @@ const useCreateReview = ({ id, refetch }: CreateReviewProps) => {
           description: "There was an error creating your review",
         });
       }
+
+      form.reset();
     }
   );
 

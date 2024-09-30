@@ -6,4 +6,7 @@ export const QueryKey = {
 
   LIST_USER: "list-user",
   USER: "user",
+
+  LIST_CART: "list-cart",
+  CART: "cart",
 };

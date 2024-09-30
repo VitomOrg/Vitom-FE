@@ -5,10 +5,12 @@ import { Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
 
 export const CartApi = {
-  getCart: async (options: CartPageRequest): Promise<Value<CartResponse>> => {
-    return handleApiCall<Value<CartResponse>>("get", "/carts", {
+  getCart: async (
+    options?: CartPageRequest
+  ): Promise<Value<CartResponse[]>> => {
+    return handleApiCall<Value<CartResponse[]>>("get", "/carts", {
       params: options,
-    }) as Promise<Value<CartResponse>>;
+    }) as Promise<Value<CartResponse[]>>;
   },
 
   postCart: async (data: CartRequest): Promise<null> => {
