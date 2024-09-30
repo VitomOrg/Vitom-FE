@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui";
 import { UseReviewList } from "@/domains/stores/query-hook/reviews/use-review-list";
-import { useDebounce } from "@/hooks";
 import CommentForm from "@/views/productpage/components/comment-form";
 import CommentList from "@/views/productpage/components/comment-list";
 import { Eye, Loader } from "lucide-react";
@@ -11,13 +10,11 @@ const Comment = () => {
   const { id } = useParams<{ id: string }>();
   const [pageSize, setPageSize] = useState<number>(5);
 
-  const pageSizeDebounce = useDebounce(pageSize, 100);
-
   const { data, refetch, isLoading } = UseReviewList({
     options: {
       productId: id || "",
       pageIndex: 1,
-      pageSize: pageSizeDebounce,
+      pageSize: pageSize,
     },
   });
 

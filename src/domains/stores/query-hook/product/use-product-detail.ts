@@ -14,7 +14,7 @@ export const UseProductDetail = ({
 }: UseListProductParams) => {
   return useQuery({
     ...queryOptions,
-    queryKey: [QueryKey.DETAIL_PRODUCT],
+    queryKey: [QueryKey.DETAIL_PRODUCT, id],
     queryFn: () => ProductApi.getProduct(id),
   });
 };

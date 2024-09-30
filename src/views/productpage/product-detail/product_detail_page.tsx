@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
+
 import { UseProductDetail } from "@/domains/stores/query-hook/product/use-product-detail";
 import Comment from "@/views/productpage/components/comment";
 import InformationProduct from "@/views/productpage/components/information-product";
@@ -11,7 +12,7 @@ const ProductDetailPage = () => {
 
   const { data, isLoading } = UseProductDetail({
     queryOptions: {},
-    id: id!,
+    id: id || "",
   });
 
   return (

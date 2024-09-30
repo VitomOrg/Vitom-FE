@@ -15,8 +15,6 @@ function App() {
     });
   }, [auth]);
 
-
-  
   useEffect(() => {
     fetchData();
   }, [fetchData]);

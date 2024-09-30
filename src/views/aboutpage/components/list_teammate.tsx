@@ -98,7 +98,7 @@ const ListTeammate = () => {
         {loading
           ? Array.from({ length: 6 }).map((_, index) => (
               <SwiperSlide key={index}>
-                <Card className="flex flex-col items-center justify-center p-6 transition-shadow duration-300 ease-in-out bg-white rounded-lg shadow-lg hover:shadow-2xl">
+                <Card className="flex flex-col items-center justify-center p-6 transition-shadow duration-300 ease-in-out rounded-lg shadow-lg bg-background hover:shadow-2xl">
                   <CardHeader className="flex justify-center mb-4">
                     <Skeleton className="w-24 h-24 border-4 border-gray-200 rounded-full" />
                   </CardHeader>
@@ -111,7 +111,7 @@ const ListTeammate = () => {
             ))
           : teammates.map((member, index) => (
               <SwiperSlide key={index}>
-                <Card className="flex flex-col items-center justify-center p-6 my-5 transition-shadow duration-300 ease-in-out bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-2xl">
+                <Card className="flex flex-col items-center justify-center p-6 my-5 transition-shadow duration-300 ease-in-out border border-gray-200 rounded-lg shadow-lg bg-background hover:shadow-2xl">
                   <CardHeader className="flex justify-center mb-4">
                     <Avatar className="overflow-hidden bg-cover rounded-full w-28 h-28">
                       <AvatarImage

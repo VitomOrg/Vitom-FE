@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   Avatar,
   AvatarImage,
@@ -9,14 +10,15 @@ import {
   CardTitle,
   Form,
   Textarea,
+  useToast,
 } from "@/components/ui";
-import useCreateReview from "@/domains/stores/query-hook/reviews/use-create-review";
-import { useParams } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import { getItem } from "@/lib";
-import React, { useEffect, useMemo, useState } from "react";
 import { ClerkTokenResponse } from "@/domains/models/clerk/clerk_token.response";
+import useCreateReview from "@/domains/stores/query-hook/reviews/use-create-review";
+import { getItem } from "@/lib";
+import { jwtDecode } from "jwt-decode";
 import { Star } from "lucide-react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface CommentFormProps {
   refetch: () => void;
@@ -27,6 +29,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
   const [token, setToken] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const storedToken = getItem("token");
@@ -45,18 +48,61 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
     refetch: refetch,
   });
 
-  const handleRatingChange = (index: number) => {
-    setRating(index + 1);
-    form.setValue("rating", index + 1);
-  };
+  const {
+    formState: { errors },
+  } = form;
 
-  const handleRatingHover = (index: number) => {
+  useEffect(() => {
+    if (errors.content || errors.rating) {
+      toast({
+        title: "Review creation failed",
+        description: errors.content?.message || errors.rating?.message,
+      });
+    }
+  }, [errors.content, errors.rating, toast]);
+
+  // Memoize rating change handlers
+  const handleRatingChange = useCallback(
+    (index: number) => {
+      setRating(index + 1);
+      form.setValue("rating", index + 1);
+    },
+    [form]
+  );
+
+  const handleRatingHover = useCallback((index: number) => {
     setHoverRating(index + 1);
-  };
+  }, []);
 
-  const handleRatingHoverLeave = () => {
+  const handleRatingHoverLeave = useCallback(() => {
     setHoverRating(null);
-  };
+  }, []);
+
+  // Memoize Stars rendering to avoid unnecessary renders
+  const starElements = useMemo(
+    () =>
+      Array.from({ length: 5 }).map((_, index) => (
+        <Star
+          key={index}
+          size={28}
+          className={`transition-transform duration-200 cursor-pointer hover:scale-110 ${
+            (hoverRating || rating) > index
+              ? "text-yellow-400"
+              : "text-gray-400"
+          }`}
+          onClick={() => handleRatingChange(index)}
+          onMouseEnter={() => handleRatingHover(index)}
+          onMouseLeave={handleRatingHoverLeave}
+        />
+      )),
+    [
+      hoverRating,
+      rating,
+      handleRatingChange,
+      handleRatingHover,
+      handleRatingHoverLeave,
+    ]
+  );
 
   return (
     <div className="flex items-center justify-center py-20">
@@ -67,6 +113,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
               src={user?.imageurl}
               alt={user?.id}
               className="object-cover rounded-full"
+              loading="lazy" // Lazy loading the avatar image
             />
           </Avatar>
 
@@ -79,25 +126,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
           <form onSubmit={onSubmit}>
             <CardContent className="space-y-6">
               <div className="flex items-center justify-between gap-4 p-4 rounded-lg shadow-lg md:flex-row bg-primary/10">
-                <p className="mt-4 text-sm text-center md:text-start md:w-36 text-muted-foregroutline-muted-foreground">
+                <p className="mt-4 text-sm text-center md:text-start md:w-36 text-muted-foreground">
                   Your feedback is important to us
                 </p>
-                <div className="flex gap-1 ">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star
-                      key={index}
-                      size={28}
-                      className={`transition-transform duration-200 cursor-pointer hover:scale-110 ${
-                        (hoverRating || rating) > index
-                          ? "text-yellow-400"
-                          : "text-gray-400"
-                      }`}
-                      onClick={() => handleRatingChange(index)}
-                      onMouseEnter={() => handleRatingHover(index)}
-                      onMouseLeave={handleRatingHoverLeave}
-                    />
-                  ))}
-                </div>
+                <div className="flex gap-1">{starElements}</div>
               </div>
 
               <Textarea
@@ -122,4 +154,4 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
   );
 };
 
-export default CommentForm;
+export default memo(CommentForm);

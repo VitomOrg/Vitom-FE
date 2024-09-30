@@ -1,1 +1,3 @@
-export interface CartRequest {}
+export interface CartRequest {
+  productId: string;
+}

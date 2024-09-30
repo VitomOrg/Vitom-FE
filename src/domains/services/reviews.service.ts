@@ -8,6 +8,8 @@ export const ReviewApi = {
   getReviewByProduct: async (
     options: ReviewPageRequest
   ): Promise<Value<ReviewResponse[]>> => {
+    console.log(options);
+
     return handleApiCall<Value<ReviewResponse[]>>(
       "get",
       `/reviews/product/${options.productId}`,
