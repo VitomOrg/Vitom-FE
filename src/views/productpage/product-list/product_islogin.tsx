@@ -1,32 +1,46 @@
 import Search from "@/components/common/search";
+import { Button } from "@/components/ui";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
 import { useProductStore } from "@/domains/stores/zustand/products";
-import Filter from "@/views/productpage/product-list/filter";
+// import Filter from "@/views/productpage/product-list/filter";
 import ListItem from "@/views/productpage/product-list/list-item";
-import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const ProductIsLogin = () => {
-  const [search, setSearch] = useState<string>();
-  const { filter } = useProductStore();
+  const { filter, setFilter } = useProductStore();
   const { data, isLoading } = UseListProduct({
     options: filter || {},
   });
 
+  if (!data) return null;
+
   const handleSearch = (value: string) => {
-    setSearch(value);
+    console.log(value);
   };
-  console.log("search", search);
 
   return (
     <div className="flex gap-4">
-      <div className="flex-grow">
-        <Filter />
-      </div>
+      <div className="flex-grow">{/* <Filter /> */}</div>
       <section className={`w-full`}>
         <div className="flex justify-end">
           <Search getValue={handleSearch} placeholder="Search product" />
         </div>
-        <ListItem data={data!} isLoading={isLoading} />
+        <ListItem data={data} isLoading={isLoading} />
+        <div className="flex justify-center w-full">
+          <Button
+            className="space-x-2"
+            onClick={() => {
+              setFilter({
+                ...filter,
+                pageSize: filter?.pageSize ? filter?.pageSize + 10 : 10,
+                pageIndex: 1,
+              });
+            }}
+          >
+            <ChevronDown size={24} />
+            <span>See more</span>
+          </Button>
+        </div>
       </section>
     </div>
   );

@@ -17,9 +17,19 @@ export const UseListProduct = ({
   queryOptions,
   options,
 }: UseListProductParams) => {
-  return useQuery({
+  const {
+    data: product,
+    isLoading: isLoadingProduct,
+    error: errorProduct,
+  } = useQuery({
     ...queryOptions,
     queryKey: [QueryKey.LIST_PRODUCT, options],
     queryFn: () => ProductApi.listProduct(options),
   });
+
+  return {
+    data: product,
+    isLoading: isLoadingProduct,
+    error: errorProduct,
+  };
 };
