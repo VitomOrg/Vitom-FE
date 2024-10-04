@@ -1,10 +1,11 @@
 import assert from "@/assets";
 import GlbViewer from "@/components/three_ui/glb";
 import { ProductDetail } from "@/domains/models/products/product-detail.response";
-import { Button, Card, Skeleton } from "@/components/ui";
+import { Button, Card, Skeleton, useToast } from "@/components/ui";
 import { Heart, ShoppingCart } from "lucide-react";
 import React from "react";
 import { useCart } from "@/domains/stores/query-hook/carts/add-to-cart";
+import { CartApi } from "@/domains/services/carts.service";
 
 interface InformationProductProps {
   data: ProductDetail;
@@ -15,7 +16,25 @@ const InformationProduct: React.FC<InformationProductProps> = ({
   data,
   isLoading,
 }) => {
-  const { addToCart } = useCart();
+  const { fetchCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = async (id: string) => {
+    const response = await CartApi.postCart({ productId: id });
+
+    if (response.isSuccess) {
+      fetchCart();
+      toast({
+        title: "Success",
+        description: "Product added to cart",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to add product to cart",
+      });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -98,7 +117,9 @@ const InformationProduct: React.FC<InformationProductProps> = ({
             <Button
               className="w-full text-white lg:w-auto bg-secondary"
               variant="outline"
-              onClick={() => addToCart(data.id)}
+              onClick={() => {
+                handleAddToCart(data.id);
+              }}
             >
               Add to cart
             </Button>

@@ -1,7 +1,6 @@
 import {
   Badge,
   Button,
-  Card,
   CardContent,
   CardDescription,
   CardFooter,
@@ -30,8 +29,8 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
   const { imgError, handleImageError } = useImageError();
 
   return (
-    <Card className="relative w-full md:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.5rem)] mb-4">
-      <div className="relative w-full overflow-hidden bg-white rounded-lg shadow-lg group h-72">
+    <div className="relative w-full md:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.5rem)] mb-4 shadow-md shadow-white rounded-lg">
+      <div className="relative w-full overflow-hidden rounded-lg shadow-lg group h-72">
         {!imgError ? (
           <img
             src={data.downloadUrl}
@@ -100,7 +99,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
           ))}
         </div>
       </CardFooter>
-    </Card>
+    </div>
   );
 };
 
