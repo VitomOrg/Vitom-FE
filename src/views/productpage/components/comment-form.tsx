@@ -12,10 +12,8 @@ import {
   Textarea,
   useToast,
 } from "@/components/ui";
-import { ClerkTokenResponse } from "@/domains/models/clerk/clerk_token.response";
 import useCreateReview from "@/domains/stores/query-hook/reviews/use-create-review";
-import { getItem } from "@/lib";
-import { jwtDecode } from "jwt-decode";
+import { useUser } from "@clerk/clerk-react";
 import { Star } from "lucide-react";
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -26,22 +24,11 @@ interface CommentFormProps {
 
 const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
   const { id } = useParams<{ id: string }>();
-  const [token, setToken] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
+
   const { toast } = useToast();
-
-  useEffect(() => {
-    const storedToken = getItem("token");
-    setToken(storedToken);
-  }, []);
-
-  const user = useMemo(() => {
-    if (token) {
-      return jwtDecode<ClerkTokenResponse>(token);
-    }
-    return null;
-  }, [token]);
+  const { user } = useUser();
 
   const { form, onSubmit } = useCreateReview({
     id,
@@ -87,8 +74,8 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
           size={28}
           className={`transition-transform duration-200 cursor-pointer hover:scale-110 ${
             (hoverRating || rating) > index
-              ? "text-yellow-400"
-              : "text-gray-400"
+              ? "fill-current text-yellow-400"
+              : "fill-none stroke-current text-gray-400"
           }`}
           onClick={() => handleRatingChange(index)}
           onMouseEnter={() => handleRatingHover(index)}
@@ -110,7 +97,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ refetch }) => {
         <CardHeader className="flex flex-col items-center text-center">
           <Avatar className="w-16 h-16">
             <AvatarImage
-              src={user?.imageurl}
+              src={user?.imageUrl}
               alt={user?.id}
               className="object-cover rounded-full"
               loading="lazy" // Lazy loading the avatar image

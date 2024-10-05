@@ -7,7 +7,7 @@ import {
 } from "@/components/ui";
 import { ProductResponse } from "@/domains/models/products/product.response";
 import { useImageError } from "@/hooks";
-import { pastOfDate } from "@/lib/helper";
+import { getFirebaseImageUrl, pastOfDate } from "@/lib/helper";
 import Show from "@/lib/show";
 import {
   DownloadIcon,
@@ -17,7 +17,7 @@ import {
   CircleDollarSign,
   HeartIcon,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface CardItemProps {
@@ -26,14 +26,20 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ data }) => {
   const navigation = useNavigate();
+  const [image, setImage] = useState<string>();
+
   const { imgError, handleImageError } = useImageError();
 
+  getFirebaseImageUrl(data.imageUrls[0]).then((url) => setImage(url));
+
+  console.log("imgError", imgError);
+
   return (
-    <div className="relative w-full md:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.5rem)] mb-4 shadow-md shadow-white rounded-lg">
+    <div className="relative mb-4 rounded-lg shadow-md shadow-white ">
       <div className="relative w-full overflow-hidden rounded-lg shadow-lg group h-72">
         {!imgError ? (
           <img
-            src={data.downloadUrl}
+            src={image}
             alt={data.name}
             className="object-cover w-full h-full"
             onError={handleImageError}
@@ -66,7 +72,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
       </div>
       <Show>
         <Show.When isTrue={data.license.toLowerCase() === "pro"}>
-          <div className="absolute top-0 z-10 p-2 rounded-[0px_0px_20px_20px] end-2 bg-primary">
+          <div className="absolute top-0 z-1 p-2 rounded-[0px_0px_20px_20px] end-2 bg-primary">
             <Award className="size-6" />
           </div>
         </Show.When>

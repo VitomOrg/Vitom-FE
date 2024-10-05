@@ -6,6 +6,7 @@ import { Heart, ShoppingCart } from "lucide-react";
 import React from "react";
 import { useCart } from "@/domains/stores/query-hook/carts/add-to-cart";
 import { CartApi } from "@/domains/services/carts.service";
+import { RootResponse, Value } from "@/domains/models/root/root.response";
 
 interface InformationProductProps {
   data: ProductDetail;
@@ -16,24 +17,24 @@ const InformationProduct: React.FC<InformationProductProps> = ({
   data,
   isLoading,
 }) => {
-  const { fetchCart } = useCart();
+  const { refetchCart } = useCart();
   const { toast } = useToast();
 
   const handleAddToCart = async (id: string) => {
-    const response = await CartApi.postCart({ productId: id });
-
-    if (response.isSuccess) {
-      fetchCart();
-      toast({
-        title: "Success",
-        description: "Product added to cart",
+    await CartApi.postCart({ productId: id })
+      .then(() => {
+        refetchCart();
+        toast({
+          title: "Success",
+          description: "Added to cart",
+        });
+      })
+      .catch((error: RootResponse<Value<null>>) => {
+        toast({
+          title: "Error",
+          description: error.errors[0] as string,
+        });
       });
-    } else {
-      toast({
-        title: "Error",
-        description: "Failed to add product to cart",
-      });
-    }
   };
 
   if (isLoading) {

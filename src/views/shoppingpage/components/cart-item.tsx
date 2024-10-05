@@ -29,7 +29,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, onRemove }) => {
               <Show.When
                 isTrue={cartItem.product.license.toLowerCase() === "pro"}
               >
-                <div className=" top-0 z-10 p-2 rounded-[0px_0px_20px_20px] end-2 bg-primary">
+                <div className="  rounded-[0px_0px_20px_20px]  bg-primary grid place-content-center">
                   <Award className="text-white size-6" />
                 </div>
               </Show.When>

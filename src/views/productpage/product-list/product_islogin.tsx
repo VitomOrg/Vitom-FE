@@ -2,7 +2,7 @@ import Search from "@/components/common/search";
 import { Button } from "@/components/ui";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
 import { useProductStore } from "@/domains/stores/zustand/products";
-// import Filter from "@/views/productpage/product-list/filter";
+import Filter from "@/views/productpage/product-list/filter";
 import ListItem from "@/views/productpage/product-list/list-item";
 import { ChevronDown } from "lucide-react";
 
@@ -20,13 +20,14 @@ const ProductIsLogin = () => {
 
   return (
     <div className="flex gap-4">
-      <div className="flex-grow">{/* <Filter /> */}</div>
       <section className={`w-full`}>
-        <div className="flex justify-end">
+        <div className="flex justify-between">
           <Search getValue={handleSearch} placeholder="Search product" />
+          <Filter />
         </div>
+
         <ListItem data={data} isLoading={isLoading} />
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full ">
           <Button
             className="space-x-2"
             onClick={() => {

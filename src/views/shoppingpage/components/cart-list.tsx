@@ -13,13 +13,13 @@ const CartList: React.FC<CartListProps> = ({ cartItems, onRemove }) => {
     return (
       <div className="grid gap-4 size-full place-content-center place-items-center text-accent-foreground/40">
         <ShoppingBag size={64} />
-        <span>Your cart is empty</span>
+        <span className="text-sm md:text-lg">Your cart is empty</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-20">
+    <div className="space-y-10 md:space-y-20">
       {cartItems.map((cartItem) => (
         <CartItem
           cartItem={cartItem}
