@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { ReviewResponse } from "@/domains/models/reviews/review.response";
 import { pastOfDate } from "@/lib/helper";
-import { Star } from "lucide-react";
+import { Star } from "lucide-react"; // Giữ nguyên nếu không có icon Solid
 import React from "react";
 
 interface ReviewItemProps {
@@ -9,6 +9,8 @@ interface ReviewItemProps {
 }
 
 const ReviewItem: React.FC<ReviewItemProps> = ({ review }) => {
+  if (!review) return null;
+
   return (
     <div className="grid grid-cols-9 gap-4 p-4 rounded-lg shadow-md bg-primary/5">
       <div className="flex items-start justify-center col-span-1">
@@ -34,11 +36,13 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review }) => {
                 className={`w-5 h-5 ${
                   index < review.rating ? "text-yellow-400" : "text-gray-400"
                 }`}
+                fill={index < review.rating ? "currentColor" : "none"}
+                stroke="currentColor"
               />
             ))}
           </div>
         </div>
-        <article className="mt-4 leading-relaxed ">{review.content}</article>
+        <article className="mt-4 leading-relaxed">{review.content}</article>
       </div>
     </div>
   );

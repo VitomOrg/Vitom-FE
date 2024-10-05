@@ -16,7 +16,7 @@ export async function handleApiCall<T>(
   url: string,
   option?: unknown,
   isRootResponse: boolean = false
-): Promise<T | Value<T> | RootResponse<T>> {
+): Promise<T | Value<T> | RootResponse<T> > {
   try {
     // Execute the API call using the specified method
 
