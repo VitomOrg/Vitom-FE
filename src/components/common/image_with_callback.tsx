@@ -28,9 +28,9 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
           onError={handleImageError}
         />
       ) : (
-        <div className="grid gap-3 p-5 text-center rounded-lg place-content-center place-items-center size-full bg-secondary">
+        <div className="grid gap-3 p-5 text-center rounded-tl-lg place-content-center place-items-center size-full bg-secondary text-muted-foreground">
           <Frown className="size-16 text-muted-foreground/20" />
-          <span>Sorry for the inconvenience!</span>
+          <span>Failed to load image.</span>
         </div>
       )}
     </>

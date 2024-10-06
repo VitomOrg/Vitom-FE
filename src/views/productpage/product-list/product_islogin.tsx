@@ -14,15 +14,11 @@ const ProductIsLogin = () => {
 
   if (!data) return null;
 
-  const handleSearch = (value: string) => {
-    console.log(value);
-  };
-
   return (
     <div className="flex gap-4">
       <section className={`w-full`}>
         <div className="flex justify-between">
-          <Search getValue={handleSearch} placeholder="Search product" />
+          <Search placeholder="Search product" />
           <Filter />
         </div>
 

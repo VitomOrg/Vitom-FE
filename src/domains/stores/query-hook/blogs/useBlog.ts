@@ -9,7 +9,7 @@ interface useBlogProps {
 
 const useBlog = ({ options }: useBlogProps) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: [QueryKey.LIST_BLOG, options],
+    queryKey: [QueryKey.LIST_BLOG, ...(options ? [options] : [])],
     queryFn: () => BlogApi.getBlog(options),
   });
 

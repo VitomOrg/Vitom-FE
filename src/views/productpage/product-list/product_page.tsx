@@ -7,7 +7,7 @@ const ProductPage = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <section className="container">
+    <section className="container py-9">
       <Show>
         <Show.When isTrue={!isSignedIn}>
           <Introduction />

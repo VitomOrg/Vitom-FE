@@ -13,6 +13,13 @@ export const BlogApi = {
     }) as Promise<Value<BlogResponse[]>>;
   },
 
+  getBlogById: async (Id: string): Promise<BlogResponse> => {
+    return handleApiCall<BlogResponse>(
+      "get",
+      `/blogs/${Id}`
+    ) as Promise<BlogResponse>;
+  },
+
   postBlog: async (data: BlogRequest): Promise<null> => {
     return handleApiCall<null>("post", "/blogs", data) as Promise<null>;
   },

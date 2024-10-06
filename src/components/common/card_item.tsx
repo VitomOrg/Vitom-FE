@@ -1,3 +1,4 @@
+import ImageWithFallback from "@/components/common/image_with_callback";
 import {
   Badge,
   Button,
@@ -6,14 +7,12 @@ import {
   CardFooter,
 } from "@/components/ui";
 import { ProductResponse } from "@/domains/models/products/product.response";
-import { useImageError } from "@/hooks";
 import { getFirebaseImageUrl, pastOfDate } from "@/lib/helper";
 import Show from "@/lib/show";
 import {
   DownloadIcon,
   ClipboardList,
   Award,
-  Frown,
   CircleDollarSign,
   HeartIcon,
 } from "lucide-react";
@@ -28,28 +27,20 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
   const navigation = useNavigate();
   const [image, setImage] = useState<string>();
 
-  const { imgError, handleImageError } = useImageError();
-
-  getFirebaseImageUrl(data.imageUrls[0]).then((url) => setImage(url));
-
-  console.log("imgError", imgError);
+  if (data.imageUrls && data.imageUrls.length > 0 && data.imageUrls[0]) {
+    getFirebaseImageUrl(data.imageUrls[0]).then((url) => setImage(url));
+  }
 
   return (
-    <div className="relative mb-4 rounded-lg shadow-md shadow-white ">
+    <div
+      className={`relative mb-4 rounded-lg shadow-md shadow-muted border-2 ${
+        data.license.toLowerCase() === "pro"
+          ? "border-primary"
+          : "border-secondary"
+      }`}
+    >
       <div className="relative w-full overflow-hidden rounded-lg shadow-lg group h-72">
-        {!imgError ? (
-          <img
-            src={image}
-            alt={data.name}
-            className="object-cover w-full h-full"
-            onError={handleImageError}
-          />
-        ) : (
-          <div className="flex flex-col items-center justify-center w-full h-full gap-3 text-center bg-secondary">
-            <Frown className="w-16 h-16 text-gray-500" />
-            <span>Sorry for the inconvenience!</span>
-          </div>
-        )}
+        <ImageWithFallback src={image!} alt={data.name} />
         <CardContent className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
           <CardDescription className="flex flex-col gap-2">
             <div className="absolute top-1 start-0">
@@ -70,13 +61,17 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
           </CardDescription>
         </CardContent>
       </div>
-      <Show>
-        <Show.When isTrue={data.license.toLowerCase() === "pro"}>
-          <div className="absolute top-0 z-1 p-2 rounded-[0px_0px_20px_20px] end-2 bg-primary">
-            <Award className="size-6" />
-          </div>
-        </Show.When>
-      </Show>
+      <div>
+        <Show>
+          <Show.When isTrue={data.license.toLowerCase() === "pro"}>
+            <div className="absolute top-0 right-0 flex items-center gap-2 p-2 rounded-tr-sm rounded-bl-sm bg-primary/65">
+              <Award className="size-5" />
+              <span className="hidden font-semibold">Pro</span>
+            </div>
+          </Show.When>
+        </Show>
+      </div>
+
       <CardFooter className="flex flex-col items-start gap-3 mt-4 ">
         <div className="flex items-center justify-start w-full gap-4">
           <div className="flex items-center gap-2">
