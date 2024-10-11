@@ -6,6 +6,8 @@ export interface ProductPageRequest extends RootRequest {
   priceTo?: number;
   ascByCreatedAt?: boolean;
   license?: string;
+  softwareIds?: string[];
+  search?: string;
 }
 
 export interface ProductFavoriteRequest extends RootRequest {

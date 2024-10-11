@@ -10,6 +10,7 @@ interface CartHook {
 }
 
 export const useCart = ({ options }: CartHook = {}) => {
+  // const queryClient = useQueryClient();
   const {
     data: cartData,
     isLoading: isLoadingCart,
@@ -18,6 +19,15 @@ export const useCart = ({ options }: CartHook = {}) => {
     queryKey: [QueryKey.CART, ...(options ? [options] : [])],
     queryFn: () => CartApi.getCart(options),
   });
+
+  // const deleteCart = useMutation({
+  //   onMutate: async (id: string) => await CartApi.deleteCart(id),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: [QueryKey.CART, ...(options ? [options] : [])],
+  //     });
+  //   },
+  // });
 
   return {
     cartData,

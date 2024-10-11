@@ -7,7 +7,7 @@ import "./style/index.css";
 const HomePage = () => {
   return (
     <main className="w-full py-9">
-      <Hero />
+        <Hero />
       <ProductShowcase />
       <ReasonList />
       <BusinessMetrics />

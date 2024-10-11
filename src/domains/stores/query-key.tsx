@@ -14,4 +14,7 @@ export const QueryKey = {
   BLOG: "blog",
 
   LIST_TRANSACTION: "list-transaction",
+
+  LIST_TYPE: "list-type",
+  LIST_SOFTWARE: "list-software",
 };
