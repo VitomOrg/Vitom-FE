@@ -5,14 +5,14 @@ import { handleApiCall } from "@/lib/handle-api-call";
 
 export const TransactionApi = {
   getTransaction: async (
-    options: TransactionPageRequest
-  ): Promise<Value<TransactionResponse>> => {
-    return handleApiCall<Value<TransactionResponse>>(
+    options?: TransactionPageRequest
+  ): Promise<Value<TransactionResponse[]>> => {
+    return handleApiCall<Value<TransactionResponse[]>>(
       "get",
       "/transactions/user",
       {
         params: options,
       }
-    ) as Promise<Value<TransactionResponse>>;
+    ) as Promise<Value<TransactionResponse[]>>;
   },
 };

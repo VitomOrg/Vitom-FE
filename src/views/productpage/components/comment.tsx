@@ -10,7 +10,7 @@ const Comment = () => {
   const { id } = useParams<{ id: string }>();
   const [pageSize, setPageSize] = useState<number>(5);
 
-  const { data, refetch, isLoading } = UseReviewList({
+  const { review, isLoadingReview, refetchReview } = UseReviewList({
     options: {
       productId: id || "",
       pageIndex: 1,
@@ -21,14 +21,14 @@ const Comment = () => {
   return (
     <section className="grid grid-cols-1 gap-4 my-10 md:grid-cols-5">
       <div className="md:col-span-3">
-        <CommentList data={data!} isLoading={isLoading} />
+        <CommentList data={review!} isLoading={isLoadingReview} />
         <Button
           className="w-full mt-4 space-x-2"
           variant="outline"
           onClick={() => setPageSize(pageSize + 5)}
-          disabled={isLoading}
+          disabled={isLoadingReview}
         >
-          {isLoading ? (
+          {isLoadingReview ? (
             <div className="flex flex-row items-center gap-2">
               <Loader className="animate-spin size-4" />
               <span>Loading...</span>
@@ -42,7 +42,7 @@ const Comment = () => {
         </Button>
       </div>
       <div className="md:col-span-2">
-        <CommentForm refetch={refetch} />
+        <CommentForm refetch={refetchReview} />
       </div>
     </section>
   );

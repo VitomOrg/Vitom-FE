@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui";
+import { useAuth } from "@clerk/clerk-react";
 import { ArrowBigRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const Hero = () => {
+  const { isSignedIn } = useAuth();
   return (
-    <section className="container py-8 hero md:py-20">
+    <section className="container grid py-56 hero place-content-center">
       <div className="container px-4 mx-auto text-center">
         <h1 className="mb-2 text-2xl font-bold md:text-4xl text-accent-foreground">
           Vitom - Unleash Your 3D World
@@ -16,12 +18,15 @@ const Hero = () => {
           Browse, purchase, and download high-quality 3D model files. Unlock
           your creativity with detailed designs, ready for any project.
         </p>
-        <NavLink to="/sign-in">
-          <Button className="space-x-2 font-semibold">
-            <span>Get Started</span>
-            <ArrowBigRight className="size-6" />
-          </Button>
-        </NavLink>
+
+        {!isSignedIn && (
+          <NavLink to="/sign-in">
+            <Button className="space-x-2 font-semibold">
+              <span>Get Started</span>
+              <ArrowBigRight className="size-6" />
+            </Button>
+          </NavLink>
+        )}
       </div>
     </section>
   );

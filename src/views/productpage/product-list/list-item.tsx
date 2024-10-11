@@ -12,15 +12,15 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({ data, isLoading }) => {
   if (isLoading) {
     return (
-      <section className="flex flex-wrap justify-start w-full gap-2.5">
+      <section className="grid grid-cols-2 gap-5 my-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         {[...Array(8)].map((_, index) => (
-          <Card className="h-[400px]" key={index}>
+          <Card className="col-span-1" key={index}>
             <CardHeader>
-              <Skeleton className="w-[200px] h-[260px]" />
+              <Skeleton className="w-full h-[260px]" />
             </CardHeader>
             <CardFooter className="flex flex-col gap-3">
-              <Skeleton className="w-[200px] h-5" />
-              <Skeleton className="w-[200px] h-5" />
+              <Skeleton className="w-full h-5" />
+              <Skeleton className="w-full h-5" />
             </CardFooter>
           </Card>
         ))}
@@ -28,11 +28,25 @@ const ListItem: React.FC<ListItemProps> = ({ data, isLoading }) => {
     );
   }
 
+  if (data.data.length === 0) {
+    return (
+      <div className="grid place-content-center h-96">
+        <h1 className="text-2xl font-semibold">Product no found</h1>
+      </div>
+    );
+  }
+
   return (
-    <section className="flex flex-wrap justify-start w-full gap-2.5">
-      {data && data.data.map((item) => <CardItem key={item.id} data={item} />)}
+    <section className="grid grid-cols-1 gap-5 my-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 sm:grid-cols-2">
+      {data &&
+        data.data.map((item) => (
+          <div key={item.id} className="col-span-1 h-96">
+            <CardItem data={item} />
+          </div>
+        ))}
     </section>
   );
 };
 
-export default ListItem;
+const MemoizedListItem = React.memo(ListItem);
+export default MemoizedListItem;

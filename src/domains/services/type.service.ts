@@ -5,10 +5,12 @@ import { TypeResponse } from "@/domains/models/type/type.response";
 import { handleApiCall } from "@/lib/handle-api-call";
 
 export const TypeApi = {
-  listType: async (options: TypePageRequest): Promise<Value<TypeResponse>> => {
-    return handleApiCall<Value<TypeResponse>>("get", "/types", {
+  listType: async (
+    options?: TypePageRequest
+  ): Promise<Value<TypeResponse[]>> => {
+    return handleApiCall<Value<TypeResponse[]>>("get", "/types", {
       params: options,
-    }) as Promise<Value<TypeResponse>>;
+    }) as Promise<Value<TypeResponse[]>>;
   },
 
   createType: async (data: TypesRequest): Promise<null> => {

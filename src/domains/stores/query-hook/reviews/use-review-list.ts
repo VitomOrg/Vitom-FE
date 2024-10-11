@@ -14,7 +14,12 @@ type UseListReviewParams = {
 };
 
 export function UseReviewList({ queryOptions, options }: UseListReviewParams) {
-  return useQuery({
+  const {
+    data: review,
+    isLoading: isLoadingReview,
+    error: errorReview,
+    refetch: refetchReview,
+  } = useQuery({
     ...queryOptions,
     queryKey: [QueryKey.LIST_REVIEW, options],
     queryFn: () => ReviewApi.getReviewByProduct(options!),
@@ -23,4 +28,11 @@ export function UseReviewList({ queryOptions, options }: UseListReviewParams) {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+
+  return {
+    review,
+    isLoadingReview,
+    errorReview,
+    refetchReview,
+  };
 }

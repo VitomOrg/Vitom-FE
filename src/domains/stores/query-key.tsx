@@ -9,4 +9,12 @@ export const QueryKey = {
 
   LIST_CART: "list-cart",
   CART: "cart",
+
+  LIST_BLOG: "list-blog",
+  BLOG: "blog",
+
+  LIST_TRANSACTION: "list-transaction",
+
+  LIST_TYPE: "list-type",
+  LIST_SOFTWARE: "list-software",
 };
