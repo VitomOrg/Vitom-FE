@@ -2,7 +2,7 @@ import assert from "@/assets";
 
 const Hero = () => {
   return (
-    <div className="w-full py-28 bg-secondary">
+    <div className="w-full  py-28 bg-secondary">
       <div className="container flex items-center justify-end gap-2">
         <div>
           <h1 className="text-5xl font-bold text-start">

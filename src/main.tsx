@@ -8,7 +8,15 @@ import "./index.css";
 import { env } from "./lib/env.ts";
 
 const PUBLISHABLE_KEY = env.VITE_CLERK_PUBLISHABLE_KEY;
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");

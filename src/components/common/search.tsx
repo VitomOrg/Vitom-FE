@@ -1,18 +1,22 @@
 import { useSearchStore } from "@/domains/stores/zustand/search";
 import useSearch from "@/hooks/useSearch";
+import { cn } from "@/lib";
 import { SearchIcon } from "lucide-react";
 import React, { useEffect, InputHTMLAttributes, useCallback } from "react";
 
-interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
+}
 
 const Search: React.FC<SearchProps> = ({ ...restProps }) => {
   const { search, debounce, setSearch } = useSearch();
   const { setSearch: setSearchStore } = useSearchStore();
+  const { className } = restProps;
 
   useEffect(() => {
     if (debounce !== undefined) {
       setSearch(debounce);
-      setSearchStore(debounce); // Cập nhật search store khi debounce thay đổi
+      setSearchStore(debounce);
     }
   }, [debounce, setSearch, setSearchStore]);
 
@@ -24,17 +28,22 @@ const Search: React.FC<SearchProps> = ({ ...restProps }) => {
   );
 
   return (
-    <div className="flex items-center border rounded-md border-input hover:shadow-md hover:border-accent focus-within:ring-2 focus-within:ring-accent">
+    <div
+      className={cn(
+        "flex gap-2 w-full border rounded-sm p-2 items-center bg-secondary",
+        className
+      )}
+    >
       <button
         type="button"
-        className="flex items-center px-3 py-2 text-muted-foreground hover:text-accent"
         aria-label="Search"
+        className="transition-transform duration-200 "
       >
-        <SearchIcon className="size-6" />
+        <SearchIcon className="text-gray-400 size-5" />
       </button>
       <input
-        className="flex-1 px-3 py-2 border border-transparent bg-background hover:border-background focus:border-background focus:ring-0 focus:outline-none"
         value={search || ""}
+        className="w-full focus:outline-none bg-secondary"
         onChange={handleChange}
         {...restProps}
         aria-describedby="search-helper"

@@ -8,8 +8,9 @@ type ProductStore = {
 
 export const useProductStore = create<ProductStore>((set) => ({
   filter: {
+    ascByCreatedAt: true,
     pageIndex: 1,
-    pageSize: 10,
+    pageSize: 8,
   } as ProductPageRequest,
   setFilter: (filter) => set({ filter }),
 }));

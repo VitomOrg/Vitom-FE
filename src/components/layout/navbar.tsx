@@ -2,11 +2,11 @@ import assert from "@/assets";
 import IconNote from "@/components/common/icon-note";
 import { Button } from "@/components/ui";
 import Show from "@/lib/show";
-import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/clerk-react";
-import { ArrowBigRight, History, MenuIcon, X } from "lucide-react";
+import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-react";
+import { ArrowBigRight, MenuIcon, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import HistoryPage from "@/views/historypage/history-page";
+import Profile from "@/views/authpage/profile/profile";
 
 const menu = [
   { name: "Home", href: "/" },
@@ -21,7 +21,6 @@ const Navbar = () => {
   const navigator = useNavigate();
   const { isSignedIn } = useAuth();
 
-  // Toggle sheet visibility
   const toggleSheet = () => {
     setIsSheetOpen(!isSheetOpen);
   };
@@ -68,6 +67,7 @@ const Navbar = () => {
               <IconNote />
             </Show.When>
           </Show>
+
           <SignedOut>
             <Button onClick={() => navigator("/sign-in")}>
               <span className="font-semibold">Sign In</span>
@@ -75,15 +75,7 @@ const Navbar = () => {
             </Button>
           </SignedOut>
           <SignedIn>
-            <UserButton>
-              <UserButton.UserProfilePage
-                label="Order History"
-                url="order-history"
-                labelIcon={<History className="size-4" />}
-              >
-                <HistoryPage />
-              </UserButton.UserProfilePage>
-            </UserButton>
+            <Profile />
           </SignedIn>
         </div>
       </div>
