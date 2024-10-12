@@ -12,21 +12,18 @@ import {
   DropdownMenuTrigger,
   Label,
 } from "@/components/ui";
+import useRoleStore from "@/domains/stores/zustand/role";
 import { useTheme } from "@/hooks";
+import Show from "@/lib/show";
 import { useAuth, UserProfile, useUser } from "@clerk/clerk-react";
-import {
-  CreditCard,
-  LayoutDashboard,
-  LogOut,
-  Moon,
-  Sun,
-  User,
-} from "lucide-react";
+import { LayoutDashboard, LogOut, Moon, Sun, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUser();
+  const { role } = useRoleStore();
+
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const navigation = useNavigate();
@@ -67,14 +64,18 @@ const Profile = () => {
             <User className="mr-2 size-5" />
             <Label>Profile</Label>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <CreditCard className="mr-2 size-5" />
             <Label>Billing</Label>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigation("/dashboard")}>
-            <LayoutDashboard className="mr-2 size-5" />
-            <Label>Dashboard</Label>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
+          <Show>
+            <Show.When isTrue={role.toLowerCase() !== "customer"}>
+              <DropdownMenuItem onClick={() => navigation("/dashboard")}>
+                <LayoutDashboard className="mr-2 size-5" />
+                <Label>Dashboard</Label>
+              </DropdownMenuItem>
+            </Show.When>
+          </Show>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
             <LogOut className="mr-2 size-5" />

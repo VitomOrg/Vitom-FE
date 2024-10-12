@@ -31,6 +31,8 @@ const ProductIsLogin = () => {
     return updatedOptions;
   }, [search, filter]);
 
+  console.log("options", options);
+
   const { data, isLoading } = UseListProduct({
     options,
   });

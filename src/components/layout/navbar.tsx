@@ -18,6 +18,7 @@ const menu = [
 
 const Navbar = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
   const navigator = useNavigate();
   const { isSignedIn } = useAuth();
 
