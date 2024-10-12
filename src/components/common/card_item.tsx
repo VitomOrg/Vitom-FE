@@ -19,11 +19,7 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ data }) => {
   const navigation = useNavigate();
-  // const [image, setImage] = useState<string>();
-
-  // if (data.imageUrls && data.imageUrls.length > 0 && data.imageUrls[0]) {
-  //   getFirebaseImageUrl(data.imageUrls[0]).then((url) => setImage(url));
-  // }
+  
 
   return (
     <div
@@ -42,7 +38,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
           ))}
         </div>
         <ImageWithFallback
-          src={data.imageUrls[0]}
+          src={data?.images[0]?.url || "/path/to/default/image.jpg"}
           alt={data.name}
           className="object-cover h-full "
         />

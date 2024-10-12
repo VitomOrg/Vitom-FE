@@ -23,11 +23,13 @@ import {
   User,
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUser();
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
+  const navigation = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const isDarkMode = theme === "dark";
@@ -69,7 +71,7 @@ const Profile = () => {
             <CreditCard className="mr-2 size-5" />
             <Label>Billing</Label>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigation("/dashboard")}>
             <LayoutDashboard className="mr-2 size-5" />
             <Label>Dashboard</Label>
           </DropdownMenuItem>
