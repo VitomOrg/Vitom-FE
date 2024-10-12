@@ -22,6 +22,10 @@ const CardProductList = () => {
     .sort((a, b) => a.totalLiked - b.totalLiked)
     .slice(0, 5);
 
+  if (bestOfProducts.length === 0) {
+    return <div>No data</div>;
+  }
+
   return (
     <Carousel className="flex items-center justify-center w-full ">
       <CarouselContent className="px-10 w-[800px] ">
@@ -32,7 +36,7 @@ const CardProductList = () => {
           >
             <div className="h-[400px]">
               <ImageWithFallback
-                src={product.imageUrls[0]}
+                src={product.images?.[0]?.url || "/path/to/default/image.jpg"}
                 alt={product.name}
                 className="object-cover w-full h-full"
               />

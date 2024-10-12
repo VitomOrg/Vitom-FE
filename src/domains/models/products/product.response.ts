@@ -6,15 +6,18 @@ export interface ProductResponse {
   name: string;
   description: string;
   types: string[];
-  imageUrls: string[];
-  model: {
-    fbx: string;
-    obj: string;
-    glb: string;
-  };
-
+  images: Image[];
+  modelMaterials: Image[];
+  fbxUrl: string;
+  objUrl: string;
+  glbUrl: string;
   price: number;
   downloadUrl: string;
   totalPurchases: number;
   totalLiked: number;
+}
+
+export interface Image {
+  id: string;
+  url: string;
 }

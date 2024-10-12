@@ -1,4 +1,5 @@
 import ErrorPage from "@/components/error_page";
+import DashboardLayout from "@/components/layout/dashboard_layout";
 import { Loading } from "@/components/loading";
 import Login from "@/views/authpage/login/login";
 import Register from "@/views/authpage/register/register";
@@ -8,6 +9,9 @@ import { createBrowserRouter } from "react-router-dom";
 /*eslint-disable*/
 const MainLayout = lazy(() => import("@/components/layout/main_layout"));
 const HomePage = lazy(() => import("@/views/homepage/home_page"));
+const HomeDashboard = lazy(
+  () => import("@/views/homepage/dashboard/home_page")
+);
 const AboutPage = lazy(() => import("@/views/aboutpage/about_page"));
 const ContactPage = lazy(() => import("@/views/contactpage/contact_page"));
 const ProductsPage = lazy(
@@ -88,6 +92,20 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <BlogDetailPage />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <HomeDashboard />
           </Suspense>
         ),
       },
