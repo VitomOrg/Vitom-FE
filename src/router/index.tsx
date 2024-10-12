@@ -1,6 +1,7 @@
 import ErrorPage from "@/components/error_page";
 import DashboardLayout from "@/components/layout/dashboard_layout";
 import { Loading } from "@/components/loading";
+import PrivateRoute from "@/components/private-route";
 import Login from "@/views/authpage/login/login";
 import Register from "@/views/authpage/register/register";
 import { lazy, Suspense } from "react";
@@ -9,19 +10,24 @@ import { createBrowserRouter } from "react-router-dom";
 /*eslint-disable*/
 const MainLayout = lazy(() => import("@/components/layout/main_layout"));
 const HomePage = lazy(() => import("@/views/homepage/home_page"));
-const HomeDashboard = lazy(
-  () => import("@/views/homepage/dashboard/home_page")
+const DashboardPage = lazy(
+  () => import("@/views/dashboardmanage/dashboard_page")
 );
 const AboutPage = lazy(() => import("@/views/aboutpage/about_page"));
 const ContactPage = lazy(() => import("@/views/contactpage/contact_page"));
 const ProductsPage = lazy(
   () => import("@/views/productpage/product-list/product_page")
 );
+
+const ProductManagePage = lazy(
+  () => import("@/views/productmanage/product-manage")
+);
 const ProductDetailPage = lazy(
   () => import("@/views/productpage/product-detail/product_detail_page")
 );
 const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
 const BlogPage = lazy(() => import("@/views/blogpage/blog-page"));
+const BlogManagePage = lazy(() => import("@/views/postmanage/post-manage"));
 const BlogDetailPage = lazy(() => import("@/views/blogpage/blog-detail-page"));
 /*eslint-enable*/
 
@@ -99,13 +105,33 @@ const routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute roles={["Artist", "Admin"]}>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "",
         element: (
           <Suspense fallback={<Loading />}>
-            <HomeDashboard />
+            <DashboardPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "posts",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogManagePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "materials",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ProductManagePage />
           </Suspense>
         ),
       },
