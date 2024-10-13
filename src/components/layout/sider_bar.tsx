@@ -19,7 +19,7 @@ const menu = [
   { name: "Home", href: "/dashboard", icon: LayoutDashboard },
   { name: "Social Media", href: "/dashboard/posts", icon: Newspaper },
   { name: "Material", href: "/dashboard/materials", icon: Boxes },
-  { name: "History Orders", href: "/dashboard/orders", icon: History },
+  { name: "History Orders", href: "/dashboard/history-orders", icon: History },
   { name: "Software", href: "/dashboard/software", icon: Brush },
   { name: "Types", href: "/dashboard/types", icon: Grid },
 ];

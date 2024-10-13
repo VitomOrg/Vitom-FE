@@ -25,6 +25,7 @@ const ProductManagePage = lazy(
 const ProductDetailPage = lazy(
   () => import("@/views/productpage/product-detail/product_detail_page")
 );
+
 const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
 const BlogPage = lazy(() => import("@/views/blogpage/blog-page"));
 const BlogManagePage = lazy(() => import("@/views/postmanage/post-manage"));
