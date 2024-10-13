@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui";
+import Pagination from "@/components/common/pagination";
 import { BlogResponse } from "@/domains/models/blogs/blog.response";
 import { Value } from "@/domains/models/root/root.response";
 import { usePaginationStore } from "@/domains/stores/zustand/pagination";
 import CartBlog from "@/views/blogpage/components/cart-blog";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 
 interface BlogListProps {
@@ -41,38 +40,11 @@ const BlogList: React.FC<BlogListProps> = ({ data, isLoading, error }) => {
       </div>
 
       {/* <!-- Pagination --> */}
-      <div className="flex justify-center w-full gap-4 mt-4">
-        {/* Previous button */}
-        <Button
-          variant="ghost"
-          onClick={() => handlePageChange(activePage - 1)}
-          disabled={activePage === 1} // Disabled when on the first page
-        >
-          <ChevronLeft />
-          <span className="hidden font-semibold ">Previous</span>
-        </Button>
-
-        {/* Page numbers */}
-        {[...Array(data.totalPages)].map((_, page) => (
-          <Button
-            key={page + 1}
-            variant={activePage === page + 1 ? "default" : "ghost"}
-            onClick={() => handlePageChange(page + 1)}
-          >
-            {page + 1}
-          </Button>
-        ))}
-
-        {/* Next button */}
-        <Button
-          variant="ghost"
-          onClick={() => handlePageChange(activePage + 1)}
-          disabled={activePage === data.totalPages} // Disabled when on the last page
-        >
-          <span className="hidden font-semibold ">Next</span>
-          <ChevronRight />
-        </Button>
-      </div>
+      <Pagination
+        totalPages={data.totalPages}
+        currentPage={activePage}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

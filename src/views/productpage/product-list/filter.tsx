@@ -63,7 +63,7 @@ const Filter = () => {
   }, [filter]);
 
   return (
-    <section className="container sticky top-0 h-screen pt-6 space-y-6 rounded-md ">
+    <section className="container sticky z-10 h-screen pt-6 space-y-6 rounded-md top-20">
       <Search
         placeholder="Search product"
         className="items-center outline-none bg-background "
@@ -131,7 +131,7 @@ const Filter = () => {
             <Badge
               key={item.id}
               variant={
-                filter.softwareIds?.find((sw) => item.id === sw)
+                filter.softwareIds?.find((sw) => item.name === sw)
                   ? "default"
                   : "outline"
               }
@@ -139,7 +139,7 @@ const Filter = () => {
               onClick={() => {
                 setFilter({
                   ...filter,
-                  softwareIds: [...(filter.softwareIds || []), item.id],
+                  softwareIds: [...(filter.softwareIds || []), item.name],
                 });
               }}
             >
