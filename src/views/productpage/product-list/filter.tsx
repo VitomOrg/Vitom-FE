@@ -11,10 +11,22 @@ import {
 import { useProductStore } from "@/domains/stores/zustand/products";
 import useSoftware from "@/domains/stores/zustand/software/useSoftware";
 import useTypes from "@/domains/stores/zustand/types/use-types";
-import React from "react";
+import { useDebounce } from "@/hooks";
+import React, { useEffect, useState } from "react";
 
 const Filter = () => {
   const { setFilter, filter } = useProductStore();
+
+  const [priceTo, setPriceTo] = useState(filter.priceTo || 200);
+  const priceDebounce = useDebounce(priceTo, 500);
+
+  useEffect(() => {
+    setFilter({
+      ...filter,
+      priceFrom: 0,
+      priceTo: priceDebounce,
+    });
+  }, [priceDebounce]);
 
   const {
     data: software,
@@ -39,6 +51,16 @@ const Filter = () => {
   if (typesError) {
     return <div>Error: {typesError.message}</div>;
   }
+
+  const handleSliderChange = (value: number) => {
+    setPriceTo(value);
+  };
+
+  useEffect(() => {
+    if (filter.priceTo !== priceTo) {
+      setPriceTo(filter.priceTo || 200);
+    }
+  }, [filter]);
 
   return (
     <section className="container sticky top-0 h-screen pt-6 space-y-6 rounded-md ">
@@ -178,22 +200,15 @@ const Filter = () => {
           </Button>
         </div>
         <Slider
-          value={[filter.priceFrom || 200]}
-          max={2000}
+          defaultValue={[filter.priceTo || 200]}
+          max={200}
           step={10}
-          onValueChange={(e) => {
-            setFilter({
-              ...filter,
-              priceFrom: 0,
-              priceTo: e[0],
-            });
-          }}
+          onValueChange={(values) => handleSliderChange(values[0])}
         />
 
         <div>
           <span className="text-sm">
-            From $ {filter.priceFrom ? filter.priceFrom : 0} to $
-            {filter.priceTo ? filter.priceTo : 200}
+            From $ {filter.priceFrom ? filter.priceFrom : 0} to ${priceTo}
           </span>
         </div>
       </div>
