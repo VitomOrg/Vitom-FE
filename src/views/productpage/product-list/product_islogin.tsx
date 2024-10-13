@@ -31,8 +31,6 @@ const ProductIsLogin = () => {
     return updatedOptions;
   }, [search, filter]);
 
-  console.log("options", options);
-
   const { data, isLoading } = UseListProduct({
     options,
   });
@@ -40,7 +38,7 @@ const ProductIsLogin = () => {
   if (!data) return null;
 
   return (
-    <div className="grid grid-cols-12 gap-10">
+    <div className="grid grid-cols-12 gap-10 ">
       <div className="col-span-3 ">
         <Filter />
       </div>

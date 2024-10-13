@@ -41,7 +41,7 @@ const Filter = () => {
   }
 
   return (
-    <section className="container sticky z-10 h-screen pt-6 space-y-6 rounded-md top-20">
+    <section className="container pt-6 space-y-6 rounded-md ">
       <Search
         placeholder="Search product"
         className="items-center outline-none bg-background "
@@ -109,16 +109,24 @@ const Filter = () => {
             <Badge
               key={item.id}
               variant={
-                filter.softwareIds?.find((sw) => item.name === sw)
+                filter.softwareIds?.find((sw) => item.id === sw)
                   ? "default"
                   : "outline"
               }
               className="hover:cursor-pointer hover:bg-primary hover:text-primary-foreground"
               onClick={() => {
-                setFilter({
-                  ...filter,
-                  softwareIds: [...(filter.softwareIds || []), item.name],
-                });
+                if (filter.softwareIds?.find((sw) => item.id === sw)) {
+                  const updatedFilter = { ...filter };
+
+                  const softwareIds = updatedFilter.softwareIds?.filter(
+                    (sw) => sw !== item.id
+                  );
+
+                  setFilter({
+                    ...updatedFilter,
+                    softwareIds,
+                  });
+                }
               }}
             >
               {item.name}
