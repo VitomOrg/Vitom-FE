@@ -13,16 +13,6 @@ import {
 } from "lucide-react";
 import React, { useMemo } from "react";
 
-const test = () => {
-  return <div className="grid grid-cols-12 gap-10">
-    <div className="col-span-3 ">
-      <Filter />
-    </div>
-
-    <ProductIsLogin />
-  </div>
-}
-
 const ProductIsLogin = () => {
   const { filter, setFilter } = useProductStore();
   const { search } = useSearchStore();
@@ -44,71 +34,75 @@ const ProductIsLogin = () => {
   const { data, isLoading } = UseListProduct({
     options,
   });
-  if (!data) return null;
-
 
   return (
-    <div className="col-span-9">
-      <div className="flex items-center justify-between">
-        <Show>
-          <Show.When isTrue={filter.ascByCreatedAt!}>
-            <Button
-              variant="outline"
-              onClick={() =>
-                setFilter({
-                  ...filter,
-                  ascByCreatedAt: !filter.ascByCreatedAt,
-                })
-              }
-            >
-              <ArrowDownWideNarrow size={24} />
-              <span className="hidden font-semibold">Created At</span>
-            </Button>
-          </Show.When>
-          <Show.Else>
-            <Button
-              variant="outline"
-              onClick={() =>
-                setFilter({
-                  ...filter,
-                  ascByCreatedAt: !filter.ascByCreatedAt,
-                })
-              }
-            >
-              <ArrowUpNarrowWide size={24} />
-              <span className="hidden font-semibold">Created At</span>
-            </Button>
-          </Show.Else>
-        </Show>
-
-        <div>
-          <span>
-            Show {data?.pageIndex} of {data?.totalPages} products
-          </span>
-        </div>
+    <div className="grid grid-cols-12 gap-10">
+      <div className="col-span-3 border border-secondary rounded-xl">
+        <Filter />
       </div>
-      <ListItem data={data} isLoading={isLoading} />
-      <div className="flex justify-center w-full ">
-        {data.data.length !== 0 && (
-          <Button
-            className="space-x-2"
-            onClick={() => {
-              setFilter({
-                ...filter,
-                pageSize: filter?.pageSize ? filter?.pageSize + 8 : 8,
-                pageIndex: 1,
-              });
-            }}
-          >
-            <ChevronDown size={24} />
-            <span>See more</span>
-          </Button>
-        )}
+      <div className="col-span-9">
+        <div className="flex items-center justify-between">
+          <Show>
+            <Show.When isTrue={filter.ascByCreatedAt!}>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setFilter({
+                    ...filter,
+                    ascByCreatedAt: !filter.ascByCreatedAt,
+                  })
+                }
+              >
+                <ArrowDownWideNarrow size={24} />
+                <span className="hidden font-semibold">Created At</span>
+              </Button>
+            </Show.When>
+            <Show.Else>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setFilter({
+                    ...filter,
+                    ascByCreatedAt: !filter.ascByCreatedAt,
+                  })
+                }
+              >
+                <ArrowUpNarrowWide size={24} />
+                <span className="hidden font-semibold">Created At</span>
+              </Button>
+            </Show.Else>
+          </Show>
+
+          <div>
+            <span>
+              Show {data?.pageIndex} of {data?.totalPages} products
+            </span>
+          </div>
+        </div>
+
+        <ListItem data={data!} isLoading={isLoading} />
+        <div className="flex justify-center w-full ">
+          {data && data.data.length !== 0 && (
+            <Button
+              className="space-x-2"
+              onClick={() => {
+                setFilter({
+                  ...filter,
+                  pageSize: filter?.pageSize ? filter?.pageSize + 8 : 8,
+                  pageIndex: 1,
+                });
+              }}
+            >
+              <ChevronDown size={24} />
+              <span>See more</span>
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-const MemoProductIsLogin = React.memo(test);
+const MemoProductIsLogin = React.memo(ProductIsLogin);
 
 export default MemoProductIsLogin;

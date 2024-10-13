@@ -1,12 +1,12 @@
 import { RootRequest } from "@/domains/models/root/root.request";
 
 export interface ProductPageRequest extends RootRequest {
-  type?: string;
+  tupeIds?: Array<string>;
   priceFrom?: number;
   priceTo?: number;
   ascByCreatedAt?: boolean;
   license?: string;
-  softwareIds?: string[];
+  softwareIds?: Array<string>;
   search?: string;
 }
 

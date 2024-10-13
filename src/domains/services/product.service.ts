@@ -14,6 +14,9 @@ export const ProductApi = {
   ): Promise<Value<ProductResponse[]>> => {
     return handleApiCall<Value<ProductResponse[]>>("get", "/products/list", {
       params: options,
+      paramsSerializer: {
+        indexes: null,
+      },
     }) as Promise<Value<ProductResponse[]>>;
   },
 

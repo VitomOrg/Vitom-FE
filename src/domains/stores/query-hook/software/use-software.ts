@@ -13,6 +13,16 @@ const useSoftware = ({ options }: SoftwareHook) => {
     queryFn: () => SoftwareApi.listSoftware(options),
   });
 
+  // const { data, isLoading, error, fetchNextPage, hasNextPage } =
+  //   useInfiniteQuery<Value<SoftwareResponse[]>, Error>({
+  //     queryKey: [QueryKey.LIST_SOFTWARE, ...(options ? [options] : [])],
+  //     queryFn: async () => await SoftwareApi.listSoftware(options),
+  //     getNextPageParam: (lastPage, pages) => {
+  //       return pages.length + 1;
+  //     },
+  //     initialPageParam: 0,
+  //   });
+
   return { data, isLoading, error };
 };
 

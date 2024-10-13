@@ -28,7 +28,7 @@ const ListProduct = () => {
             {/* <GlbViewer children filePath={assert.glb} /> */}
             <ImageWithFallback
               className="object-cover w-full h-full rounded-xl"
-              src={bestOfProducts[0].images[0].url || ""}
+              src={bestOfProducts[0]?.images[0]?.url || ""}
               alt={bestOfProducts[0].name}
             />
           </Card>
