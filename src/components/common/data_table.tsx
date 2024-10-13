@@ -13,15 +13,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui";
+import Show from "@/lib/show";
+import { Loading } from "@/components/loading";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isLoading,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -32,14 +36,14 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full overflow-x-auto">
       <div className="border rounded-md">
-        <Table className="min-w-full divide-y divide-gray-200">
+        <Table className="min-w-full divide-y divide-muted-foreground">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                    className="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase bg-primary/60 text-primary-foreground"
                   >
                     {header.isPlaceholder
                       ? null
@@ -53,16 +57,23 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
+            <Show>
+              <Show.When isTrue={isLoading}>
+                <div className="grid size-full place-content-center">
+                  <Loading />
+                </div>
+              </Show.When>
+            </Show>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="bg-white divide-y divide-gray-200"
+                  className="divide-y divide-muted bg-secondary"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap"
+                      className="px-6 py-4 text-sm text-secondary-foreground whitespace-nowrap"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

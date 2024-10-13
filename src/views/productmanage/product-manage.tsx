@@ -1,22 +1,24 @@
 import Search from "@/components/common/search";
 import { Button } from "@/components/ui";
+import ProductTable from "@/views/productmanage/components/product-table";
 
 const ProductManage = () => {
   return (
-    <div className="grid grid-cols-12 grid-rows-3 gap-4">
-      <div className="col-span-5 ">
-        <Search placeholder="Search material ... " />
-      </div>
-      <div className="col-span-2 col-start-11 ">
-        <Button className="w-full">
+    <div className="w-full space-y-3">
+      <div className="flex justify-between">
+        <div className="w-96">
+          <Search placeholder="Search material ... " />
+        </div>
+
+        <Button>
           <span className="text-white">Add New Material</span>
         </Button>
       </div>
-      <div className="col-span-5 col-start-8 row-span-2 row-start-2 bg-slate-500">
-        3
-      </div>
-      <div className="col-span-7 col-start-1 row-span-2 row-start-2 bg-slate-500">
-        4
+      <div className="flex gap-5">
+        <div className="">
+          <ProductTable />
+        </div>
+        <div className=" bg-slate-500">3</div>
       </div>
     </div>
   );

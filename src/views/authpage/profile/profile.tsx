@@ -37,7 +37,7 @@ const Profile = () => {
 
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild className="after:border after:border-none">
           <Avatar className="size-6 hover:cursor-pointer hover:bg-secondary ">
             <AvatarFallback>{user?.username}</AvatarFallback>
@@ -89,7 +89,9 @@ const Profile = () => {
         onClose={() => setIsDialogOpen(false)}
         children={
           <div className="relative">
-            <AlertDialogCancel>Close</AlertDialogCancel>
+            <AlertDialogCancel className="absolute z-10 bottom-3 right-3">
+              Close
+            </AlertDialogCancel>
             <UserProfile />
           </div>
         }
