@@ -1,5 +1,11 @@
 import ImageWithFallback from "@/components/common/image_with_callback";
-import { Badge, Button, CardContent, CardDescription } from "@/components/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+} from "@/components/ui";
 import { ProductResponse } from "@/domains/models/products/product.response";
 
 import Show from "@/lib/show";
@@ -19,10 +25,9 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ data }) => {
   const navigation = useNavigate();
-  
 
   return (
-    <div
+    <Card
       className={`relative mb-4 rounded-lg shadow-md h-full shadow-muted border-2 ${
         data.license.toLowerCase() === "pro"
           ? "border-primary"
@@ -88,7 +93,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
           </Show.When>
         </Show>
       </div>
-    </div>
+    </Card>
   );
 };
 
