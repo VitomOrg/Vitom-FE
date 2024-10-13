@@ -15,7 +15,7 @@ import {
 import useRoleStore from "@/domains/stores/zustand/role";
 import { useTheme } from "@/hooks";
 import Show from "@/lib/show";
-import { useAuth, UserProfile, useUser } from "@clerk/clerk-react";
+import { useClerk, useAuth, UserProfile, useUser } from "@clerk/clerk-react";
 import { LayoutDashboard, LogOut, Moon, Sun, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,11 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const { user } = useUser();
   const { role } = useRoleStore();
-
+  const { closeUserProfile } = useClerk();
+  const close = () => {
+    closeUserProfile();
+    setIsDialogOpen(false);
+  }
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const navigation = useNavigate();
@@ -86,12 +90,10 @@ const Profile = () => {
 
       <DialogCustom
         isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
+        onClose={close}
         children={
           <div className="relative">
-            <AlertDialogCancel className="absolute z-10 bottom-3 right-3">
-              Close
-            </AlertDialogCancel>
+            <AlertDialogCancel>Close</AlertDialogCancel>
             <UserProfile />
           </div>
         }
