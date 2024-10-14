@@ -34,16 +34,16 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full overflow-x-auto">
-      <div className="border rounded-md">
-        <Table className="min-w-full divide-y divide-muted-foreground">
+    <div className="w-full overflow-x-auto rounded-lg shadow-sm shadow-foreground">
+      <div className="border rounded-lg border-muted">
+        <Table className="min-w-full rounded-lg -y ">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase bg-primary/60 text-primary-foreground"
+                    className="px-6 py-3 text-xs font-semibold tracking-wider text-left uppercase bg-primary/60 text-foreground"
                   >
                     {header.isPlaceholder
                       ? null
@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="divide-y divide-muted bg-secondary"
+                  className="divide divide-muted bg-secondary"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell

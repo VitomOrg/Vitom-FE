@@ -12,6 +12,7 @@ export interface ProductResponse {
   objUrl: string;
   glbUrl: string;
   price: number;
+  softwares: string[];
   downloadUrl: string;
   totalPurchases: number;
   totalLiked: number;

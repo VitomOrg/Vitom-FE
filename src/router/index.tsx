@@ -4,6 +4,7 @@ import { Loading } from "@/components/loading";
 import PrivateRoute from "@/components/private-route";
 import Login from "@/views/authpage/login/login";
 import Register from "@/views/authpage/register/register";
+import ProductEdit from "@/views/productmanage/components/product-edit";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -129,12 +130,20 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "materials",
+        path: "products",
         element: (
           <Suspense fallback={<Loading />}>
             <ProductManagePage />
           </Suspense>
         ),
+      },
+      {
+        path: "products/create",
+        element: <ProductEdit />,
+      },
+      {
+        path: "product/edit/:id",
+        element: <ProductEdit />,
       },
     ],
   },

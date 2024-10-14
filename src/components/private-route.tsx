@@ -12,7 +12,7 @@ const PrivateRoute = ({ children, roles = [] }: PrivateRouteProps) => {
   const { role } = useRoleStore();
 
   if (roles.length && !roles.includes(role))
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
 
   return <>{children}</>;
 };

@@ -1,10 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { useTheme } from "@/hooks";
 import { useUser } from "@clerk/clerk-react";
-import { Moon, Sun } from "lucide-react";
+import { Home, Moon, Sun } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { user } = useUser();
+  const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
 
   const isDarkMode = theme === "dark";
@@ -15,6 +17,13 @@ const Header = () => {
 
   return (
     <header className="flex items-center justify-end gap-5 px-10 py-8">
+      <button
+        className="p-3 space-x-2 border-2 rounded-full shadow-xl border-secondary hover:bg-secondary/80"
+        onClick={() => navigate("/")}
+      >
+        <Home className="size-5" />
+        <span className="hidden text-white">Home</span>
+      </button>
       <button
         onClick={handleToggle}
         className="p-3 border-2 rounded-full shadow-xl border-secondary hover:bg-secondary/80"

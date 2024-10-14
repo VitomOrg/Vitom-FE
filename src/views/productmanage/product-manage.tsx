@@ -1,4 +1,5 @@
 import Search from "@/components/common/search";
+import ObjView from "@/components/test";
 import { Button } from "@/components/ui";
 import ProductTable from "@/views/productmanage/components/product-table";
 
@@ -14,11 +15,13 @@ const ProductManage = () => {
           <span className="text-white">Add New Material</span>
         </Button>
       </div>
-      <div className="flex gap-5">
-        <div className="">
+      <div className="grid grid-cols-6 gap-10">
+        <div className="col-span-4">
           <ProductTable />
         </div>
-        <div className=" bg-slate-500">3</div>
+        <div className="col-span-2 ">
+          <ObjView />
+        </div>
       </div>
     </div>
   );

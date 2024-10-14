@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui";
+import { cn } from "@/lib";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import React from "react";
 
 interface PaginationProps {
+  className?: string;
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
+  className,
   totalPages,
   currentPage,
   onPageChange,
@@ -54,7 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex justify-center w-full gap-4 mt-4">
+    <div className={cn("flex justify-center w-full gap-4", className)}>
       {/* Nút Previous */}
       <Button
         variant="ghost"
@@ -71,7 +74,7 @@ const Pagination: React.FC<PaginationProps> = ({
           key={index}
           variant={currentPage === page ? "default" : "ghost"}
           onClick={() => handlePageChange(page)}
-          disabled={typeof page === "string"} // Disable khi là "dots-left" hoặc "dots-right"
+          disabled={typeof page === "string"}
         >
           {typeof page === "string" ? (
             <MoreHorizontal className="w-4 h-4" />
