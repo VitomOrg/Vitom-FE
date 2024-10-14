@@ -1,9 +1,9 @@
 import DialogCustom from "@/components/common/dialog";
 import {
-  AlertDialogCancel,
   Avatar,
   AvatarFallback,
   AvatarImage,
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -27,7 +27,7 @@ const Profile = () => {
   const close = () => {
     closeUserProfile();
     setIsDialogOpen(false);
-  }
+  };
   const { signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const navigation = useNavigate();
@@ -93,7 +93,12 @@ const Profile = () => {
         onClose={close}
         children={
           <div className="relative">
-            <AlertDialogCancel>Close</AlertDialogCancel>
+            <Button
+              className="absolute z-10 bottom-3 right-3"
+              onClick={() => setIsDialogOpen(false)}
+            >
+              Close
+            </Button>
             <UserProfile />
           </div>
         }

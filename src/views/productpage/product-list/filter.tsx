@@ -60,8 +60,6 @@ const Filter = () => {
     });
   }
 
-  console.log("software", software);
-
   const handleSliderChange = (value: number) => {
     setPriceTo(value);
   };
@@ -132,7 +130,7 @@ const Filter = () => {
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {/* {software?.data.map((item) => (
+          {software?.data.map((item) => (
             <Badge
               key={item.id}
               variant={
@@ -152,7 +150,7 @@ const Filter = () => {
             >
               {item.name}
             </Badge>
-          ))} */}
+          ))}
         </div>
         <Button
           className="w-full space-x-2"
