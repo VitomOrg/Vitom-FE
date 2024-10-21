@@ -38,7 +38,11 @@ const Filter = () => {
     };
   }, [pageSizeTypes]);
 
-  const { data: software, error: softwareError } = useSoftware({
+  const {
+    data: software,
+    error: softwareError,
+    fetchNextPage,
+  } = useSoftware({
     options: optionSoftware,
   });
 
@@ -130,27 +134,29 @@ const Filter = () => {
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {software?.data.map((item) => (
-            <Badge
-              key={item.id}
-              variant={
-                filter.softwareIds?.find((sw) => item.id === sw)
-                  ? "default"
-                  : "outline"
-              }
-              className="hover:cursor-pointer hover:bg-primary hover:text-primary-foreground"
-              onClick={() => {
-                setFilter({
-                  ...filter,
-                  softwareIds: filter.softwareIds?.includes(item.id)
-                    ? filter.softwareIds?.filter((sw) => sw !== item.id)
-                    : [...(filter.softwareIds || []), item.id],
-                });
-              }}
-            >
-              {item.name}
-            </Badge>
-          ))}
+          {software?.pages.map((data) =>
+            data.data.map((item) => (
+              <Badge
+                key={item.id}
+                variant={
+                  filter.softwareIds?.find((sw) => item.id === sw)
+                    ? "default"
+                    : "outline"
+                }
+                className="hover:cursor-pointer hover:bg-primary hover:text-primary-foreground"
+                onClick={() => {
+                  setFilter({
+                    ...filter,
+                    softwareIds: filter.softwareIds?.includes(item.id)
+                      ? filter.softwareIds?.filter((sw) => sw !== item.id)
+                      : [...(filter.softwareIds || []), item.id],
+                  });
+                }}
+              >
+                {item.name}
+              </Badge>
+            ))
+          )}
         </div>
         <Button className="w-full space-x-2" variant="outline">
           <ChevronDown size={24} />
