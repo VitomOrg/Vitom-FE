@@ -11,7 +11,17 @@ import { formatFromISOString, FormatType } from "@/lib";
 import { ColumnDef } from "@tanstack/react-table";
 import { BookText, MoreHorizontal, PencilIcon, Trash2 } from "lucide-react";
 
-export const ProductColumns: ColumnDef<ProductResponse>[] = [
+interface ProductColumnProps {
+  getId: (id: string) => void;
+  editData: (data: ProductResponse) => void;
+  deleteData: (id: string) => void;
+}
+
+export const ProductColumns = ({
+  getId,
+  editData,
+  deleteData,
+}: ProductColumnProps): ColumnDef<ProductResponse>[] => [
   {
     header: "Name",
     accessorKey: "name",
@@ -54,7 +64,6 @@ export const ProductColumns: ColumnDef<ProductResponse>[] = [
     id: "actions",
     cell({ row }) {
       console.log(row.original);
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -63,15 +72,24 @@ export const ProductColumns: ColumnDef<ProductResponse>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="space-x-4">
+            <DropdownMenuItem
+              className="space-x-4"
+              onClick={() => getId(row.original.id)}
+            >
               <BookText className="size-4" />
               <span>Detail</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="space-x-4">
+            <DropdownMenuItem
+              className="space-x-4"
+              onClick={() => editData(row.original)}
+            >
               <PencilIcon className="size-4" />
               <span>Update</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="space-x-4">
+            <DropdownMenuItem
+              className="space-x-4"
+              onAbort={() => deleteData(row.original.id)}
+            >
               <Trash2 className="size-4" />
               <span>Remove</span>
             </DropdownMenuItem>

@@ -29,8 +29,39 @@ const ProductDetailPage = lazy(
 
 const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
 const BlogPage = lazy(() => import("@/views/blogpage/blog-page"));
-const BlogManagePage = lazy(() => import("@/views/postmanage/post-manage"));
 const BlogDetailPage = lazy(() => import("@/views/blogpage/blog-detail-page"));
+const BlogManagePage = lazy(
+  () => import("@/views/dashboard-layout/post-page/post-manage")
+);
+
+const BlogDetailManage = lazy(
+  () => import("@/views/dashboard-layout/post-page/post-detail")
+);
+const BlogEditPage = lazy(
+  () => import("@/views/dashboard-layout/post-page/post-edit")
+);
+
+const SoftwarePage = lazy(
+  () => import("@/views/dashboard-layout/software-page/software-page")
+);
+const SoftwareDetailPage = lazy(
+  () => import("@/views/dashboard-layout/software-page/software-detail")
+);
+const SoftwareManagePage = lazy(
+  () => import("@/views/dashboard-layout/software-page/software-edit")
+);
+
+const TypesPage = lazy(
+  () => import("@/views/dashboard-layout/types-page/types-page")
+);
+
+const TypesDetailPage = lazy(
+  () => import("@/views/dashboard-layout/types-page/types-detail")
+);
+
+const TypesManagePage = lazy(
+  () => import("@/views/dashboard-layout/types-page/types-edit")
+);
 /*eslint-enable*/
 
 const routes = createBrowserRouter([
@@ -103,6 +134,22 @@ const routes = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "blog/:id/edit",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogEditPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "blog/create",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogEditPage />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
@@ -130,6 +177,30 @@ const routes = createBrowserRouter([
         ),
       },
       {
+        path: "posts/create",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogEditPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "posts/:id",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogDetailManage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "posts/:id/edit",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <BlogEditPage />
+          </Suspense>
+        ),
+      },
+      {
         path: "products",
         element: (
           <Suspense fallback={<Loading />}>
@@ -142,8 +213,73 @@ const routes = createBrowserRouter([
         element: <ProductEdit />,
       },
       {
-        path: "product/edit/:id",
+        path: "product/:id/edit",
         element: <ProductEdit />,
+      },
+
+      {
+        path: "software",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SoftwarePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "software/create",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SoftwareManagePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "software/:id/edit",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SoftwareManagePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "software/:id",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SoftwareDetailPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "types",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <TypesPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "types/create",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <TypesManagePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "types/:id/edit",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <TypesManagePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "types/:id",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <TypesDetailPage />
+          </Suspense>
+        ),
       },
     ],
   },

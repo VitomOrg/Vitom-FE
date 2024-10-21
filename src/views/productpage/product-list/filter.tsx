@@ -152,11 +152,7 @@ const Filter = () => {
             </Badge>
           ))}
         </div>
-        <Button
-          className="w-full space-x-2"
-          variant="outline"
-          onClick={() => setPageSizeSoftware(100)}
-        >
+        <Button className="w-full space-x-2" variant="outline">
           <ChevronDown size={24} />
           <span>See more</span>
         </Button>
@@ -202,11 +198,7 @@ const Filter = () => {
           ))}
         </div>
 
-        <Button
-          className="w-full space-x-2"
-          variant="outline"
-          onClick={() => setPageSizeTypes(100)}
-        >
+        <Button className="w-full space-x-2" variant="outline">
           <ChevronDown size={24} />
           <span>See more</span>
         </Button>

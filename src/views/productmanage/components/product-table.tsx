@@ -9,14 +9,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui";
+import { ProductResponse } from "@/domains/models/products";
 import { ProductPageRequest } from "@/domains/models/products/product-page.request";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
 import { useProductStore } from "@/domains/stores/zustand/products";
 import { useSearchStore } from "@/domains/stores/zustand/search";
 import { ProductColumns } from "@/views/productmanage/components/product-column";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductTable = () => {
+  const navigate = useNavigate();
   const { search } = useSearchStore();
   const { filter } = useProductStore();
 
@@ -48,7 +51,12 @@ const ProductTable = () => {
   return (
     <div className="space-y-3">
       <DataTable
-        columns={ProductColumns}
+        columns={ProductColumns({
+          getId: (id: string) => navigate(`detail/${id}`),
+          editData: (data: ProductResponse) =>
+            navigate(`edit/${data.id}`, { state: data }),
+          deleteData: (id: string) => console.log({ id }),
+        })}
         data={(data && data.data) || []}
         isLoading={isLoading}
       />
