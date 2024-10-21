@@ -41,7 +41,6 @@ const Filter = () => {
   const {
     data: software,
     error: softwareError,
-    fetchNextPage,
   } = useSoftware({
     options: optionSoftware,
   });
@@ -134,8 +133,7 @@ const Filter = () => {
           </Button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {software?.pages.map((data) =>
-            data.data.map((item) => (
+          {software?.data.map((item) => (
               <Badge
                 key={item.id}
                 variant={
@@ -154,8 +152,7 @@ const Filter = () => {
                 }}
               >
                 {item.name}
-              </Badge>
-            ))
+              </Badge>)
           )}
         </div>
         <Button className="w-full space-x-2" variant="outline">
