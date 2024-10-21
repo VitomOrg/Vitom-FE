@@ -158,11 +158,7 @@ const Filter = () => {
             ))
           )}
         </div>
-        <Button
-          className="w-full space-x-2"
-          variant="outline"
-          onClick={() => fetchNextPage()}
-        >
+        <Button className="w-full space-x-2" variant="outline">
           <ChevronDown size={24} />
           <span>See more</span>
         </Button>
@@ -208,11 +204,7 @@ const Filter = () => {
           ))}
         </div>
 
-        <Button
-          className="w-full space-x-2"
-          variant="outline"
-          onClick={() => fetchNextPage}
-        >
+        <Button className="w-full space-x-2" variant="outline">
           <ChevronDown size={24} />
           <span>See more</span>
         </Button>

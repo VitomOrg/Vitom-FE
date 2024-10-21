@@ -7,7 +7,6 @@ import {
   ChevronFirst,
   ChevronLast,
   Grid,
-  History,
   LayoutDashboard,
   LogOut,
   Newspaper,
@@ -19,7 +18,6 @@ const menu = [
   { name: "Home", href: "/dashboard", icon: LayoutDashboard },
   { name: "Social Media", href: "/dashboard/posts", icon: Newspaper },
   { name: "Product", href: "/dashboard/products", icon: Boxes },
-  { name: "History Orders", href: "/dashboard/history-orders", icon: History },
   { name: "Software", href: "/dashboard/software", icon: Brush },
   { name: "Types", href: "/dashboard/types", icon: Grid },
 ];
