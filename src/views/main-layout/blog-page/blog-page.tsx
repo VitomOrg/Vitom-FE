@@ -3,11 +3,9 @@ import Hero from "@/views/main-layout/blog-page/components/hero";
 
 const BlogPage = () => {
   return (
-    <div>
-      <div className="w-full">
-        <Hero />
-        <Content />
-      </div>
+    <div className="container py-3">
+      <Hero />
+      <Content />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Custom schema for files (File or Blob)
-const FileSchema = z.instanceof(Blob).refine((file) => file.size > 0, {
+export const FileSchema = z.instanceof(Blob).refine((file) => file.size > 0, {
   message: "File is required and cannot be empty",
 });
 
