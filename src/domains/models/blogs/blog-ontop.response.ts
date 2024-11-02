@@ -1,10 +1,6 @@
+import { TopBlog } from "@/domains/models/blogs/blog-edit.response";
+
 export interface BlogOntopResponse {
   topBlogs: TopBlog[];
 }
 
-export interface TopBlog {
-  id: string;
-  title: string;
-  createdAt: Date;
-  author: string;
-}
