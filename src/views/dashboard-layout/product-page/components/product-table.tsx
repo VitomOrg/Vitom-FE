@@ -10,8 +10,8 @@ import {
   SelectValue,
   useToast,
 } from "@/components/ui";
-import { ProductResponse } from "@/domains/models/products";
 import { ProductPageRequest } from "@/domains/models/products/product-page.request";
+import { ProductResponse } from "@/domains/models/products/product.response";
 import { ProductApi } from "@/domains/services";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
 import { useProductStore } from "@/domains/stores/zustand/products";
