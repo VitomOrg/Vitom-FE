@@ -1,7 +1,13 @@
 export interface ProductRequest {
-  license?: number;
+  license: number;
   name: string;
   description: string;
   price: number;
-  downloadUrl: string;
+  typeIds: string[];
+  softwareIds: string[];
+  files: Blob[];
+  modelMaterialFiles: Blob[];
+  fbx: Blob;
+  obj: Blob;
+  glb: Blob;
 }

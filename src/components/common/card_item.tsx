@@ -58,11 +58,13 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
               </div>
               <div className="flex items-center gap-2 ml-3">
                 <CircleDollarSign className="w-5 h-5 text-primary" />
-                <span className="text-lg font-semibold">{data.price}</span>
+                <span className="text-lg text-background">{data.price}</span>
               </div>
               <div className="flex items-center gap-2 ml-3">
                 <HeartIcon className="w-5 h-5 text-red-500" />
-                <span className="text-lg">{data.totalLiked}</span>
+                <span className="text-lg text-background">
+                  {data.totalLiked}
+                </span>
               </div>
             </div>
             <div className="absolute bottom-2 start-2">

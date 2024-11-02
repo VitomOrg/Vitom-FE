@@ -34,24 +34,26 @@ const CheckOut: React.FC<CheckOutProps> = ({ data }) => {
       <Separator className="border border-white/20" />
       <div className="grid grid-cols-2 grid-rows-3 gap-4 mt-10">
         <div>
-          <span className="text-base font-semibold text-white/70 md:text-2xl">
+          <span className="text-base font-semibold text-foreground/70 md:text-2xl">
             Subtotal
           </span>
         </div>
         <div className="text-base text-end md:text-2xl">
-          <span className="font-semibold text-white/70">
+          <span className="font-semibold text-foreground/70">
             {formatPriceVND(subtotal)}
           </span>
         </div>
+        {/* <div>
+          <span className="text-sm text-foreground/50 md:text-base">
+            Discount
+          </span>
+        </div> */}
+        {/* <div className="text-sm text-end md:text-base">
+          <span className="font-semibold text-foreground/50">0%</span>
+        </div> */}
+        <Separator className="col-span-2 border border-fotext-foreground/20" />
         <div>
-          <span className="text-sm text-white/50 md:text-base">Discount</span>
-        </div>
-        <div className="text-sm text-end md:text-base">
-          <span className="font-semibold text-white/50">0%</span>
-        </div>
-        <Separator className="col-span-2 border border-white/20" />
-        <div>
-          <span className="text-base font-semibold text-white md:text-2xl">
+          <span className="text-base font-semibold text-foreground md:text-2xl">
             Total
           </span>
         </div>

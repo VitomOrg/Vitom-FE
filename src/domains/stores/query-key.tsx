@@ -17,4 +17,6 @@ export const QueryKey = {
 
   LIST_TYPE: "list-type",
   LIST_SOFTWARE: "list-software",
+
+  REPORTS: "report",
 };

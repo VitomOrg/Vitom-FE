@@ -3,6 +3,7 @@ import { ProductParamsRequest } from "@/domains/models/products";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
 import { useProductStore } from "@/domains/stores/zustand/products";
 import { useSearchStore } from "@/domains/stores/zustand/search";
+import useInfiniteScroll from "@/hooks/use-infinite-scroll";
 import Show from "@/lib/show";
 import Filter from "@/views/main-layout/product-page/product-page/filter";
 import ListItem from "@/views/main-layout/product-page/product-page/list-item";
@@ -33,6 +34,16 @@ const ProductIsLogin = () => {
 
   const { data, isLoading } = UseListProduct({
     options,
+  });
+
+  const hasMore = data && data.pageIndex < data.totalPages;
+
+  useInfiniteScroll(isLoading, hasMore!, () => {
+    setFilter({
+      ...filter,
+      pageIndex: 1,
+      pageSize: filter?.pageSize ? filter?.pageSize + 8 : 8,
+    });
   });
 
   return (

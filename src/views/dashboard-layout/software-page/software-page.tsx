@@ -24,7 +24,7 @@ const SoftwarePage = () => {
     <div className="mb-10 space-y-4">
       <div className="flex justify-between">
         <div className="w-[300px]">
-          <Search />
+          <Search placeholder="Search software ..." />
         </div>
         <Button className="space-x-2" onClick={() => navigate("create")}>
           <CirclePlus size={24} />

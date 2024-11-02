@@ -1,35 +1,58 @@
 import ErrorPage from "@/components/error_page";
-import DashboardLayout from "@/components/layout/dashboard_layout";
 import { Loading } from "@/components/loading";
-import PrivateRoute from "@/components/private-route";
+// import PrivateRoute from "@/components/private-route";
 import Login from "@/views/authpage/login/login";
 import Register from "@/views/authpage/register/register";
-import ProductEdit from "@/views/productmanage/components/product-edit";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 /*eslint-disable*/
 const MainLayout = lazy(() => import("@/components/layout/main_layout"));
-const HomePage = lazy(() => import("@/views/homepage/home_page"));
-const DashboardPage = lazy(
-  () => import("@/views/dashboardmanage/dashboard_page")
+const DashboardLayout = lazy(
+  () => import("@/components/layout/dashboard_layout")
 );
-const AboutPage = lazy(() => import("@/views/aboutpage/about_page"));
-const ContactPage = lazy(() => import("@/views/contactpage/contact_page"));
+
+// main-layout
+const HomePage = lazy(() => import("@/views/main-layout/home-page/home_page"));
+const AboutPage = lazy(
+  () => import("@/views/main-layout/about-page/about_page")
+);
+const ContactPage = lazy(
+  () => import("@/views/main-layout/contact-page/contact_page")
+);
 const ProductsPage = lazy(
-  () => import("@/views/productpage/product-list/product_page")
+  () => import("@/views/main-layout/product-page/product-page/product_page")
+);
+const ShoppingPage = lazy(
+  () => import("@/views/main-layout/shopping-page/shopping_page")
 );
 
-const ProductManagePage = lazy(
-  () => import("@/views/productmanage/product-manage")
-);
 const ProductDetailPage = lazy(
-  () => import("@/views/productpage/product-detail/product_detail_page")
+  () =>
+    import(
+      "@/views/main-layout/product-page/product-detail/product_detail_page"
+    )
 );
 
-const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
-const BlogPage = lazy(() => import("@/views/blogpage/blog-page"));
-const BlogDetailPage = lazy(() => import("@/views/blogpage/blog-detail-page"));
+const BlogPage = lazy(() => import("@/views/main-layout/blog-page/blog-page"));
+const BlogDetailPage = lazy(
+  () => import("@/views/main-layout/blog-page/blog-detail-page")
+);
+const HistoryPage = lazy(
+  () => import("@/views/main-layout/history-order-page/history-page")
+);
+
+// dashboard-layout
+const DashboardPage = lazy(
+  () => import("@/views/dashboard-layout/dashboard-page/dashboard_page")
+);
+const ProductEdit = lazy(
+  () => import("@/views/dashboard-layout/product-page/product-edit")
+);
+const ProductManagePage = lazy(
+  () => import("@/views/dashboard-layout/product-page/product-manage")
+);
+
 const BlogManagePage = lazy(
   () => import("@/views/dashboard-layout/post-page/post-manage")
 );
@@ -108,7 +131,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "products/:id",
-        element: <ProductDetailPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ProductDetailPage />
+          </Suspense>
+        ),
       },
       {
         path: "shopping-cart",
@@ -150,15 +177,24 @@ const routes = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "history",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <HistoryPage />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute roles={["Artist", "Admin"]}>
+      <Suspense fallback={<Loading />}>
         <DashboardLayout />
-      </PrivateRoute>
+      </Suspense>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "",
@@ -210,11 +246,19 @@ const routes = createBrowserRouter([
       },
       {
         path: "products/create",
-        element: <ProductEdit />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ProductEdit />
+          </Suspense>
+        ),
       },
       {
-        path: "product/:id/edit",
-        element: <ProductEdit />,
+        path: "products/:id/edit",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ProductEdit />
+          </Suspense>
+        ),
       },
 
       {

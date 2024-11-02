@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui";
 import useTransactions from "@/domains/stores/query-hook/transactions/use-transactions";
-import HistoryList from "@/views/historypage/components/history-list";
+import HistoryList from "@/views/main-layout/history-order-page/components/history-list";
 
 const HistoryPage = () => {
   const {
@@ -15,8 +15,8 @@ const HistoryPage = () => {
   });
 
   return (
-    <div>
-      <h6 className="font-semibold">History Page</h6>
+    <div className="container my-10">
+      <h6 className="font-semibold">History Order</h6>
 
       <Separator className="my-4 border border-gray" />
 
