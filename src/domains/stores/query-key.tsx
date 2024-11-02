@@ -11,6 +11,7 @@ export const QueryKey = {
   CART: "cart",
 
   LIST_BLOG: "list-blog",
+  BLOG_TOP: "blog-top",
   BLOG: "blog",
 
   LIST_TRANSACTION: "list-transaction",

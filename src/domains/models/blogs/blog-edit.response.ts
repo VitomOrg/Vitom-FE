@@ -1,7 +1,10 @@
 export interface BlogEditResponse {
+  topBlogs: TopBlog[];
+}
+
+export interface TopBlog {
   id: string;
   title: string;
-  content: string;
   createdAt: Date;
-  imageUrl: string[];
+  author: string;
 }

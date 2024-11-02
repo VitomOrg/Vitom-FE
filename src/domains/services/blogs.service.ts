@@ -1,8 +1,11 @@
+import { axiosInstance } from "@/configs";
+import { BlogEditResponse, BlogOntopResponse } from "@/domains/models/blogs";
 import { BlogPageRequest } from "@/domains/models/blogs/blog-page.request";
 import { BlogRequest } from "@/domains/models/blogs/blog.request";
 import { BlogResponse } from "@/domains/models/blogs/blog.response";
-import { Value } from "@/domains/models/root/root.response";
+import { RootResponse, Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
+import axios from "axios";
 
 export const BlogApi = {
   getBlog: async (
@@ -20,12 +23,68 @@ export const BlogApi = {
     ) as Promise<BlogResponse>;
   },
 
-  postBlog: async (data: BlogRequest): Promise<null> => {
-    return handleApiCall<null>("post", "/blogs", data) as Promise<null>;
+  getBlobTop: async (): Promise<
+    RootResponse<BlogOntopResponse> | undefined
+  > => {
+    try {
+      const response = await axiosInstance.get("/blogs/top");
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+    }
   },
 
-  putBlog: async (data: BlogRequest, id: string): Promise<null> => {
-    return handleApiCall<null>("put", `/blogs/${id}`, data) as Promise<null>;
+  postBlog: async (
+    data: BlogRequest
+  ): Promise<RootResponse<BlogEditResponse> | undefined> => {
+    try {
+      const formData = new FormData();
+
+      formData.append("title", data.title);
+      formData.append("content", data.content);
+      data.images.forEach((image) => {
+        formData.append("images", image);
+      });
+
+      const response = await axiosInstance.post("/blogs", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+    }
+  },
+
+  putBlog: async (
+    id: string,
+    data: BlogRequest
+  ): Promise<RootResponse<{ imageUrl: string[] }> | undefined> => {
+    try {
+      const formData = new FormData();
+
+      formData.append("title", data.title);
+      formData.append("content", data.content);
+      data.images.forEach((image) => {
+        formData.append("images", image);
+      });
+
+      const response = await axiosInstance.put(`/blogs/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+    }
   },
 
   deleteBlog: async (Id: string): Promise<null> => {
