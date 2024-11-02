@@ -38,7 +38,7 @@ const SiderBar = () => {
   };
   return (
     <aside
-      className={`h-screen col-span-2 bg-secondary/90 relative px-4 py-10 ${
+      className={`min-h-screen col-span-2 bg-secondary/90 relative px-4 py-10 ${
         isOpen ? "w-64" : "w-32"
       } transition-width duration-700 ease-in-out`}
     >

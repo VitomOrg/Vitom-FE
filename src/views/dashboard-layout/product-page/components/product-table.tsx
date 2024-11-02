@@ -8,17 +8,23 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  useToast,
 } from "@/components/ui";
 import { ProductPageRequest } from "@/domains/models/products/product-page.request";
+import { ProductResponse } from "@/domains/models/products/product.response";
+import { ProductApi } from "@/domains/services";
 import { UseListProduct } from "@/domains/stores/query-hook/product/use-product-list";
 import { useProductStore } from "@/domains/stores/zustand/products";
 import { useSearchStore } from "@/domains/stores/zustand/search";
 import { ProductColumns } from "@/views/dashboard-layout/product-page/components/product-column";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductTable = () => {
   const { search } = useSearchStore();
   const { filter } = useProductStore();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -37,7 +43,7 @@ const ProductTable = () => {
     return updatedOptions;
   }, [filter, search, currentPage, pageSize]);
 
-  const { data, isLoading } = UseListProduct({ options });
+  const { data, isLoading, refetch } = UseListProduct({ options });
 
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= data!.totalPages) {
@@ -45,14 +51,39 @@ const ProductTable = () => {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    const response = await ProductApi.deleteProduct(id);
+
+    if (response === 204) {
+      toast({
+        title: "Success",
+        description: "Product has been deleted",
+      });
+      refetch();
+    }
+
+    if (response === 400 || response === 404 || response === 403) {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+      });
+    }
+  };
+
   return (
     <div className="space-y-3">
       <DataTable
-        columns={ProductColumns}
+        columns={ProductColumns({
+          getId: (id: string) => navigate(`/dashboard/products/${id}`),
+          updateProduct: (id: string, data: ProductResponse) =>
+            navigate(`${id}/edit`, { state: data }),
+          removeProduct: (id: string) => handleDelete(id),
+        })}
         data={(data && data.data) || []}
         isLoading={isLoading}
       />
-      <div className="flex flex-row items-center justify-end gap-2 ">
+      <div className="flex flex-row items-center justify-between gap-2 ">
+        <div></div>
         <Pagination
           className="flex items-center justify-between w-auto border rounded-lg border-muted"
           totalPages={(data && data.totalPages) || 1}

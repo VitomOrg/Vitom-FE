@@ -1,4 +1,5 @@
 export * from "./accordion";
+export * from "./alert";
 export * from "./alert-dialog";
 export * from "./avatar";
 export * from "./badge";
@@ -30,4 +31,3 @@ export * from "./toast";
 export * from "./toaster";
 export * from "./tooltip";
 export * from "./use-toast";
-

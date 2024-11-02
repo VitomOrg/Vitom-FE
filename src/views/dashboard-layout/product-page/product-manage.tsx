@@ -1,29 +1,24 @@
-// import Search from "@/components/common/search";
-// import ObjView from "@/components/test";
-// import { Button } from "@/components/ui";
-// import ProductTable from "@/views/dashboard-layout/product-page/components/product-table";
+import Search from "@/components/common/search";
+import { Button } from "@/components/ui";
+import ProductTable from "@/views/dashboard-layout/product-page/components/product-table";
+import { PlusCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductPage = () => {
+  const navigation = useNavigate();
   return (
     <div className="w-full space-y-3">
-      Product Manage
-      {/* <div className="flex justify-between">
+      <div className="flex justify-between">
         <div className="w-96">
           <Search placeholder="Search material ... " />
         </div>
 
-        <Button>
-          <span className="text-white">Add New Material</span>
+        <Button className="space-x-2" onClick={() => navigation("create")}>
+          <PlusCircle size={20} />
+          <span className="text-white">Add Product</span>
         </Button>
       </div>
-      <div className="grid grid-cols-6 gap-10">
-        <div className="col-span-4">
-          <ProductTable />
-        </div>
-        <div className="col-span-2 ">
-          <ObjView />
-        </div>
-      </div> */}
+      <ProductTable />
     </div>
   );
 };

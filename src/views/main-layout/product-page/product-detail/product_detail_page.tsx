@@ -1,5 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
-
 import { UseProductDetail } from "@/domains/stores/query-hook/product/use-product-detail";
 import Comment from "@/views/main-layout/product-page/components/comment";
 import InformationProduct from "@/views/main-layout/product-page/components/information-product";
@@ -17,7 +16,7 @@ const ProductDetailPage = () => {
 
   return (
     <main className="container">
-      <InformationProduct data={data!} isLoading={isLoading} />
+      <InformationProduct product={data!} isLoading={isLoading} />
       <Tabs className="mt-10" value={tab} onValueChange={setTab}>
         <TabsList className="grid w-full grid-cols-2 h-fit ">
           <TabsTrigger value="descriptions">Description</TabsTrigger>

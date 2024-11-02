@@ -1,12 +1,15 @@
+import { axiosInstance } from "@/configs";
 import { ProductDetail } from "@/domains/models/products/product-detail.response";
+import { ProductEditResponse } from "@/domains/models/products/product-edit.response";
 import {
   ProductFavoriteRequest,
   ProductPageRequest,
 } from "@/domains/models/products/product-page.request";
 import { ProductRequest } from "@/domains/models/products/product.request";
 import { ProductResponse } from "@/domains/models/products/product.response";
-import { Value } from "@/domains/models/root/root.response";
+import { RootResponse, Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
+import axios from "axios";
 
 export const ProductApi = {
   listProduct: async (
@@ -20,10 +23,11 @@ export const ProductApi = {
     }) as Promise<Value<ProductResponse[]>>;
   },
 
-  getProduct: async (Id: string): Promise<ProductDetail> => {
-    return handleApiCall<ProductDetail>("get", `/products/${Id}`, {
-      params: { Id },
-    }) as Promise<ProductDetail>;
+  getProduct: async (id: string): Promise<ProductDetail> => {
+    return handleApiCall<ProductDetail>(
+      "get",
+      `/products/${id}`
+    ) as Promise<ProductDetail>;
   },
 
   getFavoriteProduct: async (
@@ -34,15 +38,103 @@ export const ProductApi = {
     }) as Promise<Value<ProductResponse[]>>;
   },
 
-  createProduct: async (data: ProductRequest): Promise<null> => {
-    return handleApiCall<null>("post", "/products", data) as Promise<null>;
+  createProduct: async (
+    data: ProductRequest
+  ): Promise<RootResponse<ProductEditResponse> | undefined> => {
+    try {
+      const formData = new FormData();
+
+      formData.append("license", data.license!.toString());
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("price", data.price!.toString());
+      data.typeIds?.forEach((typeId) => {
+        formData.append("typeIds", typeId);
+      });
+      data.softwareIds?.forEach((softwareId) => {
+        formData.append("softwareIds", softwareId);
+      });
+      data.files?.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      data.modelMaterialFiles?.forEach((file) => {
+        formData.append("modelMaterialFiles", file);
+      });
+      formData.append("fbx", data.fbx);
+      formData.append("obj", data.obj);
+      formData.append("glb", data.glb);
+
+      const response = await axiosInstance.post<
+        RootResponse<ProductEditResponse>
+      >("/products", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return Promise.reject(error.response?.status);
+      }
+    }
   },
 
-  updateProduct: async (data: ProductRequest, id: string): Promise<null> => {
-    return handleApiCall<null>("put", `/products/${id}`, data) as Promise<null>;
+  updateProduct: async (
+    id: string,
+    data: ProductRequest
+  ): Promise<RootResponse<ProductEditResponse> | undefined> => {
+    try {
+      const formData = new FormData();
+
+      formData.append("license", data.license!.toString());
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("price", data.price!.toString());
+      data.typeIds?.forEach((typeId) => {
+        formData.append("typeIds", typeId);
+      });
+      data.softwareIds?.forEach((softwareId) => {
+        formData.append("softwareIds", softwareId);
+      });
+      data.files?.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      data.modelMaterialFiles?.forEach((file) => {
+        formData.append("modelMaterialFiles", file);
+      });
+      formData.append("fbx", data.fbx);
+      formData.append("obj", data.obj);
+      formData.append("glb", data.glb);
+
+      const response = await axiosInstance.put<
+        RootResponse<ProductEditResponse>
+      >(`/products/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return Promise.reject(error.response?.status);
+      }
+    }
   },
 
-  deleteProduct: async (id: string): Promise<null> => {
-    return handleApiCall<null>("delete", `/products/${id}`) as Promise<null>;
+  deleteProduct: async (id: string): Promise<number | undefined> => {
+    try {
+      const response = await axiosInstance.delete(`/products/${id}`);
+      if (response.status === 204) {
+        return response.status;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.status;
+      }
+    }
   },
 };

@@ -16,7 +16,14 @@ import useRoleStore from "@/domains/stores/zustand/role";
 import { useTheme } from "@/hooks";
 import Show from "@/lib/show";
 import { useClerk, useAuth, UserProfile, useUser } from "@clerk/clerk-react";
-import { LayoutDashboard, LogOut, Moon, Sun, User } from "lucide-react";
+import {
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Moon,
+  Sun,
+  User,
+} from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -68,10 +75,10 @@ const Profile = () => {
             <User className="mr-2 size-5" />
             <Label>Profile</Label>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigation("/history")}>
             <CreditCard className="mr-2 size-5" />
             <Label>Billing</Label>
-          </DropdownMenuItem> */}
+          </DropdownMenuItem>
           <Show>
             <Show.When isTrue={role.toLowerCase() !== "customer"}>
               <DropdownMenuItem onClick={() => navigation("/dashboard")}>

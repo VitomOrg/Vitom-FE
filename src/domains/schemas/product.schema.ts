@@ -1,17 +1,35 @@
 import { z } from "zod";
 
+// Custom schema for files (File or Blob)
+const FileSchema = z.instanceof(Blob).refine((file) => file.size > 0, {
+  message: "File is required and cannot be empty",
+});
+
 export const ProductSchema = z.object({
   license: z.number(),
-  name: z.string(),
-  description: z.string(),
-  price: z.number(),
-  typeIds: z.array(z.string()),
-  softwareIds: z.array(z.string()),
-  file: z.array(z.unknown()),
-  modelMaterialFiles: z.array(z.unknown()),
-  fbx: z.string(),
-  obj: z.string(),
-  glb: z.string(),
+  name: z
+    .string()
+    .min(1, { message: "Name is required" })
+    .max(30, { message: "Name must not exceed 30 characters" }),
+  description: z
+    .string()
+    .min(1, { message: "Description is required" })
+    .max(500, { message: "Description must not exceed 500 characters" }),
+  price: z
+    .number()
+    .min(1, { message: "Price must be at least 1" })
+    .max(1000, { message: "Price must not exceed 1000" }),
+  typeIds: z.array(
+    z.string().uuid({ message: "Invalid UUID format for typeIds" })
+  ),
+  softwareIds: z.array(
+    z.string().uuid({ message: "Invalid UUID format for softwareIds" })
+  ),
+  files: z.array(FileSchema),
+  modelMaterialFiles: z.array(FileSchema),
+  fbx: FileSchema,
+  obj: FileSchema,
+  glb: FileSchema,
 });
 
 export type ProductTypeSchema = z.infer<typeof ProductSchema>;

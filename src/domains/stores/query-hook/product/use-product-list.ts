@@ -21,6 +21,7 @@ export const UseListProduct = ({
     data: product,
     isLoading: isLoadingProduct,
     error: errorProduct,
+    refetch,
   } = useQuery({
     ...queryOptions,
     queryKey: [QueryKey.LIST_PRODUCT, options],
@@ -31,5 +32,6 @@ export const UseListProduct = ({
     data: product,
     isLoading: isLoadingProduct,
     error: errorProduct,
+    refetch,
   };
 };

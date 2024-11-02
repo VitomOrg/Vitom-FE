@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui";
 import { TransactionResponse } from "@/domains/models/transactions/transaction.response";
-import HistoryItem from "@/views/historypage/components/history-item";
+import HistoryItem from "@/views/main-layout/history-order-page/components/history-item";
 import React from "react";
 
 interface HistoryListProps {
@@ -24,7 +24,7 @@ const HistoryList: React.FC<HistoryListProps> = ({
 
   if (historyOrder.length === 0) {
     return (
-      <div className="grid font-semibold text-center text-muted/50 place-content-center place-items-center h-96">
+      <div className="grid font-semibold text-center text-muted-foreground/50 place-content-center place-items-center h-96">
         <span>
           There is no transaction history. Please make a transaction first.
         </span>
@@ -33,7 +33,7 @@ const HistoryList: React.FC<HistoryListProps> = ({
   }
 
   return (
-    <div>
+    <div className="text-foreground">
       <div className="grid grid-cols-12 py-2 border rounded-sm">
         <div className="col-span-3 text-center"></div>
         <div className="col-span-3 text-center">
@@ -54,7 +54,7 @@ const HistoryList: React.FC<HistoryListProps> = ({
         </div>
       </ScrollArea>
 
-      <div className="my-4 font-semibold text-center text-muted/50">
+      <div className="my-4 font-semibold text-center text-muted-foreground/50">
         <span>
           Thank you for using our service. We hope you have a great day!
         </span>

@@ -15,7 +15,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, onRemove }) => {
   return (
     <>
       <Separator className="border border-white/20" />
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 p-4 rounded-xl bg-muted-foreground/20">
         <div className="col-span-2">
           <ImageWithFallback
             src={cartItem.product.downloadUrl}
