@@ -88,6 +88,7 @@ export const ProductApi = {
     try {
       const formData = new FormData();
 
+      formData.append("id", id);
       formData.append("license", data.license!.toString());
       formData.append("name", data.name);
       formData.append("description", data.description);
