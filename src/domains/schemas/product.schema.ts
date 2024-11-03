@@ -17,8 +17,8 @@ export const ProductSchema = z.object({
     .max(500, { message: "Description must not exceed 500 characters" }),
   price: z
     .number()
-    .min(1, { message: "Price must be at least 1" })
-    .max(1000, { message: "Price must not exceed 1000" }),
+    .min(10000, { message: "Price must be at least 10000" })
+    .max(900000, { message: "Price must not exceed 900000" }),
   typeIds: z.array(
     z.string().uuid({ message: "Invalid UUID format for typeIds" })
   ),
