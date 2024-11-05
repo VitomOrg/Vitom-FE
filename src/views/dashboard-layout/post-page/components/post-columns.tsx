@@ -39,6 +39,10 @@ const PostColumns = ({
     accessorKey: "title",
   },
   {
+    header: "Owner",
+    accessorKey: "username",
+  },
+  {
     id: "action",
     cell: ({ row }) => {
       return (

@@ -7,13 +7,11 @@ import {
   CardDescription,
 } from "@/components/ui";
 import { ProductResponse } from "@/domains/models/products/product.response";
-
 import Show from "@/lib/show";
 import {
-  DownloadIcon,
-  ClipboardList,
   Award,
   CircleDollarSign,
+  ClipboardList,
   HeartIcon,
 } from "lucide-react";
 import React from "react";
@@ -52,7 +50,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
           <CardDescription className="flex flex-col gap-2">
             <div className="absolute space-y-3 top-1 start-0">
               <div>
-                <span className="px-8 py-2 text-foreground bg-opacity-50 rounded-[0px_0px_10px_0px] bg-primary/60 font-semibold">
+                <span className="px-8 py-2 text-background bg-opacity-50 rounded-[0px_0px_10px_0px] bg-primary/60 font-semibold">
                   {data.name}
                 </span>
               </div>
@@ -69,10 +67,10 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
             </div>
             <div className="absolute bottom-2 start-2">
               <div className="space-x-3">
-                <Button variant="secondary" className="space-x-2">
+                {/* <Button variant="secondary" className="space-x-2">
                   <DownloadIcon className="size-4" />
                   <span>Download</span>
-                </Button>
+                </Button> */}
                 <Button
                   className="space-x-2"
                   onClick={() => navigation(data.id)}
@@ -88,7 +86,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
       <div>
         <Show>
           <Show.When isTrue={data.license.toLowerCase() === "pro"}>
-            <div className="absolute top-0 right-0 flex items-center gap-2 p-2 rounded-tr-sm rounded-bl-sm bg-primary/65">
+            <div className="absolute top-0 right-0 flex items-center gap-2 p-2 rounded-tr-sm rounded-bl-sm bg-primary/65 text-background">
               <Award className="size-5" />
               <span className="hidden font-semibold">Pro</span>
             </div>
