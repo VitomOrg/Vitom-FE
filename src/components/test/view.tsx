@@ -1,22 +1,25 @@
-import { Text, useGLTF } from "@react-three/drei";
+import { ErrorBoundary } from "@/components/hoc/error-boundary";
+import { Camera } from "@/components/test/camera";
+import { Grid } from "@/components/test/grid";
+import { Light } from "@/components/test/light";
+import { Model } from "@/components/test/model";
+import { Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense, useState, useEffect } from "react";
-import { GLTF } from "three-stdlib";
+import { Suspense, useEffect, useState } from "react";
 
 interface ModelViewerProps {
   glbUrl: string;
+  showGrid?: boolean;
 }
 
-const Model: React.FC<ModelViewerProps> = ({ glbUrl }) => {
-  const { scene } = useGLTF(glbUrl) as GLTF;
-  return <primitive object={scene} />;
-};
-
-const ModelViewer: React.FC<ModelViewerProps> = ({ glbUrl }) => {
+export const ModelViewer: React.FC<ModelViewerProps> = ({
+  glbUrl,
+  showGrid,
+}) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setError(false); // Reset error state when URL changes
+    setError(false);
   }, [glbUrl]);
 
   const handleError = (error: Error) => {
@@ -25,7 +28,10 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ glbUrl }) => {
   };
 
   return (
-    <Canvas>
+    <Canvas className="border bg-background rounded-xl">
+      <Camera />
+      <Light />
+      {showGrid && <Grid />}
       <Suspense
         fallback={
           <Text color="gray" position={[0, 0, 0]}>
@@ -46,19 +52,3 @@ const ModelViewer: React.FC<ModelViewerProps> = ({ glbUrl }) => {
     </Canvas>
   );
 };
-
-// Custom ErrorBoundary component
-class ErrorBoundary extends React.Component<{
-  onError: (error: Error) => void;
-  children: React.ReactNode;
-}> {
-  componentDidCatch(error: Error) {
-    this.props.onError(error);
-  }
-
-  render() {
-    return this.props.children;
-  }
-}
-
-export default ModelViewer;

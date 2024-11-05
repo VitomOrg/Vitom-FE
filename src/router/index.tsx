@@ -49,6 +49,10 @@ const DashboardPage = lazy(
 const ProductEdit = lazy(
   () => import("@/views/dashboard-layout/product-page/product-edit")
 );
+
+const ProductDetailManage = lazy(
+  () => import("@/views/dashboard-layout/product-page/product-detail")
+);
 const ProductManagePage = lazy(
   () => import("@/views/dashboard-layout/product-page/product-manage")
 );
@@ -241,6 +245,14 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <ProductManagePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "products/:id",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ProductDetailManage />
           </Suspense>
         ),
       },

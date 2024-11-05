@@ -1,12 +1,21 @@
-// import assert from "@/assets";
-// import GlbViewer from "@/components/three_ui/glb";
 import { ProductDetail } from "@/domains/models/products/product-detail.response";
-import { Badge, Button, Card, Skeleton, useToast } from "@/components/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Skeleton,
+  useToast,
+} from "@/components/ui";
 import { BookmarkPlus, CreditCard, Download, Heart } from "lucide-react";
 import React from "react";
 import { CartApi } from "@/domains/services/carts.service";
 import { RootResponse, Value } from "@/domains/models/root/root.response";
-import ModelViewer from "@/components/test/model-viewer";
+import DownloadFile from "@/components/download-file/download-file";
+import { ModelViewer } from "@/components/test/view";
 
 interface InformationProductProps {
   product: ProductDetail;
@@ -76,8 +85,8 @@ const InformationProduct: React.FC<InformationProductProps> = ({
           </div>
           <div className="grid grid-cols-4 gap-2"></div>
         </div>
-        <div>
-          <h1 className="mb-4 text-3xl font-bold">{product.name}</h1>
+        <div className="space-y-4">
+          <h1 className="text-3xl font-bold ">{product.name}</h1>
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <span className="text-2xl font-bold">
@@ -118,10 +127,27 @@ const InformationProduct: React.FC<InformationProductProps> = ({
               </span>
             </div>
             {product.license === "Free" ? (
-              <Button variant="outline" className="w-full">
-                <Download className="w-4 h-4 mr-2" /> Download
-              </Button>
+              <div className="flex justify-center gap-3">
+                <DownloadFile
+                  fileName={product.name}
+                  filePath={product.glbUrl}
+                  title="GLB"
+                />
+                <DownloadFile
+                  fileName={product.name}
+                  filePath={product.fbxUrl}
+                  title="FBX"
+                />
+                <DownloadFile
+                  fileName={product.name}
+                  filePath={product.objUrl}
+                  title="OBJ"
+                />
+              </div>
             ) : (
+              // <Button variant="outline" className="w-full">
+              //   <Download className="w-4 h-4 mr-2" /> Download
+              // </Button>
               <Button
                 variant="outline"
                 className="w-full bg-foreground text-background hover:bg-foreground/80 hover:text-background/80"
@@ -129,6 +155,16 @@ const InformationProduct: React.FC<InformationProductProps> = ({
                 <CreditCard className="w-4 h-4 mr-2" /> Purchase
               </Button>
             )}
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <h2 className="text-xl font-bold">Information</h2>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>{product.description}</CardDescription>
+            </CardContent>
           </Card>
         </div>
       </div>
