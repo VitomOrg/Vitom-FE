@@ -1,14 +1,14 @@
-import { SoftwarePageRequest } from "@/domains/models/software/software-page.request";
+import { SoftwareParamsRequest } from "@/domains/models/softwares";
 import { SoftwareApi } from "@/domains/services";
 import { QueryKey } from "@/domains/stores/query-key";
 import { useQuery } from "@tanstack/react-query";
 
 interface SoftwareHook {
-  options?: SoftwarePageRequest;
+  options?: SoftwareParamsRequest;
 }
 
 const useSoftware = ({ options }: SoftwareHook) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [QueryKey.LIST_SOFTWARE, ...(options ? [options] : [])],
     queryFn: () => SoftwareApi.listSoftware(options),
   });
@@ -30,7 +30,7 @@ const useSoftware = ({ options }: SoftwareHook) => {
   //   initialPageParam: 1,
   // });
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 export default useSoftware;

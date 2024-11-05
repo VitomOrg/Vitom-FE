@@ -3,12 +3,14 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from "@/components/ui";
+import { cn } from "@/lib";
 
 interface DialogCustomProps {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
   title?: React.ReactNode;
+  className?: string;
 }
 
 const DialogCustom: React.FC<DialogCustomProps> = ({
@@ -16,6 +18,7 @@ const DialogCustom: React.FC<DialogCustomProps> = ({
   isOpen,
   onClose,
   title,
+  className,
 }) => {
   return (
     <AlertDialog
@@ -25,7 +28,12 @@ const DialogCustom: React.FC<DialogCustomProps> = ({
       }}
     >
       <AlertDialogTrigger asChild>{title}</AlertDialogTrigger>
-      <AlertDialogContent className="max-w-[1000px] grid place-content-center border border-none bg-black/0">
+      <AlertDialogContent
+        className={cn(
+          "max-w-[1000px] grid place-content-center border border-none bg-black/0",
+          className
+        )}
+      >
         {children}
       </AlertDialogContent>
     </AlertDialog>

@@ -14,8 +14,8 @@ import useSoftware from "@/domains/stores/query-hook/software/use-software";
 import useTypes from "@/domains/stores/query-hook/types/use-types";
 import { ChevronDown } from "lucide-react";
 import React, { useMemo } from "react";
-import { SoftwarePageRequest } from "@/domains/models/software/software-page.request";
 import { TypePageRequest } from "@/domains/models/type/type-page.request";
+import { SoftwareParamsRequest } from "@/domains/models/softwares";
 
 const Filter = () => {
   const [priceTo, setPriceTo] = React.useState<number>(200);
@@ -24,7 +24,7 @@ const Filter = () => {
   const [pageSizeTypes, setPageSizeTypes] = React.useState<number>(10);
   const { setFilter, filter } = useProductStore();
 
-  const optionSoftware: SoftwarePageRequest = useMemo(() => {
+  const optionSoftware: SoftwareParamsRequest = useMemo(() => {
     return {
       pageSize: pageSizeSoftware,
       pageIndex: 1,
@@ -198,10 +198,7 @@ const Filter = () => {
           ))}
         </div>
 
-        <Button
-          className="w-full space-x-2"
-          variant="outline"
-        >
+        <Button className="w-full space-x-2" variant="outline">
           <ChevronDown size={24} />
           <span>See more</span>
         </Button>

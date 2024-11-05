@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -10,13 +12,28 @@ import {
 import { UseReportQuery } from "@/domains/stores/query-hook/report/use-report";
 import { DollarSign, Package, ShoppingCart, Users } from "lucide-react";
 import {
-  Bar,
-  BarChart,
+  Area,
+  AreaChart,
   CartesianGrid,
   ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
+
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const DashboardPage = () => {
   const { data, isLoading, error } = UseReportQuery({
@@ -46,30 +63,33 @@ const DashboardPage = () => {
 
   const cardData = [
     {
-      title: "Total Income",
+      title: "Income",
       value: data.value.systemTotalIncome,
       icon: DollarSign,
     },
     {
-      title: "Total Transactions",
+      title: "Transactions",
       value: data.value.systemTotalTransaction,
       icon: ShoppingCart,
     },
     {
-      title: "Total Products",
+      title: "Products",
       value: data.value.systemTotalProduct,
       icon: Package,
     },
-    { title: "Total Users", value: data.value.systemTotalUser, icon: Users },
+    { title: "Users", value: data.value.systemTotalUser, icon: Users },
   ];
 
-  const monthlyIncomeData = data.value.monthlyIncomeResponses.data.map(
-    (item) => ({
-      month: `${item.year}-${item.month.toString().padStart(2, "0")}`,
-      income: item.TotalIncome,
-      transactions: item.TotalTransaction,
-    })
-  );
+  const monthlyData = months.map((month, index) => {
+    const matchingData = data.value.monthlyIncomeResponses.data.find(
+      (item) => item.month === index + 1
+    );
+    return {
+      month,
+      income: matchingData?.totalIncome || 0,
+      transactions: matchingData?.totalTransaction || 0,
+    };
+  });
 
   return (
     <div className="container p-4 mx-auto">
@@ -93,7 +113,7 @@ const DashboardPage = () => {
       </div>
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle>Monthly Income</CardTitle>
+          <CardTitle>Monthly Statistics</CardTitle>
         </CardHeader>
         <CardContent>
           <ChartContainer
@@ -107,36 +127,77 @@ const DashboardPage = () => {
                 color: "hsl(var(--chart-2))",
               },
             }}
-            className="h-[400px]"
+            className="h-[400px] w-full"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={monthlyIncomeData}>
+              <AreaChart data={monthlyData}>
+                <defs>
+                  <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
+                    <stop
+                      offset="5%"
+                      stopColor="var(--color-income)"
+                      stopOpacity={0.8}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="var(--color-income)"
+                      stopOpacity={0}
+                    />
+                  </linearGradient>
+                  <linearGradient
+                    id="colorTransactions"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="5%"
+                      stopColor="var(--color-transactions)"
+                      stopOpacity={0.8}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="var(--color-transactions)"
+                      stopOpacity={0}
+                    />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
+                <XAxis dataKey="month" tick={{ fill: "var(--foreground)" }} />
                 <YAxis
                   yAxisId="left"
                   orientation="left"
-                  stroke="var(--color-income)"
+                  tick={{ fill: "var(--foreground)" }}
                 />
                 <YAxis
                   yAxisId="right"
                   orientation="right"
-                  stroke="var(--color-transactions)"
+                  tick={{ fill: "var(--foreground)" }}
                 />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar
+                <ChartTooltip
+                  content={<ChartTooltipContent />}
+                  cursor={{ stroke: "var(--foreground)", strokeWidth: 1 }}
+                />
+                <Area
                   yAxisId="left"
+                  type="monotone"
                   dataKey="income"
-                  fill="var(--color-income)"
+                  stroke="var(--color-income)"
+                  fillOpacity={1}
+                  fill="url(#colorIncome)"
                   name="Income"
                 />
-                <Bar
+                <Area
                   yAxisId="right"
+                  type="monotone"
                   dataKey="transactions"
-                  fill="var(--color-transactions)"
+                  stroke="var(--color-transactions)"
+                  fillOpacity={1}
+                  fill="url(#colorTransactions)"
                   name="Transactions"
                 />
-              </BarChart>
+              </AreaChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>

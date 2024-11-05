@@ -8,7 +8,7 @@ import {
 } from "@/components/ui";
 import { SoftwareResponse } from "@/domains/models/softwares";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, BookText, PencilIcon, Trash2 } from "lucide-react";
+import { MoreHorizontal, PencilIcon, Trash2 } from "lucide-react";
 
 interface SoftwareColumnsProps {
   getId: (id: string) => void;
@@ -17,7 +17,7 @@ interface SoftwareColumnsProps {
 }
 
 export const SoftwareColumns = ({
-  getId,
+  // getId,
   editData,
   deleteData,
 }: SoftwareColumnsProps): ColumnDef<SoftwareResponse>[] => [
@@ -32,6 +32,9 @@ export const SoftwareColumns = ({
   {
     header: "Created At",
     accessorKey: "createdAt",
+    cell: ({ row }) => {
+      return new Date(row.original.createdAt).toLocaleString();
+    },
   },
   {
     header: "Purchases",
@@ -49,13 +52,13 @@ export const SoftwareColumns = ({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               className="space-x-4"
               onClick={() => getId(row.original.id)}
             >
               <BookText className="size-4" />
               <span>Detail</span>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem
               className="space-x-4"
               onClick={() => editData(row.original)}
