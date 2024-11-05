@@ -28,7 +28,7 @@ const SoftwarePage = () => {
         </div>
         <Button className="space-x-2" onClick={() => navigate("create")}>
           <CirclePlus size={24} />
-          <span>Add Post</span>
+          <span>Add Software</span>
         </Button>
       </div>
       <SoftwareTable data={data?.data || []} isLoading={isLoading} />

@@ -12,8 +12,8 @@ export interface ReportsResponse {
 export interface MonthlyIncomeResponses {
   year: number;
   month: number;
-  TotalIncome: number;
-  TotalTransaction: number;
-  CreatedAt: Date;
-  UpdatedAt: Date;
+  totalIncome: number;
+  totalTransaction: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

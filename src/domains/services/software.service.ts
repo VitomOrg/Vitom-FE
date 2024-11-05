@@ -1,18 +1,20 @@
-import { Value } from "@/domains/models/root/root.response";
+import { axiosInstance } from "@/configs";
+import { RootResponse, Value } from "@/domains/models/root/root.response";
 import {
+  SoftwareBodyRequest,
+  SoftwareEditResponse,
   SoftwareOfProductRequest,
-  SoftwarePageRequest,
-} from "@/domains/models/software/software-page.request";
-import { SoftwareRequest } from "@/domains/models/software/software.request";
-import {
   SoftwareOfProductResponse,
+  SoftwareParamsRequest,
   SoftwareResponse,
-} from "@/domains/models/software/software.response";
+} from "@/domains/models/softwares";
+
 import { handleApiCall } from "@/lib/handle-api-call";
+import axios from "axios";
 
 export const SoftwareApi = {
   listSoftware: async (
-    options?: SoftwarePageRequest
+    options?: SoftwareParamsRequest
   ): Promise<Value<SoftwareResponse[]>> => {
     return handleApiCall<Value<SoftwareResponse[]>>("get", "/softwares", {
       params: options,
@@ -31,20 +33,46 @@ export const SoftwareApi = {
     ) as Promise<Value<SoftwareOfProductResponse>>;
   },
 
-  createSoftware: async (data: SoftwareRequest): Promise<null> => {
-    return handleApiCall<null>("post", "/softwares", data) as Promise<null>;
+  createSoftware: async (
+    data: SoftwareBodyRequest
+  ): Promise<RootResponse<SoftwareEditResponse> | undefined> => {
+    try {
+      const response = await axiosInstance.post<
+        RootResponse<SoftwareEditResponse>
+      >("/softwares", data);
+
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data as RootResponse<SoftwareEditResponse>;
+      }
+    }
   },
 
-  updateSoftware: async (Id: string, data: SoftwareRequest) => {
-    return handleApiCall<null>("put", `/softwares/${Id}`, {
-      params: { Id },
-      data,
-    }) as Promise<null>;
+  updateSoftware: async (
+    id: string,
+    data: SoftwareBodyRequest
+  ): Promise<boolean | undefined> => {
+    try {
+      const response = await axiosInstance.put(`/softwares/${id}`, data);
+
+      if (
+        response.status === 204 ||
+        response.status === 200 ||
+        response.status === 201
+      ) {
+        return true;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data as boolean;
+      }
+    }
   },
 
-  deleteSoftware: async (Id: string) => {
-    return handleApiCall<null>("delete", `/softwares/${Id}`, {
-      params: { Id },
+  deleteSoftware: async (id: string) => {
+    return handleApiCall<null>("delete", `/softwares/${id}`, {
+      params: { id },
     }) as Promise<null>;
   },
 };
