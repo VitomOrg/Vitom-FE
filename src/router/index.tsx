@@ -95,7 +95,13 @@ const routes = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Suspense fallback={<Loading />}>
+      <Suspense
+        fallback={
+          <div className="grid w-screen h-screen place-content-center">
+            <Loading />
+          </div>
+        }
+      >
         <MainLayout />
       </Suspense>
     ),
@@ -104,7 +110,13 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <HomePage />
           </Suspense>
         ),
@@ -112,7 +124,13 @@ const routes = createBrowserRouter([
       {
         path: "about",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <AboutPage />
           </Suspense>
         ),
@@ -120,7 +138,13 @@ const routes = createBrowserRouter([
       {
         path: "contact",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ContactPage />
           </Suspense>
         ),
@@ -128,7 +152,13 @@ const routes = createBrowserRouter([
       {
         path: "products",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ProductsPage />
           </Suspense>
         ),
@@ -136,7 +166,13 @@ const routes = createBrowserRouter([
       {
         path: "products/:id",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ProductDetailPage />
           </Suspense>
         ),
@@ -144,7 +180,13 @@ const routes = createBrowserRouter([
       {
         path: "shopping-cart",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ShoppingPage />
           </Suspense>
         ),
@@ -152,7 +194,13 @@ const routes = createBrowserRouter([
       {
         path: "blog",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogPage />
           </Suspense>
         ),
@@ -160,7 +208,13 @@ const routes = createBrowserRouter([
       {
         path: "blog/:id",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogDetailPage />
           </Suspense>
         ),
@@ -168,7 +222,13 @@ const routes = createBrowserRouter([
       {
         path: "blog/:id/edit",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogEditPage />
           </Suspense>
         ),
@@ -176,7 +236,13 @@ const routes = createBrowserRouter([
       {
         path: "blog/create",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogEditPage />
           </Suspense>
         ),
@@ -184,7 +250,13 @@ const routes = createBrowserRouter([
       {
         path: "history",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <HistoryPage />
           </Suspense>
         ),
@@ -194,7 +266,13 @@ const routes = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Suspense fallback={<Loading />}>
+      <Suspense
+        fallback={
+          <div className="grid w-screen h-screen place-content-center">
+            <Loading />
+          </div>
+        }
+      >
         <DashboardLayout />
       </Suspense>
     ),
@@ -203,7 +281,13 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <DashboardPage />
           </Suspense>
         ),
@@ -211,7 +295,13 @@ const routes = createBrowserRouter([
       {
         path: "posts",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogManagePage />
           </Suspense>
         ),
@@ -219,7 +309,13 @@ const routes = createBrowserRouter([
       {
         path: "posts/create",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogEditPage />
           </Suspense>
         ),
@@ -227,7 +323,13 @@ const routes = createBrowserRouter([
       {
         path: "posts/:id",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogDetailManage />
           </Suspense>
         ),
@@ -235,7 +337,13 @@ const routes = createBrowserRouter([
       {
         path: "posts/:id/edit",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <BlogEditPage />
           </Suspense>
         ),
@@ -243,7 +351,13 @@ const routes = createBrowserRouter([
       {
         path: "products",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ProductManagePage />
           </Suspense>
         ),
@@ -251,7 +365,13 @@ const routes = createBrowserRouter([
       {
         path: "products/:id",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ProductDetailManage />
           </Suspense>
         ),
@@ -259,7 +379,13 @@ const routes = createBrowserRouter([
       {
         path: "products/create",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ProductEdit />
           </Suspense>
         ),
@@ -267,7 +393,13 @@ const routes = createBrowserRouter([
       {
         path: "products/:id/edit",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <ProductEdit />
           </Suspense>
         ),
@@ -276,7 +408,13 @@ const routes = createBrowserRouter([
       {
         path: "software",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <SoftwarePage />
           </Suspense>
         ),
@@ -284,7 +422,13 @@ const routes = createBrowserRouter([
       {
         path: "software/create",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <SoftwareManagePage />
           </Suspense>
         ),
@@ -292,7 +436,13 @@ const routes = createBrowserRouter([
       {
         path: "software/:id/edit",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <SoftwareManagePage />
           </Suspense>
         ),
@@ -300,7 +450,13 @@ const routes = createBrowserRouter([
       {
         path: "software/:id",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <SoftwareDetailPage />
           </Suspense>
         ),
@@ -308,7 +464,13 @@ const routes = createBrowserRouter([
       {
         path: "types",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <TypesPage />
           </Suspense>
         ),
@@ -316,7 +478,13 @@ const routes = createBrowserRouter([
       {
         path: "types/create",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <TypesManagePage />
           </Suspense>
         ),
@@ -324,7 +492,13 @@ const routes = createBrowserRouter([
       {
         path: "types/:id/edit",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <TypesManagePage />
           </Suspense>
         ),
@@ -332,7 +506,13 @@ const routes = createBrowserRouter([
       {
         path: "types/:id",
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense
+            fallback={
+              <div className="grid w-screen h-screen place-content-center">
+                <Loading />
+              </div>
+            }
+          >
             <TypesDetailPage />
           </Suspense>
         ),

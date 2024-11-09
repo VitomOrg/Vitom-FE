@@ -1,14 +1,34 @@
-import { GridHelper } from "three";
-import { useRef, useEffect } from "react";
+// src/components/three_ui/GridScreen.tsx
+import React from "react";
+import * as THREE from "three";
+import { useThree } from "@react-three/fiber";
 
-export const Grid = () => {
-  const gridRef = useRef<GridHelper | null>(null);
+interface GridScreenProps {
+  positionY?: number;
+  heightObjet?: number;
+}
 
-  useEffect(() => {
-    if (gridRef.current) {
-      gridRef.current.visible = true; // Toggle visibility if needed
-    }
-  }, []);
+const GridScreen: React.FC<GridScreenProps> = ({ heightObjet = 1 }) => {
+  const { scene } = useThree();
 
-  return <gridHelper ref={gridRef} args={[10, 10]} />;
+  React.useEffect(() => {
+    // Set the size of the grid
+    const size = 10;
+    const divisions = 10;
+
+    // Create a grid helper and set its position
+    const gridHelper = new THREE.GridHelper(size, divisions);
+    gridHelper.position.y = -heightObjet! / 2 - 0.2;
+
+    scene.add(gridHelper);
+
+    // Cleanup the grid helper on unmount
+    return () => {
+      scene.remove(gridHelper);
+    };
+  }, [scene, heightObjet]);
+
+  return null; // This component doesn't render anything itself
 };
+
+export default GridScreen;

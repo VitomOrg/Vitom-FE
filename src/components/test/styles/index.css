@@ -1,0 +1,7 @@
+.gradient {
+  background-image: radial-gradient(
+    circle 400px at 50% 50%,
+    rgb(77, 77, 77) 0px,
+    transparent 70%
+  );
+}

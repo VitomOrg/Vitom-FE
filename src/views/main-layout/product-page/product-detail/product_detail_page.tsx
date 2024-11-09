@@ -6,14 +6,17 @@ import { useParams } from "react-router-dom";
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { data, isLoading } = UseProductDetail({
-    queryOptions: {},
+  const { data, isLoading, refetch } = UseProductDetail({
     id: id || "",
   });
 
   return (
     <main className="container">
-      <InformationProduct product={data!} isLoading={isLoading} />
+      <InformationProduct
+        product={data!}
+        isLoading={isLoading}
+        refetch={refetch}
+      />
       <Comment />
     </main>
   );

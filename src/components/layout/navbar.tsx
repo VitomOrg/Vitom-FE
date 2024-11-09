@@ -27,7 +27,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 bg-accent text-accent-foreground">
+    <header className="sticky top-0 z-30 bg-accent text-accent-foreground">
       <div className="container flex items-center justify-between h-full py-4">
         {/* Button to open Sheet for screens smaller than 768px */}
         <div className="block md:hidden">

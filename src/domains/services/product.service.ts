@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/configs";
+import { ProductLikeResponse } from "@/domains/models/products";
 import { ProductDetail } from "@/domains/models/products/product-detail.response";
 import { ProductEditResponse } from "@/domains/models/products/product-edit.response";
 import {
@@ -118,6 +119,29 @@ export const ProductApi = {
         },
       });
 
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return Promise.reject(error.response?.status);
+      }
+    }
+  },
+
+  putProductLiked: async (
+    id: string
+  ): Promise<RootResponse<ProductLikeResponse> | undefined> => {
+    try {
+      const response = await axiosInstance.put<
+        RootResponse<ProductLikeResponse>
+      >(
+        `/products/like`,
+        {},
+        {
+          params: {
+            productId: id,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

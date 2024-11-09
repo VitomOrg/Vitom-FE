@@ -16,6 +16,7 @@ export interface ProductDetail {
   downloadUrl: string;
   totalPurchases: number;
   totalLiked: number;
+  isLiked: boolean;
 }
 
 export interface Image {
