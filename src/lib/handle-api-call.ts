@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import axios from "axios";
 import { axiosInstance } from "@/configs";
 import { RootResponse, Value } from "@/domains/models/root/root.response";
 
@@ -16,7 +16,7 @@ export async function handleApiCall<T>(
   url: string,
   option?: unknown,
   isRootResponse: boolean = false
-): Promise<T | Value<T> | RootResponse<T> > {
+): Promise<T | Value<T> | RootResponse<T>> {
   try {
     // Execute the API call using the specified method
 
@@ -28,9 +28,8 @@ export async function handleApiCall<T>(
 
     return response.data.value;
   } catch (error) {
-    if (error instanceof AxiosError && error.response) {
-      console.error("API error:", error.response.data);
-      return Promise.reject(error.response.data);
+    if (axios.isAxiosError(error)) {
+      return error.response?.data as RootResponse<T>;
     } else {
       console.error("Unknown error:", error);
       return Promise.reject(error);

@@ -6,18 +6,32 @@ import * as THREE from "three";
 
 interface ModelViewerProps {
   glbUrl: string;
+  showGrid: boolean;
 }
 
-export const Model: React.FC<ModelViewerProps> = ({ glbUrl }) => {
+export const Model: React.FC<ModelViewerProps> = ({ glbUrl, showGrid }) => {
   const { scene } = useGLTF(glbUrl) as GLTF;
   const meshRef = useRef<THREE.Group>(null);
+  const gridRef = useRef<THREE.GridHelper>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [modelHeight, setModelHeight] = useState(0);
   const [prevMousePosition, setPrevMousePosition] = useState({ x: 0, y: 0 });
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
     setIsDragging(true);
     setPrevMousePosition({ x: event.clientX, y: event.clientY });
   }, []);
+
+  const calculateModelHeight = useCallback(() => {
+    const boundingBox = new THREE.Box3().setFromObject(scene);
+    const height = (boundingBox.max.y - boundingBox.min.y) / 2;
+    return height > 0 ? height : 1;
+  }, [scene]);
+
+  useEffect(() => {
+    const height = calculateModelHeight();
+    setModelHeight(height);
+  }, [calculateModelHeight]);
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
@@ -26,8 +40,8 @@ export const Model: React.FC<ModelViewerProps> = ({ glbUrl }) => {
       const dx = event.clientX - prevMousePosition.x;
       const dy = event.clientY - prevMousePosition.y;
 
-      meshRef.current.rotation.y += dx * 0.01; // Rotate around the Y-axis
-      meshRef.current.rotation.x += dy * 0.01; // Rotate around the X-axis
+      meshRef.current.rotation.y += dx * 0.01;
+      meshRef.current.rotation.x += dy * 0.01;
 
       setPrevMousePosition({ x: event.clientX, y: event.clientY });
     },
@@ -55,5 +69,17 @@ export const Model: React.FC<ModelViewerProps> = ({ glbUrl }) => {
     };
   }, [handleMouseDown, handleMouseMove, handleMouseUp]);
 
-  return <primitive ref={meshRef} object={scene} />;
+  return (
+    <group ref={meshRef}>
+      {/* Model and gridHelper will move together */}
+      <primitive object={scene} />
+      {showGrid && (
+        <gridHelper
+          ref={gridRef}
+          args={[10, 10, 0x888888, 0x444444]}
+          position={[0, -modelHeight, 0]}
+        />
+      )}
+    </group>
+  );
 };

@@ -25,17 +25,6 @@ export const axiosInstance = axios.create({
   timeout: 10000,
 });
 
-export const api = () => {
-  return axios.create({
-    baseURL: baseURL,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: false,
-    timeout: 10000,
-  });
-};
-
 axiosInstance.interceptors.request.use(
   (config) => {
     // get token from local storage

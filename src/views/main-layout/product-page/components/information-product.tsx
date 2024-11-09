@@ -1,4 +1,5 @@
-import { ProductDetail } from "@/domains/models/products/product-detail.response";
+import DownloadFile from "@/components/download-file/download-file";
+import { ModelViewer } from "@/components/test/view";
 import {
   Badge,
   Button,
@@ -10,23 +11,42 @@ import {
   Skeleton,
   useToast,
 } from "@/components/ui";
+import { ProductDetail } from "@/domains/models/products/product-detail.response";
+import { RootResponse, Value } from "@/domains/models/root/root.response";
+import { ProductApi } from "@/domains/services";
+import { CartApi } from "@/domains/services/carts.service";
 import { BookmarkPlus, CreditCard, Download, Heart } from "lucide-react";
 import React from "react";
-import { CartApi } from "@/domains/services/carts.service";
-import { RootResponse, Value } from "@/domains/models/root/root.response";
-import DownloadFile from "@/components/download-file/download-file";
-import { ModelViewer } from "@/components/test/view";
 
 interface InformationProductProps {
   product: ProductDetail;
   isLoading: boolean;
+  refetch: () => void;
 }
 
 const InformationProduct: React.FC<InformationProductProps> = ({
   product,
   isLoading,
+  refetch,
 }) => {
   const { toast } = useToast();
+
+  const handlePurchase = async (id: string) => {
+    const response = await CartApi.postCart({ productId: id });
+
+    if (response.isSuccess) {
+      const checkoutResponse = await CartApi.postCartCheckout();
+
+      if (checkoutResponse) {
+        window.location.href = checkoutResponse.checkoutUrl;
+      }
+    } else {
+      toast({
+        title: "Error",
+        description: response.errors[0] as string,
+      });
+    }
+  };
 
   const handleAddToCart = async (id: string) => {
     await CartApi.postCart({ productId: id })
@@ -45,17 +65,29 @@ const InformationProduct: React.FC<InformationProductProps> = ({
       .finally(() => {});
   };
 
+  const handleLike = async (id: string) => {
+    await ProductApi.putProductLiked(id)
+      .then(() => {
+        refetch();
+      })
+      .catch((error: RootResponse<Value<null>>) => {
+        toast({
+          title: "Error",
+          description: error.errors[0] as string,
+        });
+      })
+      .finally(() => {});
+  };
+
   if (isLoading) {
     return (
       <section className="flex flex-col gap-6 p-4 lg:flex-row">
-        {/* Viewer 3D model skeleton */}
         <div className="w-full lg:w-1/2">
           <Card>
             <Skeleton className="h-[400px]" />
           </Card>
         </div>
 
-        {/* Thông tin sản phẩm skeleton */}
         <div className="w-full lg:w-1/2">
           <Card>
             <div className="p-4">
@@ -80,17 +112,24 @@ const InformationProduct: React.FC<InformationProductProps> = ({
     <div className="container px-4 py-8 mx-auto">
       <div className="grid gap-8 md:grid-cols-2">
         <div>
-          <div className="flex items-center justify-center w-full mb-4 bg-gray-100 rounded-lg aspect-square">
-            <ModelViewer glbUrl={product.glbUrl} />
-          </div>
-          <div className="grid grid-cols-4 gap-2"></div>
+          <ModelViewer
+            glbUrl={product.glbUrl}
+            productName={product.name}
+            handleLike={() => {
+              handleLike(product.id);
+            }}
+            isLiked={product.isLiked}
+          />
         </div>
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold ">{product.name}</h1>
+          {/* <h1 className="text-3xl font-bold ">{product.name}</h1> */}
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <span className="text-2xl font-bold">
-                ${product.price.toFixed(2)}
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(product.price)}
               </span>
               <Button onClick={() => handleAddToCart(product.id)}>
                 <BookmarkPlus className="size-5" />
@@ -123,36 +162,24 @@ const InformationProduct: React.FC<InformationProductProps> = ({
                 purchases
               </span>
               <span className="flex items-center">
-                <Heart className="w-4 h-4 mr-1" /> {product.totalLiked} likes
+                <Heart className="mr-1 size-4" /> {product.totalLiked} likes
               </span>
             </div>
-            {product.license === "Free" ? (
+            {product.downloadUrl.length !== 0 ? (
               <div className="flex justify-center gap-3">
                 <DownloadFile
                   fileName={product.name}
-                  filePath={product.glbUrl}
-                  title="GLB"
-                />
-                <DownloadFile
-                  fileName={product.name}
-                  filePath={product.fbxUrl}
-                  title="FBX"
-                />
-                <DownloadFile
-                  fileName={product.name}
-                  filePath={product.objUrl}
-                  title="OBJ"
+                  filePath={product.downloadUrl}
+                  title="Download"
                 />
               </div>
             ) : (
-              // <Button variant="outline" className="w-full">
-              //   <Download className="w-4 h-4 mr-2" /> Download
-              // </Button>
               <Button
                 variant="outline"
                 className="w-full bg-foreground text-background hover:bg-foreground/80 hover:text-background/80"
+                onClick={() => handlePurchase(product.id)}
               >
-                <CreditCard className="w-4 h-4 mr-2" /> Purchase
+                <CreditCard className="mr-2 size-4" /> Purchase
               </Button>
             )}
           </Card>
