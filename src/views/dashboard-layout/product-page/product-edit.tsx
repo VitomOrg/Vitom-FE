@@ -1,4 +1,5 @@
 import { FileInput } from "@/components/common/file-input";
+// import ViewGlTF from "@/components/three_ui/gltf/view-gltf";
 import {
   Badge,
   Button,
@@ -25,23 +26,28 @@ import {
   Textarea,
   useToast,
 } from "@/components/ui";
+import { Image } from "@/domains/models/products";
+import { ProductResponse } from "@/domains/models/products/product.response";
 import { ProductSchema, ProductTypeSchema } from "@/domains/schemas";
 import { ProductApi } from "@/domains/services";
 import useSoftware from "@/domains/stores/query-hook/software/use-software";
 import useTypes from "@/domains/stores/query-hook/types/use-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, Loader, PlusCircle, XCircle } from "lucide-react";
-import { useState } from "react";
+import { CheckCircle, PlusCircle, XCircle } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useParams } from "react-router-dom";
 
 const ProductEdit = () => {
   const { id } = useParams<{ id: string }>();
+  // const [softwaresSelect, setSoftwaresSelect] = useState<string[]>([]);
+  // const [typesSelect, setTypesSelect] = useState<string[]>([]);
+
   const { toast } = useToast();
 
   const { state: ProductState } = useLocation();
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data: software } = useSoftware({
     options: {
@@ -57,6 +63,30 @@ const ProductEdit = () => {
     },
   });
 
+  useEffect(() => {
+    const data = ProductState as ProductResponse;
+
+    if (ProductState) {
+      const wereSelectedSoftwares = data.softwares;
+      console.log("wereSelectedSoftwares", wereSelectedSoftwares);
+
+      // const wereSelectedTypes = data.types;
+
+      // const softwareIds = software?.data
+      //   .filter((sw) => {
+      //     wereSelectedSoftwares.find((s) => s)
+      //   })
+      //   .map((sw) => sw.id);
+      // const typeIds = types?.data.map((type) => {
+      //   if (wereSelectedTypes?.some((t) => t.includes(type.name))) {
+      //     return type.id;
+      //   }
+      // });
+
+      // console.log("softwareIds", softwareIds);
+    }
+  }, [ProductState, software, types]);
+
   const form = useForm<ProductTypeSchema>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
@@ -66,16 +96,16 @@ const ProductEdit = () => {
       price: ProductState?.price || 0,
       typeIds: ProductState?.typeIds || [],
       softwareIds: ProductState?.softwareIds || [],
-      files: ProductState?.files || [],
-      modelMaterialFiles: ProductState?.modelMaterialFiles || [],
-      fbx: ProductState?.fbx || "",
-      obj: ProductState?.obj || "",
-      glb: ProductState?.glb || "",
+      files: (ProductState?.images as Image[]).map((img) => img.url) || [],
+      modelMaterialFiles: ProductState?.modelMaterials || [],
+      fbx: ProductState?.fbxUrl || "",
+      obj: ProductState?.objUrl || "",
+      glb: ProductState?.glbUrl || "",
     },
   });
 
   async function onSubmit(data: ProductTypeSchema) {
-    setIsSubmitting(true);
+    // setIsSubmitting(true);
 
     const response = id
       ? await ProductApi.updateProduct(id, data)
@@ -88,13 +118,13 @@ const ProductEdit = () => {
       });
     }
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   setIsSubmitting(false);
+    // }, 1000);
 
-    if (response) {
-      form.reset();
-    }
+    // if (response) {
+    //   form.reset();
+    // }
   }
 
   return (
@@ -204,9 +234,9 @@ const ProductEdit = () => {
                     <FormItem>
                       <FormLabel>Type</FormLabel>
                       <Select
-                        onValueChange={(value) =>
-                          field.onChange([...field.value, value])
-                        }
+                        onValueChange={(value) => {
+                          field.onChange([...field.value, value]);
+                        }}
                         value={field.value[field.value.length - 1] || ""}
                       >
                         <FormControl>
@@ -225,23 +255,23 @@ const ProductEdit = () => {
                       <FormDescription className="space-y-4">
                         <span>Selected types:</span>
                         <div>
-                          {field.value.map((id) => {
-                            const type = types?.data.find((s) => s.id === id);
-                            return (
-                              <Badge key={id} className="mt-2 mr-2">
-                                {type?.name}
-                                <XCircle
-                                  size={16}
-                                  className="ml-2 cursor-pointer"
-                                  onClick={() =>
-                                    field.onChange(
-                                      field.value.filter((v) => v !== id)
-                                    )
-                                  }
-                                />
-                              </Badge>
-                            );
-                          })}
+                          {/* {types?.data.map((id) => {
+                            // const type = types?.data.find((s) => s.id === id);
+                            // return (
+                            //   <Badge key={id} className="mt-2 mr-2">
+                            //     {type?.name}
+                            //     <XCircle
+                            //       size={16}
+                            //       className="ml-2 cursor-pointer"
+                            //       onClick={() =>
+                            //         field.onChange(
+                            //           field.value.filter((v) => v !== id)
+                            //         )
+                            //       }
+                            //     />
+                            //   </Badge>
+                            // );
+                          })} */}
                         </div>
                       </FormDescription>
                       <FormMessage />
@@ -348,7 +378,7 @@ const ProductEdit = () => {
                         multiple
                         onFilesSelected={(file) => {
                           onChange(file);
-                          console.log("value", value);
+                          console.log("Model Material Files value", value);
                         }}
                         {...field}
                       />
@@ -370,6 +400,8 @@ const ProductEdit = () => {
                       <FormLabel>FBX File</FormLabel>
                       <FormControl>
                         <FileInput
+                          // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          // value={value as any}
                           accept=".fbx"
                           onFilesSelected={(file) => {
                             onChange(file[0]);
@@ -382,6 +414,16 @@ const ProductEdit = () => {
                     </FormItem>
                   )}
                 />
+                {/* {form.watch("fbx") ? (
+                  <div className="h-96">
+                    <ViewGlTF
+                      glbUrl={URL.createObjectURL(form.watch("fbx"))}
+                      showGrid={true}
+                    />
+                  </div>
+                ) : (
+                  <div className="border border-dashed h-96 bg-accent/50 rounded-xl"></div>
+                )} */}
               </div>
 
               <div className="space-y-4">
@@ -405,6 +447,16 @@ const ProductEdit = () => {
                     </FormItem>
                   )}
                 />
+                {/* {form.watch("obj") ? (
+                  <div className="h-96">
+                    <ViewGlTF
+                      glbUrl={URL.createObjectURL(form.watch("obj"))}
+                      showGrid={true}
+                    />
+                  </div>
+                ) : (
+                  <div className="border border-dashed h-96 bg-accent/50 rounded-xl"></div>
+                )} */}
               </div>
 
               <div className="space-y-4">
@@ -428,21 +480,31 @@ const ProductEdit = () => {
                     </FormItem>
                   )}
                 />
+                {/* {form.watch("glb") ? (
+                  <div className="h-96">
+                    <ViewGlTF
+                      glbUrl={URL.createObjectURL(form.watch("glb"))}
+                      showGrid={true}
+                    />
+                  </div>
+                ) : (
+                  <div className="border border-dashed h-96 bg-accent/50 rounded-xl"></div>
+                )} */}
               </div>
             </div>
             {/* Submit button */}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
+            <Button type="submit" className="w-full">
+              {/* {isSubmitting ? (
                 <div className="flex items-center gap-2">
                   <Loader className="size-4 animate-spin-slow " />
                   <span className="ml-2">Submitting</span>
                 </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  {id ? <CheckCircle size={16} /> : <PlusCircle size={16} />}
-                  {id ? <span>Save Changes</span> : <span>Create</span>}
-                </div>
-              )}
+              ) : ( */}
+              <div className="flex items-center gap-2">
+                {id ? <CheckCircle size={16} /> : <PlusCircle size={16} />}
+                {id ? <span>Save Changes</span> : <span>Create</span>}
+              </div>
+              {/* )} */}
             </Button>
           </form>
         </Form>

@@ -61,7 +61,9 @@ const TypeEdit = () => {
           : "Type project has been created successfully.",
       });
 
-      refetch();
+      setTimeout(() => {
+        setActiveDialog(true);
+      }, 1000);
     } else {
       toast({
         title: "Error",
@@ -70,10 +72,6 @@ const TypeEdit = () => {
           : "Failed to create Type project.",
       });
     }
-
-    setTimeout(() => {
-      setActiveDialog(true);
-    }, 1000);
   };
 
   return (
@@ -152,7 +150,12 @@ const TypeEdit = () => {
               </CardDescription>
             </CardContent>
             <CardFooter className="place-self-end">
-              <Button onClick={() => navigate("/dashboard/types")}>
+              <Button
+                onClick={() => {
+                  navigate("/dashboard/types");
+                  refetch();
+                }}
+              >
                 <CheckCircle className="w-4 h-4 mr-2" />
                 Accept
               </Button>

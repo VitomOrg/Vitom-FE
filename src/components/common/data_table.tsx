@@ -13,8 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui";
-import Show from "@/lib/show";
-import { Loading } from "@/components/loading";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -25,7 +23,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  isLoading,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -57,13 +54,6 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            <Show>
-              <Show.When isTrue={isLoading}>
-                <div className="grid size-full place-content-center">
-                  <Loading />
-                </div>
-              </Show.When>
-            </Show>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

@@ -28,6 +28,11 @@ export const SoftwareColumns = ({
   {
     header: "Description",
     accessorKey: "description",
+    cell: ({ row }) => {
+      return (
+        <div className="truncate max-w-96">{row.original.description}</div>
+      );
+    },
   },
   {
     header: "Created At",
@@ -43,7 +48,6 @@ export const SoftwareColumns = ({
   {
     id: "actions",
     cell({ row }) {
-      console.log(row.original);
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -68,7 +72,7 @@ export const SoftwareColumns = ({
             </DropdownMenuItem>
             <DropdownMenuItem
               className="space-x-4"
-              onAbort={() => deleteData(row.original.id)}
+              onClick={() => deleteData(row.original.id)}
             >
               <Trash2 className="size-4" />
               <span>Remove</span>

@@ -70,9 +70,17 @@ export const SoftwareApi = {
     }
   },
 
-  deleteSoftware: async (id: string) => {
-    return handleApiCall<null>("delete", `/softwares/${id}`, {
-      params: { id },
-    }) as Promise<null>;
+  deleteSoftware: async (id: string): Promise<boolean | undefined> => {
+    try {
+      const response = await axiosInstance.delete(`/softwares/${id}`);
+
+      if (response.status === 204) {
+        return true;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+    }
   },
 };

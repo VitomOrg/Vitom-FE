@@ -5,14 +5,14 @@ export interface ProductResponse {
   license: string;
   name: string;
   description: string;
-  types: string[];
+  types: listField[];
   images: Image[];
   modelMaterials: Image[];
   fbxUrl: string;
   objUrl: string;
   glbUrl: string;
   price: number;
-  softwares: string[];
+  softwares: listField[];
   downloadUrl: string;
   totalPurchases: number;
   totalLiked: number;
@@ -21,4 +21,9 @@ export interface ProductResponse {
 export interface Image {
   id: string;
   url: string;
+}
+
+export interface listField {
+  id: string;
+  name: string;
 }

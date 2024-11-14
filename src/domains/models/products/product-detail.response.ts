@@ -1,3 +1,5 @@
+import { listField } from "@/domains/models/products/product.response";
+
 export interface ProductDetail {
   id: string;
   createdAt: Date;
@@ -5,8 +7,8 @@ export interface ProductDetail {
   license: string;
   name: string;
   description: string;
-  types: string[];
-  softwares: string[];
+  types: listField[];
+  softwares: listField[];
   images: Image[];
   modelMaterials: Image[];
   fbxUrl: string;
