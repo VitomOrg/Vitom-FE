@@ -51,5 +51,17 @@ export const TypeApi = {
     }
   },
 
-  deleteType: async () => {},
+  deleteType: async (id: string): Promise<boolean | undefined> => {
+    try {
+      const response = await axiosInstance.delete(`/types/${id}`);
+
+      if (response.status === 200 || response.status === 204) {
+        return true;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+    }
+  },
 };

@@ -25,11 +25,11 @@ export const ProductSchema = z.object({
   softwareIds: z.array(
     z.string().uuid({ message: "Invalid UUID format for softwareIds" })
   ),
-  files: z.array(FileSchema),
-  modelMaterialFiles: z.array(FileSchema),
-  fbx: FileSchema,
-  obj: FileSchema,
-  glb: FileSchema,
+  files: z.array(FileSchema || z.string().url()),
+  modelMaterialFiles: z.array(FileSchema || z.string().url()),
+  fbx: FileSchema || z.string().url(),
+  obj: FileSchema || z.string().url(),
+  glb: FileSchema || z.string().url(),
 });
 
 export type ProductTypeSchema = z.infer<typeof ProductSchema>;

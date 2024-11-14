@@ -8,7 +8,7 @@ interface TypesHook {
 }
 
 const useTypes = ({ options }: TypesHook) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [QueryKey.LIST_TYPE, ...(options ? [options] : [])],
     queryFn: () => {
       return TypeApi.listType(options);
@@ -19,6 +19,7 @@ const useTypes = ({ options }: TypesHook) => {
     data,
     isLoading,
     error,
+    refetch,
   };
 };
 

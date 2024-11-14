@@ -1,5 +1,4 @@
 import DownloadFile from "@/components/download-file/download-file";
-import { ModelViewer } from "@/components/test/view";
 import {
   Badge,
   Button,
@@ -15,6 +14,7 @@ import { ProductDetail } from "@/domains/models/products/product-detail.response
 import { RootResponse, Value } from "@/domains/models/root/root.response";
 import { ProductApi } from "@/domains/services";
 import { CartApi } from "@/domains/services/carts.service";
+import ProductViewModel from "@/views/main-layout/product-page/components/product-view-model";
 import { BookmarkPlus, CreditCard, Download, Heart } from "lucide-react";
 import React from "react";
 
@@ -41,10 +41,10 @@ const InformationProduct: React.FC<InformationProductProps> = ({
         window.location.href = checkoutResponse.checkoutUrl;
       }
     } else {
-      toast({
-        title: "Error",
-        description: response.errors[0] as string,
-      });
+      const checkoutResponse = await CartApi.postCartCheckout();
+      if (checkoutResponse) {
+        window.location.href = checkoutResponse.checkoutUrl;
+      }
     }
   };
 
@@ -112,7 +112,7 @@ const InformationProduct: React.FC<InformationProductProps> = ({
     <div className="container px-4 py-8 mx-auto">
       <div className="grid gap-8 md:grid-cols-2">
         <div>
-          <ModelViewer
+          <ProductViewModel
             glbUrl={product.glbUrl}
             productName={product.name}
             handleLike={() => {
@@ -122,7 +122,6 @@ const InformationProduct: React.FC<InformationProductProps> = ({
           />
         </div>
         <div className="space-y-4">
-          {/* <h1 className="text-3xl font-bold ">{product.name}</h1> */}
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <span className="text-2xl font-bold">
@@ -138,15 +137,15 @@ const InformationProduct: React.FC<InformationProductProps> = ({
             <p className="mb-4 text-gray-600">{product.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {product.types.map((type) => (
-                <Badge key={type} variant="secondary">
-                  {type}
+                <Badge key={type.id} variant="secondary">
+                  {type.name}
                 </Badge>
               ))}
             </div>
             <div className="flex flex-wrap gap-2 mb-4">
               {product.softwares.map((software) => (
-                <Badge key={software} variant="outline">
-                  {software}
+                <Badge key={software.id} variant="outline">
+                  {software.name}
                 </Badge>
               ))}
             </div>

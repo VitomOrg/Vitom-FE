@@ -1,51 +1,25 @@
-import { ErrorBoundary } from "@/components/hoc/error-boundary";
-import { Camera } from "@/components/test/camera";
-import { Light } from "@/components/test/light";
-import { Model } from "@/components/test/model";
-import { Html, Text } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
-import "./styles/index.css";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui";
 import { GridIcon, Heart, PanelLeftClose, PanelLeftOpen } from "lucide-react";
-import { Loading } from "@/components/loading";
+import ViewGlTF from "@/components/three_ui/gltf/view-gltf";
 
-interface ModelViewerProps {
+interface ProductViewModelProps {
   glbUrl: string;
   productName: string;
   handleLike: () => void;
   isLiked: boolean;
 }
 
-export const ModelViewer: React.FC<ModelViewerProps> = ({
+const ProductViewModel: React.FC<ProductViewModelProps> = ({
   glbUrl,
   productName,
   handleLike,
   isLiked,
 }) => {
-  const [error, setError] = useState(false);
-  const [showGrid, setShowGrid] = useState(false);
+  const [showGrid, setShowGrid] = useState(true);
   const [like, setLike] = useState(isLiked);
   const [show, setShow] = useState(true);
-  const [delayedRender, setDelayedRender] = useState(false);
   const showRef = useRef(show);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDelayedRender(true);
-    }, 500);
-
-    return () => clearTimeout(timer); // Clean up the timer on unmount
-  }, []);
-
-  useEffect(() => {
-    setError(false);
-  }, [glbUrl]);
-
-  const handleError = (error: Error) => {
-    console.error("Error loading GLB model:", error);
-    setError(true);
-  };
 
   const handleToggle = () => {
     const newShow = !show;
@@ -78,31 +52,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
           />
         </Button>
       </div>
-      <Canvas className="w-full border bg-background rounded-xl gradient">
-        <Camera />
-        <Light />
-        <Suspense
-          fallback={
-            <Text color="gray" position={[0, 0, 0]} fontSize={0.1}>
-              <Html center>
-                <Loading />
-              </Html>
-            </Text>
-          }
-        >
-          {delayedRender && !error ? (
-            <ErrorBoundary onError={handleError}>
-              <Model glbUrl={glbUrl} showGrid={showGrid} />
-            </ErrorBoundary>
-          ) : (
-            <Text color="red" position={[0, 0, 0]} fontSize={0.1}>
-              <Html center>
-                <Loading />
-              </Html>
-            </Text>
-          )}
-        </Suspense>
-      </Canvas>
+      <ViewGlTF glbUrl={glbUrl} showGrid={showGrid} />
       <div className="absolute flex flex-col items-center justify-center gap-3 top-4 right-3">
         <Button variant="outline" onClick={handleToggle}>
           {show ? (
@@ -125,3 +75,5 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     </div>
   );
 };
+
+export default ProductViewModel;

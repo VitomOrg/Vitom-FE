@@ -35,8 +35,8 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
       <div className="relative overflow-hidden rounded-lg shadow-lg size-full group ">
         <div className="absolute flex flex-wrap gap-2 bottom-2 left-2">
           {data.types.map((type) => (
-            <Badge key={type} className="px-2 py-1 text-xs rounded-full">
-              {type}
+            <Badge key={type.id} className="px-2 py-1 text-xs rounded-full">
+              {type.name}
             </Badge>
           ))}
         </div>

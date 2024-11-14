@@ -4,12 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-interface ModelViewerProps {
+interface ModelGLTFProps {
   glbUrl: string;
-  showGrid: boolean;
+  showGrid?: boolean;
 }
 
-export const Model: React.FC<ModelViewerProps> = ({ glbUrl, showGrid }) => {
+const ModelGLTF: React.FC<ModelGLTFProps> = ({ glbUrl, showGrid }) => {
   const { scene } = useGLTF(glbUrl) as GLTF;
   const meshRef = useRef<THREE.Group>(null);
   const gridRef = useRef<THREE.GridHelper>(null);
@@ -40,6 +40,9 @@ export const Model: React.FC<ModelViewerProps> = ({ glbUrl, showGrid }) => {
       const dx = event.clientX - prevMousePosition.x;
       const dy = event.clientY - prevMousePosition.y;
 
+      // console.log("dx", event.clientX, "dy", event.clientY);
+
+      // Rotate the model based on mouse movement
       meshRef.current.rotation.y += dx * 0.01;
       meshRef.current.rotation.x += dy * 0.01;
 
@@ -76,10 +79,12 @@ export const Model: React.FC<ModelViewerProps> = ({ glbUrl, showGrid }) => {
       {showGrid && (
         <gridHelper
           ref={gridRef}
-          args={[10, 10, 0x888888, 0x444444]}
+          args={[4, 8, 0x888888, 0x444444]}
           position={[0, -modelHeight, 0]}
         />
       )}
     </group>
   );
 };
+
+export default ModelGLTF;

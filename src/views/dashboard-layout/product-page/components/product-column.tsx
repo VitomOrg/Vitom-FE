@@ -39,10 +39,28 @@ export const ProductColumns = ({
         <div className="flex items-center">
           {row.original.types.map((type) => (
             <span
-              key={type}
+              key={type.id}
               className="px-2 py-1 mr-1 text-xs rounded-full bg-primary/10 text-primary"
             >
-              {type}
+              {type.name}
+            </span>
+          ))}
+        </div>
+      );
+    },
+  },
+  {
+    header: "Softwares",
+    accessorKey: "softwares",
+    cell({ row }) {
+      return (
+        <div className="flex items-center">
+          {row.original.softwares.map((software) => (
+            <span
+              key={software.id}
+              className="px-2 py-1 mr-1 text-xs rounded-full bg-primary/10 text-primary"
+            >
+              {software.name}
             </span>
           ))}
         </div>
