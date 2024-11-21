@@ -30,7 +30,10 @@ export const ProductColumns = ({
     header: "Price",
     accessorKey: "price",
   },
-
+  {
+    header: "License",
+    accessorKey: "license",
+  },
   {
     header: "Types",
     accessorKey: "types",

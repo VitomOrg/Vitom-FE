@@ -10,6 +10,8 @@ import {
   SelectValue,
   useToast,
 } from "@/components/ui";
+import { License } from "@/domains/enums";
+import { ProductBodyRequest } from "@/domains/models/products";
 import { ProductPageRequest } from "@/domains/models/products/product-page.request";
 import { ProductResponse } from "@/domains/models/products/product.response";
 import { ProductApi } from "@/domains/services";
@@ -51,6 +53,24 @@ const ProductTable = () => {
     }
   };
 
+  const handleUpdateProduct = (id: string, data: ProductResponse) => {
+    const value: ProductBodyRequest = {
+      license: data.license === "Free" ? License.Free : License.Pro,
+      name: data.name,
+      description: data.description,
+      price: data.price,
+      typeIds: data.types.map((type) => type.id),
+      softwareIds: data.softwares.map((software) => software.id),
+      files: data.images.map((image) => image.url),
+      modelMaterialFiles: data.modelMaterials.map((model) => model.url),
+      fbx: data.fbxUrl,
+      obj: data.objUrl,
+      glb: data.glbUrl,
+    };
+
+    navigate(`${id}/edit`, { state: value });
+  };
+
   const handleDelete = async (id: string) => {
     const response = await ProductApi.deleteProduct(id);
 
@@ -76,7 +96,7 @@ const ProductTable = () => {
         columns={ProductColumns({
           getId: (id: string) => navigate(`/dashboard/products/${id}`),
           updateProduct: (id: string, data: ProductResponse) =>
-            navigate(`${id}/edit`, { state: data }),
+            handleUpdateProduct(id, data),
           removeProduct: (id: string) => handleDelete(id),
         })}
         data={(data && data.data) || []}

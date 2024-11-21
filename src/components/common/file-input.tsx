@@ -2,9 +2,10 @@ import React, { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { CloudUpload } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui";
+import { cn } from "@/lib";
 
 interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  onFilesSelected: (files: File[] | Blob[]) => void;
+  onFilesSelected: (files: Blob[]) => void;
   maxFiles?: number;
 }
 
@@ -16,6 +17,7 @@ export function FileInput({
 }: FileInputProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleFileSelection = (files: FileList | null) => {
     if (files) {
@@ -95,16 +97,61 @@ export function FileInput({
   //     setError("An error occurred while reading the files.");
   //   });
 
+  // const handleFileSelection = (file: FileList | null) => {
+  //   if (file) {
+  //     const selectedFiles = Array.from(file);
+
+  //     if (selectedFiles.length > maxFiles) {
+  //       setError(
+  //         `You can only upload a maximum of ${maxFiles} file${
+  //           maxFiles > 1 ? "s" : ""
+  //         }.`
+  //       );
+  //       return;
+  //     }
+
+  //     const filePromises = selectedFiles.map((file) => {
+  //       return new Promise<string>((resolve, reject) => {
+  //         const reader = new FileReader();
+  //         reader.onload = () => {
+  //           const dataUrl = reader.result as string;
+  //           resolve(dataUrl);
+  //         };
+  //         reader.onerror = () => reject(new Error("File reading error"));
+  //         reader.readAsDataURL(file);
+  //       });
+  //     });
+
+  //     Promise.all(filePromises)
+  //       .then((dataUrls) => {
+  //         setError(null);
+  //         onFilesSelected(dataUrls);
+  //       })
+  //       .catch(() => {
+  //         setError("An error occurred while reading the files.");
+  //       });
+  //   }
+  // };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleFileSelection(event.target.files);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    setIsDragging(false);
     if (!disabled) {
       handleFileSelection(event.dataTransfer.files);
     }
@@ -113,13 +160,18 @@ export function FileInput({
   return (
     <div>
       <div
-        className={`p-8 text-center transition-colors border-2 border-dashed rounded-lg ${
-          disabled
-            ? "border-gray-200 cursor-not-allowed"
-            : "border-gray-300 cursor-pointer hover:border-primary"
-        }`}
+        className={cn(
+          "p-8 text-center transition-colors border-2 border-dashed rounded-lg",
+          {
+            "border-primary": isDragging,
+            "border-muted-foreground cursor-pointer hover:border-primary":
+              !isDragging && !disabled,
+            "border-muted-foreground/70 cursor-not-allowed": disabled,
+          }
+        )}
         onClick={() => !disabled && fileInputRef.current?.click()}
         onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
         <Input

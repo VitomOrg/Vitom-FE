@@ -5,9 +5,9 @@ export interface ProductBodyRequest {
   price: number;
   typeIds: string[];
   softwareIds: string[];
-  file: [];
-  modelMaterialFiles: [];
-  fbx: string;
-  obj: string;
-  glb: string;
+  files: (string | Blob)[];
+  modelMaterialFiles: (string | Blob)[];
+  fbx: Blob | string;
+  obj: Blob | string;
+  glb: Blob | string;
 }

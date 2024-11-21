@@ -52,7 +52,7 @@ const ProductViewModel: React.FC<ProductViewModelProps> = ({
           />
         </Button>
       </div>
-      <ViewGlTF glbUrl={glbUrl} showGrid={showGrid} />
+      <ViewGlTF url={glbUrl} showGrid={showGrid} format="gltf" />
       <div className="absolute flex flex-col items-center justify-center gap-3 top-4 right-3">
         <Button variant="outline" onClick={handleToggle}>
           {show ? (

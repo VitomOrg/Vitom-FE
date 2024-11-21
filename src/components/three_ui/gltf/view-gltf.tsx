@@ -7,13 +7,16 @@ import { Html, Text } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense, useEffect, useState } from "react";
 import "./styles/index.css";
+import ModelFBX from "@/components/three_ui/gltf/model-fbx";
+import ModelOBJ from "@/components/three_ui/gltf/model-obj";
 
 interface ViewGlTFProps {
-  glbUrl: string;
+  url: string;
+  format?: "gltf" | "fbx" | "obj";
   showGrid?: boolean;
 }
 
-const ViewGlTF: React.FC<ViewGlTFProps> = ({ glbUrl, showGrid }) => {
+const ViewGlTF: React.FC<ViewGlTFProps> = ({ url, showGrid, format }) => {
   const [error, setError] = useState(false);
   const [delayedRender, setDelayedRender] = useState(false);
 
@@ -30,6 +33,19 @@ const ViewGlTF: React.FC<ViewGlTFProps> = ({ glbUrl, showGrid }) => {
     setError(true);
   };
 
+  const renderModel = () => {
+    switch (format) {
+      case "gltf":
+        return <ModelGLTF glbUrl={url} showGrid={showGrid} />;
+      case "fbx":
+        return <ModelFBX fbxUrl={url} showGrid={showGrid} />;
+      case "obj":
+        return <ModelOBJ objUrl={url} showGrid={showGrid} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Canvas className="w-full border bg-background rounded-xl gradient">
       <Camera />
@@ -44,9 +60,7 @@ const ViewGlTF: React.FC<ViewGlTFProps> = ({ glbUrl, showGrid }) => {
         }
       >
         {delayedRender && !error ? (
-          <ErrorBoundary onError={handleError}>
-            <ModelGLTF glbUrl={glbUrl} showGrid={showGrid} />
-          </ErrorBoundary>
+          <ErrorBoundary onError={handleError}>{renderModel()}</ErrorBoundary>
         ) : (
           <Text color="red" position={[0, 0, 0]} fontSize={0.1}>
             <Html center>

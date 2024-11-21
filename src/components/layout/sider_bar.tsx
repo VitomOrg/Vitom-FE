@@ -1,5 +1,6 @@
 import assert from "@/assets";
 import { Avatar, AvatarFallback, AvatarImage, Button } from "@/components/ui";
+import { UserApi } from "@/domains/services";
 import { useAuth } from "@clerk/clerk-react";
 import {
   Boxes,
@@ -36,6 +37,19 @@ const SiderBar = () => {
   const handleMenuClick = (name: string) => {
     setOpenSubmenu(openSubmenu === name ? null : name);
   };
+
+  const handleChangeRole = async (role: "admin" | "artist") => {
+    if (role === "admin") {
+      await UserApi.putUserAdmin();
+      return;
+    }
+
+    if (role === "artist") {
+      await UserApi.putUserArtist();
+      return;
+    }
+  };
+
   return (
     <aside
       className={`min-h-screen col-span-2 bg-secondary/90 relative px-4 py-10 ${
@@ -92,14 +106,30 @@ const SiderBar = () => {
             ))}
           </div>
         </div>
-        <Button
-          className="w-full gap-2"
-          variant="outline"
-          onClick={() => signOut()}
-        >
-          <LogOut />
-          {isOpen && <span className="font-semibold">Logout</span>}
-        </Button>
+        <div className="space-y-2">
+          <Button
+            className="w-full gap-2"
+            variant="outline"
+            onClick={() => handleChangeRole("admin")}
+          >
+            Admin
+          </Button>
+          <Button
+            className="w-full gap-2"
+            variant="outline"
+            onClick={() => handleChangeRole("artist")}
+          >
+            Artist
+          </Button>
+          <Button
+            className="w-full gap-2"
+            variant="outline"
+            onClick={() => signOut()}
+          >
+            <LogOut />
+            {isOpen && <span className="font-semibold">Logout</span>}
+          </Button>
+        </div>
       </div>
     </aside>
   );

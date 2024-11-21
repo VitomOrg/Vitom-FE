@@ -1,9 +1,16 @@
 import { z } from "zod";
 
 // Custom schema for files (File or Blob)
-export const FileSchema = z.instanceof(Blob).refine((file) => file.size > 0, {
-  message: "File is required and cannot be empty",
-});
+const MAX_FILE_SIZE = 5000000;
+
+export const FileSchema = z
+  .instanceof(Blob)
+  .refine((file) => file.size > 0, {
+    message: "File is required and cannot be empty",
+  })
+  .refine((file) => file.size < MAX_FILE_SIZE, {
+    message: `File size must not exceed ${MAX_FILE_SIZE / 1000000}MB`,
+  });
 
 export const ProductSchema = z.object({
   license: z.number(),
@@ -25,11 +32,11 @@ export const ProductSchema = z.object({
   softwareIds: z.array(
     z.string().uuid({ message: "Invalid UUID format for softwareIds" })
   ),
-  files: z.array(FileSchema || z.string().url()),
-  modelMaterialFiles: z.array(FileSchema || z.string().url()),
-  fbx: FileSchema || z.string().url(),
-  obj: FileSchema || z.string().url(),
-  glb: FileSchema || z.string().url(),
+  files: z.array(z.union([z.string().url(), FileSchema])),
+  modelMaterialFiles: z.array(z.union([z.string().url(), FileSchema])),
+  fbx: z.union([z.string().url(), FileSchema]),
+  obj: z.union([z.string().url(), FileSchema]),
+  glb: z.union([z.string().url(), FileSchema]),
 });
 
 export type ProductTypeSchema = z.infer<typeof ProductSchema>;

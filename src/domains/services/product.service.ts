@@ -1,12 +1,14 @@
 import { axiosInstance } from "@/configs";
-import { ProductLikeResponse } from "@/domains/models/products";
+import {
+  ProductBodyRequest,
+  ProductLikeResponse,
+} from "@/domains/models/products";
 import { ProductDetail } from "@/domains/models/products/product-detail.response";
 import { ProductEditResponse } from "@/domains/models/products/product-edit.response";
 import {
   ProductFavoriteRequest,
   ProductPageRequest,
 } from "@/domains/models/products/product-page.request";
-import { ProductRequest } from "@/domains/models/products/product.request";
 import { ProductResponse } from "@/domains/models/products/product.response";
 import { RootResponse, Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
@@ -40,7 +42,7 @@ export const ProductApi = {
   },
 
   createProduct: async (
-    data: ProductRequest
+    data: ProductBodyRequest
   ): Promise<RootResponse<ProductEditResponse> | undefined> => {
     try {
       const formData = new FormData();
@@ -84,7 +86,7 @@ export const ProductApi = {
 
   updateProduct: async (
     id: string,
-    data: ProductRequest
+    data: ProductBodyRequest
   ): Promise<RootResponse<ProductEditResponse> | undefined> => {
     try {
       const formData = new FormData();
@@ -103,7 +105,6 @@ export const ProductApi = {
       data.files?.forEach((file) => {
         formData.append("files", file);
       });
-
       data.modelMaterialFiles?.forEach((file) => {
         formData.append("modelMaterialFiles", file);
       });
