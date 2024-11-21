@@ -1,11 +1,11 @@
 import { FileInput } from "@/components/common/file-input";
-// import ViewGlTF from "@/components/three_ui/gltf/view-gltf";
+import ViewGlTF from "@/components/three_ui/gltf/view-gltf";
 import {
-  Badge,
   Button,
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
   Checkbox,
@@ -22,34 +22,29 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Separator,
   Textarea,
-  useToast,
+  Badge,
+  Separator,
 } from "@/components/ui";
-import { Image } from "@/domains/models/products";
-import { ProductResponse } from "@/domains/models/products/product.response";
-import { ProductSchema, ProductTypeSchema } from "@/domains/schemas";
-import { ProductApi } from "@/domains/services";
+import useFormProduct from "@/domains/stores/query-hook/product/use-form-product";
 import useSoftware from "@/domains/stores/query-hook/software/use-software";
 import useTypes from "@/domains/stores/query-hook/types/use-types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle, PlusCircle, XCircle } from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 const ProductEdit = () => {
   const { id } = useParams<{ id: string }>();
-  // const [softwaresSelect, setSoftwaresSelect] = useState<string[]>([]);
-  // const [typesSelect, setTypesSelect] = useState<string[]>([]);
+  const { state: productState } = useLocation();
+  const [typeSelected, setTypeSelected] = useState<string[]>([]);
+  const [softwareSelected, setSoftwareSelected] = useState<string[]>([]);
+  const [image, setImage] = useState<string[]>([]);
+  const [material, setMaterial] = useState<string[]>([]);
+  const [fbx, setFbx] = useState<string>();
+  const [obj, setObj] = useState<string>();
+  const [glb, setGlb] = useState<string>();
 
-  const { toast } = useToast();
-
-  const { state: ProductState } = useLocation();
-
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { data: software } = useSoftware({
+  const { data: softwares } = useSoftware({
     options: {
       pageIndex: 1,
       pageSize: 100,
@@ -63,69 +58,31 @@ const ProductEdit = () => {
     },
   });
 
-  useEffect(() => {
-    const data = ProductState as ProductResponse;
-
-    if (ProductState) {
-      const wereSelectedSoftwares = data.softwares;
-      console.log("wereSelectedSoftwares", wereSelectedSoftwares);
-
-      // const wereSelectedTypes = data.types;
-
-      // const softwareIds = software?.data
-      //   .filter((sw) => {
-      //     wereSelectedSoftwares.find((s) => s)
-      //   })
-      //   .map((sw) => sw.id);
-      // const typeIds = types?.data.map((type) => {
-      //   if (wereSelectedTypes?.some((t) => t.includes(type.name))) {
-      //     return type.id;
-      //   }
-      // });
-
-      // console.log("softwareIds", softwareIds);
-    }
-  }, [ProductState, software, types]);
-
-  const form = useForm<ProductTypeSchema>({
-    resolver: zodResolver(ProductSchema),
-    defaultValues: {
-      license: ProductState?.license || 0,
-      name: ProductState?.name || "",
-      description: ProductState?.description || "",
-      price: ProductState?.price || 0,
-      typeIds: ProductState?.typeIds || [],
-      softwareIds: ProductState?.softwareIds || [],
-      files: (ProductState?.images as Image[]).map((img) => img.url) || [],
-      modelMaterialFiles: ProductState?.modelMaterials || [],
-      fbx: ProductState?.fbxUrl || "",
-      obj: ProductState?.objUrl || "",
-      glb: ProductState?.glbUrl || "",
-    },
+  const { form, onSubmit } = useFormProduct({
+    id,
+    defaultValues: productState,
   });
 
-  async function onSubmit(data: ProductTypeSchema) {
-    // setIsSubmitting(true);
-
-    const response = id
-      ? await ProductApi.updateProduct(id, data)
-      : await ProductApi.createProduct(data);
-
-    if (response) {
-      toast({
-        title: "Product saved successfully",
-        description: response?.successMessage,
-      });
+  useEffect(() => {
+    const state = productState;
+    if (state) {
+      setTypeSelected(state.typeIds);
+      setSoftwareSelected(state.softwareIds);
+      setImage(state.files);
+      setMaterial(state.modelMaterialFiles);
+      setFbx(state.fbx);
+      setObj(state.obj);
+      setGlb(state.glb);
+    } else {
+      setTypeSelected([]);
+      setSoftwareSelected([]);
+      setImage([]);
+      setMaterial([]);
+      setFbx("");
+      setObj("");
+      setGlb("");
     }
-
-    // setTimeout(() => {
-    //   setIsSubmitting(false);
-    // }, 1000);
-
-    // if (response) {
-    //   form.reset();
-    // }
-  }
+  }, [productState]);
 
   return (
     <Card className="w-full p-6">
@@ -139,222 +96,40 @@ const ProductEdit = () => {
             : "Fill in the product details and submit to create a new product."}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Grouping related fields in grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder="Product name ..." />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <FormField
-                    control={form.control}
-                    name="price"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Price</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Product price ..."
-                            type="number"
-                            onChange={(e) => {
-                              field.onChange(Number(e.target.value));
-                            }}
-                            onBlur={field.onBlur}
-                            value={field.value === 0 ? "" : field.value}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          rows={4}
-                          {...field}
-                          placeholder="Product description ..."
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="license"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start p-4 space-x-3 space-y-0 border rounded-md">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value === 1 ? true : false}
-                          onCheckedChange={(e) => {
-                            field.onChange(e === true ? 1 : 0);
-                          }}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>License</FormLabel>
-                        <FormDescription>
-                          Please provide the license information for this
-                          product.
-                        </FormDescription>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {/* Type and Software IDs */}
-                <FormField
-                  control={form.control}
-                  name="typeIds"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Type</FormLabel>
-                      <Select
-                        onValueChange={(value) => {
-                          field.onChange([...field.value, value]);
-                        }}
-                        value={field.value[field.value.length - 1] || ""}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select types" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {types?.data.map((type) => (
-                            <SelectItem key={type.id} value={type.id}>
-                              {type.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormDescription className="space-y-4">
-                        <span>Selected types:</span>
-                        <div>
-                          {/* {types?.data.map((id) => {
-                            // const type = types?.data.find((s) => s.id === id);
-                            // return (
-                            //   <Badge key={id} className="mt-2 mr-2">
-                            //     {type?.name}
-                            //     <XCircle
-                            //       size={16}
-                            //       className="ml-2 cursor-pointer"
-                            //       onClick={() =>
-                            //         field.onChange(
-                            //           field.value.filter((v) => v !== id)
-                            //         )
-                            //       }
-                            //     />
-                            //   </Badge>
-                            // );
-                          })} */}
-                        </div>
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="softwareIds"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Software</FormLabel>
-                      <Select
-                        onValueChange={(value) =>
-                          field.onChange([...field.value, value])
-                        }
-                        value={field.value[field.value.length - 1] || ""}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select software" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {software?.data.map((sw) => (
-                            <SelectItem key={sw.id} value={sw.id}>
-                              {sw.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormDescription className="space-y-4">
-                        <span>Selected software: </span>
-                        <div>
-                          {field.value.map((id) => {
-                            const sw = software?.data.find((s) => s.id === id);
-                            return (
-                              <Badge key={id} className="mt-2 mr-2">
-                                {sw?.name}
-                                <XCircle
-                                  size={16}
-                                  className="ml-2 cursor-pointer"
-                                  onClick={() =>
-                                    field.onChange(
-                                      field.value.filter((v) => v !== id)
-                                    )
-                                  }
-                                />
-                              </Badge>
-                            );
-                          })}
-                        </div>
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-            <Separator className="my-5" />
-            {/* File uploads */}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent className="grid grid-cols-2 gap-4 mb-10 ">
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="files"
-                render={({ field: { onChange, value, ...field } }) => (
+                name="name"
+                render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      Product Files{" "}
-                      <span className="text-sm text-muted-foreground">
-                        (Max 4 file)
-                      </span>
-                    </FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <FileInput
-                        accept=".img,.png"
-                        multiple
-                        maxFiles={4}
-                        onFilesSelected={(files) => {
-                          console.log("value", value);
-                          onChange(files);
+                      <Input {...field} placeholder="Product name ..." />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Product price ..."
+                        type="number"
+                        onChange={(e) => {
+                          field.onChange(Number(e.target.value));
                         }}
-                        {...field}
+                        onBlur={field.onBlur}
+                        value={field.value === 0 ? "" : field.value}
                       />
                     </FormControl>
                     <FormMessage />
@@ -363,152 +138,379 @@ const ProductEdit = () => {
               />
               <FormField
                 control={form.control}
-                name="modelMaterialFiles"
-                render={({ field: { onChange, value, ...field } }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Model Material Files{" "}
-                      <span className="text-sm text-muted-foreground">
-                        (Max 4 file)
-                      </span>
-                    </FormLabel>
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <FileInput
-                        maxFiles={4}
-                        multiple
-                        onFilesSelected={(file) => {
-                          onChange(file);
-                          console.log("Model Material Files value", value);
-                        }}
+                      <Textarea
+                        rows={4}
                         {...field}
+                        placeholder="Product description ..."
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="license"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start col-span-2 p-4 space-x-3 space-y-0 border rounded-md border-muted-foreground">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value === 1 ? true : false}
+                        onCheckedChange={(e) => {
+                          field.onChange(e === true ? 1 : 0);
+                        }}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>License</FormLabel>
+                      <FormDescription>
+                        Please provide the license information for this product.
+                      </FormDescription>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
             </div>
-            <Separator className="my-5 " />
-            {/* FBX, OBJ, GLB File uploads */}
-            <div className="grid grid-cols-3 gap-4 ">
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="softwareIds"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Softwares</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        if (!softwareSelected.includes(value)) {
+                          setSoftwareSelected([...softwareSelected, value]);
+                          field.onChange([...field.value, value]);
+                        } else {
+                          setSoftwareSelected(
+                            softwareSelected.filter((id) => id !== value)
+                          );
+                          field.onChange(
+                            field.value.filter((id) => id !== value)
+                          );
+                        }
+                      }}
+                      value={field.value[field.value.length - 1] || ""}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select software" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {softwares?.data.map((sw) => (
+                          <SelectItem key={sw.id} value={sw.id}>
+                            {sw.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription className="space-y-4">
+                      <span>Selected softwares: </span>
+                      <div className="flex items-center gap-2">
+                        {softwares?.data
+                          .filter((sw) => softwareSelected.includes(sw.id))
+                          .map((sw) => (
+                            <Badge
+                              key={sw.id}
+                              className="flex items-center gap-2"
+                            >
+                              <span>{sw.name}</span>
+                              <XCircle
+                                size={16}
+                                onClick={() => {
+                                  setSoftwareSelected(
+                                    softwareSelected.filter(
+                                      (id) => id !== sw.id
+                                    )
+                                  );
+                                  field.onChange(
+                                    field.value.filter((id) => id !== sw.id)
+                                  );
+                                }}
+                              />
+                            </Badge>
+                          ))}
+                      </div>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="typeIds"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Types</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        if (!typeSelected.includes(value)) {
+                          setTypeSelected([...typeSelected, value]);
+                          field.onChange([...field.value, value]);
+                        } else {
+                          setTypeSelected(
+                            typeSelected.filter((id) => id !== value)
+                          );
+                          field.onChange(
+                            field.value.filter((id) => id !== value)
+                          );
+                        }
+                      }}
+                      value={field.value[field.value.length - 1] || ""}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {types?.data.map((sw) => (
+                          <SelectItem key={sw.id} value={sw.id}>
+                            {sw.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription className="space-y-4">
+                      <span>Selected types: </span>
+                      <div className="flex items-center gap-2">
+                        {types?.data
+                          .filter((sw) => typeSelected.includes(sw.id))
+                          .map((sw) => (
+                            <Badge
+                              key={sw.id}
+                              className="flex items-center gap-2"
+                            >
+                              <span>{sw.name}</span>
+                              <XCircle
+                                size={16}
+                                onClick={() => {
+                                  setTypeSelected(
+                                    typeSelected.filter((id) => id !== sw.id)
+                                  );
+                                  field.onChange(
+                                    field.value.filter((id) => id !== sw.id)
+                                  );
+                                }}
+                              />
+                            </Badge>
+                          ))}
+                      </div>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="col-span-2">
+              <Separator />
+            </div>
+
+            <div className="space-y-4">
+              <h6>Product Image</h6>
+              <FileInput
+                accept=".png, .jpg, .jpeg"
+                maxFiles={4}
+                multiple
+                onFilesSelected={(file) => {
+                  const fileUrls = file.map((f) => URL.createObjectURL(f));
+                  setImage([...image, ...fileUrls]);
+                  form.setValue("files", [...form.getValues("files"), ...file]);
+                }}
+              />
+              <div className="grid grid-cols-4 gap-4">
+                {image.map((img, index) => (
+                  <div key={index} className="relative gap-2">
+                    <button className="absolute p-1 rounded-sm cursor-pointer top-2 right-2 bg-destructive text-destructive-foreground">
+                      <XCircle
+                        size={16}
+                        onClick={() => {
+                          setImage(image.filter((_, i) => i !== index));
+                          form.setValue(
+                            "files",
+                            image.filter((_, i) => i !== index)
+                          );
+                        }}
+                      />
+                    </button>
+                    <img
+                      src={img}
+                      alt="product"
+                      className="object-cover rounded-lg size-full"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h6>Model Material File</h6>
+              <FileInput
+                accept=".png, .jpg, .jpeg"
+                maxFiles={4}
+                multiple
+                onFilesSelected={(file) => {
+                  const fileUrls = file.map((f) => URL.createObjectURL(f));
+                  setMaterial([...material, ...fileUrls]);
+                  form.setValue("modelMaterialFiles", [
+                    ...form.getValues("modelMaterialFiles"),
+                    ...file,
+                  ]);
+                }}
+              />
+              <div className="grid grid-cols-4 gap-4">
+                {material.map((img, index) => (
+                  <div key={index} className="relative gap-2">
+                    <button className="absolute p-1 rounded-sm cursor-pointer top-2 right-2 bg-destructive text-destructive-foreground">
+                      <XCircle
+                        size={16}
+                        onClick={() => {
+                          setMaterial(material.filter((_, i) => i !== index));
+                          form.setValue(
+                            "modelMaterialFiles",
+                            material.filter((_, i) => i !== index)
+                          );
+                        }}
+                      />
+                    </button>
+                    <img
+                      src={img}
+                      alt="product"
+                      className="object-cover rounded-lg size-full"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="col-span-2">
+              <Separator />
+            </div>
+            <div className="grid grid-cols-3 col-span-2 gap-4">
               <div className="space-y-4">
+                <h6>FBX file</h6>
                 <FormField
                   control={form.control}
                   name="fbx"
-                  render={({ field: { onChange, value, ...field } }) => (
+                  render={() => (
                     <FormItem>
-                      <FormLabel>FBX File</FormLabel>
                       <FormControl>
                         <FileInput
-                          // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          // value={value as any}
                           accept=".fbx"
+                          maxFiles={1}
                           onFilesSelected={(file) => {
-                            onChange(file[0]);
-                            console.log("FBX value", value);
+                            form.setValue("fbx", file[0]);
+                            setFbx(URL.createObjectURL(file[0]));
                           }}
-                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                {/* {form.watch("fbx") ? (
+                {fbx ? (
                   <div className="h-96">
-                    <ViewGlTF
-                      glbUrl={URL.createObjectURL(form.watch("fbx"))}
-                      showGrid={true}
-                    />
+                    <ViewGlTF url={fbx} format="fbx" />
                   </div>
                 ) : (
-                  <div className="border border-dashed h-96 bg-accent/50 rounded-xl"></div>
-                )} */}
+                  <div className="grid w-full border rounded-lg h-96 bg-accent place-content-center border-muted-foreground">
+                    <span className="font-semibold text-muted-foreground">
+                      3D Model Preview
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-4">
+                <h6>OBJ file</h6>
                 <FormField
                   control={form.control}
                   name="obj"
-                  render={({ field: { onChange, value, ...field } }) => (
+                  render={() => (
                     <FormItem>
-                      <FormLabel>OBJ File</FormLabel>
                       <FormControl>
                         <FileInput
                           accept=".obj"
+                          maxFiles={1}
                           onFilesSelected={(file) => {
-                            onChange(file[0]);
-                            console.log("OBJ value", value);
+                            form.setValue("obj", file[0]);
+                            setObj(URL.createObjectURL(file[0]));
                           }}
-                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                {/* {form.watch("obj") ? (
+                {obj ? (
                   <div className="h-96">
-                    <ViewGlTF
-                      glbUrl={URL.createObjectURL(form.watch("obj"))}
-                      showGrid={true}
-                    />
+                    <ViewGlTF url={obj} format="obj" />
                   </div>
                 ) : (
-                  <div className="border border-dashed h-96 bg-accent/50 rounded-xl"></div>
-                )} */}
+                  <div className="grid w-full border rounded-lg h-96 bg-accent place-content-center border-muted-foreground">
+                    <span className="font-semibold text-muted-foreground">
+                      3D Model Preview
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-4">
+                <h6>GLB file</h6>
                 <FormField
                   control={form.control}
                   name="glb"
-                  render={({ field: { onChange, value, ...field } }) => (
+                  render={() => (
                     <FormItem>
-                      <FormLabel>GLB File</FormLabel>
                       <FormControl>
                         <FileInput
                           accept=".glb"
+                          maxFiles={1}
                           onFilesSelected={(file) => {
-                            onChange(file[0]);
-                            console.log("GLB value", value);
+                            form.setValue("glb", file[0]);
+                            setGlb(URL.createObjectURL(file[0]));
                           }}
-                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                {/* {form.watch("glb") ? (
+
+                {glb ? (
                   <div className="h-96">
-                    <ViewGlTF
-                      glbUrl={URL.createObjectURL(form.watch("glb"))}
-                      showGrid={true}
-                    />
+                    <ViewGlTF url={glb} format="gltf" />
                   </div>
                 ) : (
-                  <div className="border border-dashed h-96 bg-accent/50 rounded-xl"></div>
-                )} */}
+                  <div className="grid w-full border rounded-lg h-96 bg-accent place-content-center border-muted-foreground">
+                    <span className="font-semibold text-muted-foreground">
+                      3D Model Preview
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-            {/* Submit button */}
+          </CardContent>
+
+          <CardFooter>
             <Button type="submit" className="w-full">
-              {/* {isSubmitting ? (
-                <div className="flex items-center gap-2">
-                  <Loader className="size-4 animate-spin-slow " />
-                  <span className="ml-2">Submitting</span>
-                </div>
-              ) : ( */}
               <div className="flex items-center gap-2">
                 {id ? <CheckCircle size={16} /> : <PlusCircle size={16} />}
                 {id ? <span>Save Changes</span> : <span>Create</span>}
               </div>
-              {/* )} */}
             </Button>
-          </form>
-        </Form>
-      </CardContent>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 };

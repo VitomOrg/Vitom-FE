@@ -2,7 +2,7 @@ export interface ProductResponse {
   id: string;
   createdAt: Date;
   userId: string;
-  license: string;
+  license: "Free" | "Pro";
   name: string;
   description: string;
   types: listField[];
