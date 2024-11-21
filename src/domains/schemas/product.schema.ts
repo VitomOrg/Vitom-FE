@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Custom schema for files (File or Blob)
-const MAX_FILE_SIZE = 5000000;
+const MAX_FILE_SIZE = 10000000;
 
 export const FileSchema = z
   .instanceof(Blob)
