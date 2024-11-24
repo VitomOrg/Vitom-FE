@@ -11,7 +11,7 @@ import {
   useToast,
 } from "@/components/ui";
 import { License } from "@/domains/enums";
-import { ProductBodyRequest } from "@/domains/models/products";
+import { ProductEditRequest } from "@/domains/models/products";
 import { ProductPageRequest } from "@/domains/models/products/product-page.request";
 import { ProductResponse } from "@/domains/models/products/product.response";
 import { ProductApi } from "@/domains/services";
@@ -54,7 +54,7 @@ const ProductTable = () => {
   };
 
   const handleUpdateProduct = (id: string, data: ProductResponse) => {
-    const value: ProductBodyRequest = {
+    const value: ProductEditRequest = {
       license: data.license === "Free" ? License.Free : License.Pro,
       name: data.name,
       description: data.description,

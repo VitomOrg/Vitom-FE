@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/configs";
 import {
-  ProductBodyRequest,
+  ProductEditRequest,
   ProductLikeResponse,
 } from "@/domains/models/products";
 import { ProductDetail } from "@/domains/models/products/product-detail.response";
@@ -42,39 +42,35 @@ export const ProductApi = {
   },
 
   createProduct: async (
-    data: ProductBodyRequest
+    data: ProductEditRequest
   ): Promise<RootResponse<ProductEditResponse> | undefined> => {
     try {
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      formData.append("license", data.license!.toString());
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      formData.append("price", data.price!.toString());
-      data.typeIds?.forEach((typeId) => {
-        formData.append("typeIds", typeId);
-      });
-      data.softwareIds?.forEach((softwareId) => {
-        formData.append("softwareIds", softwareId);
-      });
-      data.files?.forEach((file) => {
-        formData.append("files", file);
-      });
+      // formData.append("license", data.license!.toString());
+      // formData.append("name", data.name);
+      // formData.append("description", data.description);
+      // formData.append("price", data.price!.toString());
+      // data.typeIds?.forEach((typeId) => {
+      //   formData.append("typeIds", typeId);
+      // });
+      // data.softwareIds?.forEach((softwareId) => {
+      //   formData.append("softwareIds", softwareId);
+      // });
+      // data.files?.forEach((file) => {
+      //   formData.append("files", file);
+      // });
 
-      data.modelMaterialFiles?.forEach((file) => {
-        formData.append("modelMaterialFiles", file);
-      });
-      formData.append("fbx", data.fbx);
-      formData.append("obj", data.obj);
-      formData.append("glb", data.glb);
+      // data.modelMaterialFiles?.forEach((file) => {
+      //   formData.append("modelMaterialFiles", file);
+      // });
+      // formData.append("fbx", data.fbx);
+      // formData.append("obj", data.obj);
+      // formData.append("glb", data.glb);
 
       const response = await axiosInstance.post<
         RootResponse<ProductEditResponse>
-      >("/products", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      >("/products", data);
 
       return response.data;
     } catch (error) {
@@ -86,39 +82,35 @@ export const ProductApi = {
 
   updateProduct: async (
     id: string,
-    data: ProductBodyRequest
+    data: ProductEditRequest
   ): Promise<RootResponse<ProductEditResponse> | undefined> => {
     try {
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      formData.append("id", id);
-      formData.append("license", data.license!.toString());
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      formData.append("price", data.price!.toString());
-      data.typeIds?.forEach((typeId) => {
-        formData.append("typeIds", typeId);
-      });
-      data.softwareIds?.forEach((softwareId) => {
-        formData.append("softwareIds", softwareId);
-      });
-      data.files?.forEach((file) => {
-        formData.append("files", file);
-      });
-      data.modelMaterialFiles?.forEach((file) => {
-        formData.append("modelMaterialFiles", file);
-      });
-      formData.append("fbx", data.fbx);
-      formData.append("obj", data.obj);
-      formData.append("glb", data.glb);
+      // formData.append("id", id);
+      // formData.append("license", data.license!.toString());
+      // formData.append("name", data.name);
+      // formData.append("description", data.description);
+      // formData.append("price", data.price!.toString());
+      // data.typeIds?.forEach((typeId) => {
+      //   formData.append("typeIds", typeId);
+      // });
+      // data.softwareIds?.forEach((softwareId) => {
+      //   formData.append("softwareIds", softwareId);
+      // });
+      // data.files?.forEach((file) => {
+      //   formData.append("files", file);
+      // });
+      // data.modelMaterialFiles?.forEach((file) => {
+      //   formData.append("modelMaterialFiles", file);
+      // });
+      // formData.append("fbx", data.fbx);
+      // formData.append("obj", data.obj);
+      // formData.append("glb", data.glb);
 
       const response = await axiosInstance.put<
         RootResponse<ProductEditResponse>
-      >(`/products/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      >(`/products/${id}`, data);
 
       return response.data;
     } catch (error) {
