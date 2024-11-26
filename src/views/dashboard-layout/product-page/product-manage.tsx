@@ -15,7 +15,7 @@ const ProductPage = () => {
 
         <Button className="space-x-2" onClick={() => navigation("create")}>
           <PlusCircle size={20} />
-          <span className="text-white">Add Product</span>
+          <span>Add Product</span>
         </Button>
       </div>
       <ProductTable />

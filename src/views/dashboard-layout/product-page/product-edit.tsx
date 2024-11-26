@@ -26,6 +26,8 @@ import {
   Badge,
   Separator,
 } from "@/components/ui";
+import { FileEnum } from "@/domains/enums/file.enum";
+import { FilesApi } from "@/domains/stores/query-hook/files/files.service";
 import useFormProduct from "@/domains/stores/query-hook/product/use-form-product";
 import useSoftware from "@/domains/stores/query-hook/software/use-software";
 import useTypes from "@/domains/stores/query-hook/types/use-types";
@@ -58,7 +60,7 @@ const ProductEdit = () => {
     },
   });
 
-  const { form, onSubmit } = useFormProduct({
+  const { form, onSubmit, loading } = useFormProduct({
     id,
     defaultValues: productState,
   });
@@ -83,6 +85,16 @@ const ProductEdit = () => {
       setGlb("");
     }
   }, [productState]);
+
+  const returnURLFile = async (file: Blob, fileEnum: FileEnum) => {
+    try {
+      const response = await FilesApi.postFile(file, fileEnum);
+
+      return response?.value;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Card className="w-full p-6">
@@ -321,16 +333,20 @@ const ProductEdit = () => {
                 accept=".png, .jpg, .jpeg"
                 maxFiles={4}
                 multiple
-                onFilesSelected={(file) => {
-                  const fileUrls = file.map((f) => URL.createObjectURL(f));
-                  setImage([...image, ...fileUrls]);
-                  form.setValue("files", [...form.getValues("files"), ...file]);
+                onFilesSelected={async (file) => {
+                  file.map(async (f) => {
+                    returnURLFile(f, FileEnum.PRODUCT).then((url) => {
+                      if (!url) return;
+                      setImage([...image, url]);
+                      form.setValue("files", [...form.getValues("files"), url]);
+                    });
+                  });
                 }}
               />
               <div className="grid grid-cols-4 gap-4">
                 {image.map((img, index) => (
                   <div key={index} className="relative gap-2">
-                    <button className="absolute p-1 rounded-sm cursor-pointer top-2 right-2 bg-destructive text-destructive-foreground">
+                    <div className="absolute p-1 rounded-sm cursor-pointer top-2 right-2 bg-destructive text-destructive-foreground">
                       <XCircle
                         size={16}
                         onClick={() => {
@@ -341,7 +357,7 @@ const ProductEdit = () => {
                           );
                         }}
                       />
-                    </button>
+                    </div>
                     <img
                       src={img}
                       alt="product"
@@ -359,18 +375,22 @@ const ProductEdit = () => {
                 maxFiles={4}
                 multiple
                 onFilesSelected={(file) => {
-                  const fileUrls = file.map((f) => URL.createObjectURL(f));
-                  setMaterial([...material, ...fileUrls]);
-                  form.setValue("modelMaterialFiles", [
-                    ...form.getValues("modelMaterialFiles"),
-                    ...file,
-                  ]);
+                  file.map(async (f) => {
+                    returnURLFile(f, FileEnum.MODELMATERIAL).then((url) => {
+                      if (!url) return;
+                      setMaterial([...material, url]);
+                      form.setValue("modelMaterialFiles", [
+                        ...form.getValues("modelMaterialFiles"),
+                        url,
+                      ]);
+                    });
+                  });
                 }}
               />
               <div className="grid grid-cols-4 gap-4">
                 {material.map((img, index) => (
                   <div key={index} className="relative gap-2">
-                    <button className="absolute p-1 rounded-sm cursor-pointer top-2 right-2 bg-destructive text-destructive-foreground">
+                    <div className="absolute p-1 rounded-sm cursor-pointer top-2 right-2 bg-destructive text-destructive-foreground">
                       <XCircle
                         size={16}
                         onClick={() => {
@@ -381,7 +401,7 @@ const ProductEdit = () => {
                           );
                         }}
                       />
-                    </button>
+                    </div>
                     <img
                       src={img}
                       alt="product"
@@ -408,8 +428,13 @@ const ProductEdit = () => {
                           accept=".fbx"
                           maxFiles={1}
                           onFilesSelected={(file) => {
-                            form.setValue("fbx", file[0]);
-                            setFbx(URL.createObjectURL(file[0]));
+                            returnURLFile(file[0], FileEnum.MODEL).then(
+                              (url) => {
+                                if (!url) return;
+                                form.setValue("fbx", url);
+                                setFbx(URL.createObjectURL(file[0]));
+                              }
+                            );
                           }}
                         />
                       </FormControl>
@@ -442,8 +467,13 @@ const ProductEdit = () => {
                           accept=".obj"
                           maxFiles={1}
                           onFilesSelected={(file) => {
-                            form.setValue("obj", file[0]);
-                            setObj(URL.createObjectURL(file[0]));
+                            returnURLFile(file[0], FileEnum.MODEL).then(
+                              (url) => {
+                                if (!url) return;
+                                form.setValue("obj", url);
+                                setObj(URL.createObjectURL(file[0]));
+                              }
+                            );
                           }}
                         />
                       </FormControl>
@@ -476,8 +506,13 @@ const ProductEdit = () => {
                           accept=".glb"
                           maxFiles={1}
                           onFilesSelected={(file) => {
-                            form.setValue("glb", file[0]);
-                            setGlb(URL.createObjectURL(file[0]));
+                            returnURLFile(file[0], FileEnum.MODEL).then(
+                              (url) => {
+                                if (!url) return;
+                                form.setValue("glb", url);
+                                setGlb(URL.createObjectURL(file[0]));
+                              }
+                            );
                           }}
                         />
                       </FormControl>
@@ -502,11 +537,15 @@ const ProductEdit = () => {
           </CardContent>
 
           <CardFooter>
-            <Button type="submit" className="w-full">
-              <div className="flex items-center gap-2">
-                {id ? <CheckCircle size={16} /> : <PlusCircle size={16} />}
-                {id ? <span>Save Changes</span> : <span>Create</span>}
-              </div>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? (
+                "Loading..."
+              ) : (
+                <div className="flex items-center gap-2">
+                  {id ? <CheckCircle size={16} /> : <PlusCircle size={16} />}
+                  {id ? <span>Save Changes</span> : <span>Create</span>}
+                </div>
+              )}
             </Button>
           </CardFooter>
         </form>

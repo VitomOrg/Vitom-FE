@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/configs";
 import { BlogEditResponse, BlogOntopResponse } from "@/domains/models/blogs";
 import { BlogPageRequest } from "@/domains/models/blogs/blog-page.request";
-import { BlogRequest } from "@/domains/models/blogs/blog.request";
+import { BlogEditRequest } from "@/domains/models/blogs/blog.request";
 import { BlogResponse } from "@/domains/models/blogs/blog.response";
 import { RootResponse, Value } from "@/domains/models/root/root.response";
 import { handleApiCall } from "@/lib/handle-api-call";
@@ -37,22 +37,10 @@ export const BlogApi = {
   },
 
   postBlog: async (
-    data: BlogRequest
+    data: BlogEditRequest
   ): Promise<RootResponse<BlogEditResponse> | undefined> => {
     try {
-      const formData = new FormData();
-
-      formData.append("title", data.title);
-      formData.append("content", data.content);
-      data.images.forEach((image) => {
-        formData.append("images", image);
-      });
-
-      const response = await axiosInstance.post("/blogs", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosInstance.post("/blogs", data);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -63,22 +51,10 @@ export const BlogApi = {
 
   putBlog: async (
     id: string,
-    data: BlogRequest
+    data: BlogEditRequest
   ): Promise<RootResponse<{ imageUrl: string[] }> | undefined> => {
     try {
-      const formData = new FormData();
-
-      formData.append("title", data.title);
-      formData.append("content", data.content);
-      data.images.forEach((image) => {
-        formData.append("images", image);
-      });
-
-      const response = await axiosInstance.put(`/blogs/${id}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosInstance.put(`/blogs/${id}`, data);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
