@@ -8,7 +8,7 @@ interface useBlogProps {
 }
 
 const useBlog = ({ options }: useBlogProps) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [QueryKey.LIST_BLOG, ...(options ? [options] : [])],
     queryFn: () => BlogApi.getBlog(options),
   });
@@ -17,6 +17,7 @@ const useBlog = ({ options }: useBlogProps) => {
     data,
     isLoading,
     error,
+    refetch,
   };
 };
 
