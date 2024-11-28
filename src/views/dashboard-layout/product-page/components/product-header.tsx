@@ -4,7 +4,6 @@ import { formatDate } from "@/lib/utils";
 import { ProductDetail, ProductEditRequest } from "@/domains/models/products";
 import { Button } from "@/components/ui";
 import { Pencil } from "lucide-react";
-import { License } from "@/domains/enums";
 import { useNavigate } from "react-router-dom";
 
 interface ProductHeaderProps {
@@ -15,7 +14,7 @@ export function ProductHeader({ product }: ProductHeaderProps) {
   const navigate = useNavigate();
   const handleEditProduct = (product: ProductDetail) => {
     const value: ProductEditRequest = {
-      license: product.license === "Free" ? License.Free : License.Pro,
+      // license: product.license === "Free" ? License.Free : License.Pro,
       name: product.name,
       description: product.description,
       price: product.price,

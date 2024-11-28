@@ -10,7 +10,6 @@ import {
   SelectValue,
   useToast,
 } from "@/components/ui";
-import { License } from "@/domains/enums";
 import { ProductEditRequest } from "@/domains/models/products";
 import { ProductPageRequest } from "@/domains/models/products/product-page.request";
 import { ProductResponse } from "@/domains/models/products/product.response";
@@ -55,7 +54,7 @@ const ProductTable = () => {
 
   const handleUpdateProduct = (id: string, data: ProductResponse) => {
     const value: ProductEditRequest = {
-      license: data.license === "Free" ? License.Free : License.Pro,
+      // license: data.license === "Free" ? License.Free : License.Pro,
       name: data.name,
       description: data.description,
       price: data.price,

@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Checkbox,
+  // Checkbox,
   Form,
   FormControl,
   FormDescription,
@@ -165,7 +165,7 @@ const ProductEdit = () => {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="license"
                 render={({ field }) => (
@@ -187,7 +187,7 @@ const ProductEdit = () => {
                     </div>
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <FormField

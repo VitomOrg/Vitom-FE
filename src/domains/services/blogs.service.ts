@@ -63,7 +63,18 @@ export const BlogApi = {
     }
   },
 
-  deleteBlog: async (Id: string): Promise<null> => {
-    return handleApiCall<null>("delete", `/blogs/${Id}`) as Promise<null>;
+  deleteBlog: async (Id: string): Promise<boolean | undefined> => {
+    try {
+      const response = await axiosInstance.delete(`/blogs/${Id}`);
+      if (response.status === 204) {
+        return true;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 200) {
+          return false;
+        }
+      }
+    }
   },
 };

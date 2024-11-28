@@ -5,10 +5,15 @@ import { useCart } from "@/domains/stores/query-hook/carts/add-to-cart";
 import Show from "@/lib/show";
 import CartList from "@/views/main-layout/shopping-page/components/cart-list";
 import CheckOut from "@/views/main-layout/shopping-page/components/check-out";
-import React from "react";
 
-const ShoppingPage: React.FC = () => {
-  const { cartData, refetchCart } = useCart();
+const ShoppingPage = () => {
+  const { data: cartData, refetchCart } = useCart({
+    options: {
+      pageIndex: 1,
+      pageSize: 10,
+      ascByCreatedAt: true,
+    },
+  });
   const { toast } = useToast();
 
   const handleRemove = async (id: string) => {
@@ -28,25 +33,30 @@ const ShoppingPage: React.FC = () => {
       });
   };
 
+  console.log("cartData", cartData);
+
   return (
     <div className="container grid grid-cols-1 gap-4 p-4 md:grid-cols-6 md:p-6 bg-background py-9">
       {/* Cart section */}
       <section
         className={`container col-span-1 py-6 ${
-          cartData?.data.length === 0 ? "md:col-span-6" : "md:col-span-4"
+          cartData?.value.data.length === 0 ? "md:col-span-6" : "md:col-span-4"
         } md:py-10 bg-accent rounded-xl`}
       >
         <h2 className="mb-4 text-xl font-bold text-center md:text-3xl md:text-left">
           Cart
         </h2>
-        <CartList cartItems={cartData?.data || []} onRemove={handleRemove} />
+        <CartList
+          cartItems={cartData?.value.data || []}
+          onRemove={handleRemove}
+        />
       </section>
 
       {/* Checkout section */}
       <Show>
-        <Show.When isTrue={cartData?.data.length !== 0}>
+        <Show.When isTrue={cartData?.value.data.length !== 0}>
           <section className="container col-span-1 py-6 md:col-span-2 md:py-10 bg-accent rounded-xl h-fit">
-            <CheckOut data={cartData?.data || []} />
+            <CheckOut data={cartData?.value.data || []} />
           </section>
         </Show.When>
       </Show>

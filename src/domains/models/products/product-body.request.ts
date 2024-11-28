@@ -1,5 +1,5 @@
 export interface ProductBodyRequest {
-  license: number;
+  // license: number;
   name: string;
   description: string;
   price: number;
@@ -13,7 +13,7 @@ export interface ProductBodyRequest {
 }
 
 export interface ProductEditRequest {
-  license: number;
+  // license: number;
   name: string;
   description: string;
   price: number;

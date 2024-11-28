@@ -23,7 +23,7 @@ const useFormProduct = ({ defaultValues, id }: IUseFormProduct) => {
       name: defaultValues?.name || "",
       description: defaultValues?.description || "",
       price: defaultValues?.price || 0,
-      license: defaultValues?.license || 0,
+      // license: defaultValues?.license || 0,
       softwareIds: defaultValues?.softwareIds || [],
       typeIds: defaultValues?.typeIds || [],
       files: defaultValues?.files || [],
