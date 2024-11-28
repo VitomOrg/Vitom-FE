@@ -69,7 +69,7 @@ const PostColumns = ({
             </DropdownMenuItem>
             <DropdownMenuItem
               className="space-x-4"
-              onAbort={() => deleteData(row.original.id)}
+              onClick={() => deleteData(row.original.id)}
             >
               <Trash2 className="size-4" />
               <span>Remove</span>

@@ -11,9 +11,7 @@ const PUBLISHABLE_KEY = env.VITE_CLERK_PUBLISHABLE_KEY;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
-      retry: 1,
-      refetchOnWindowFocus: false,
+      enabled: true,
     },
   },
 });

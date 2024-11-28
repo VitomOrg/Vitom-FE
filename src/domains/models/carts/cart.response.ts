@@ -11,10 +11,26 @@ export interface Product {
   license: string;
   name: string;
   description: string;
-  types: string[];
-  imageUrls: string[];
+  types: Software[];
+  softwares: Software[];
+  images: Image[];
+  modelMaterials: Image[];
+  fbxUrl: string;
+  objUrl: string;
+  glbUrl: string;
   price: number;
   downloadUrl: string;
   totalPurchases: number;
   totalLiked: number;
+  isLiked: boolean;
+}
+
+export interface Image {
+  id: string;
+  url: string;
+}
+
+export interface Software {
+  id: string;
+  name: string;
 }

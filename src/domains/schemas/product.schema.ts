@@ -13,7 +13,7 @@ export const FileSchema = z
   });
 
 export const ProductSchema = z.object({
-  license: z.number(),
+  // license: z.number(),
   name: z
     .string()
     .min(1, { message: "Name is required" })

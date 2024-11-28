@@ -37,8 +37,8 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, onRemove }) => {
           </div>
           <div>
             {cartItem.product.types.map((type) => (
-              <Badge key={type} className="mr-2">
-                {type}
+              <Badge key={type.id} className="mr-2">
+                {type.name}
               </Badge>
             ))}
           </div>
