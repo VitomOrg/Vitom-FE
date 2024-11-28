@@ -34,11 +34,23 @@ export const ProductApi = {
   },
 
   getFavoriteProduct: async (
-    option: ProductFavoriteRequest
+    option?: ProductFavoriteRequest
   ): Promise<Value<ProductResponse[]>> => {
     return handleApiCall<Value<ProductResponse[]>>("get", "/products/user", {
       params: option,
     }) as Promise<Value<ProductResponse[]>>;
+  },
+
+  getPaymentProduct: async (
+    options?: ProductFavoriteRequest
+  ): Promise<Value<ProductResponse[]>> => {
+    return handleApiCall<Value<ProductResponse[]>>(
+      "get",
+      "/products/download-product",
+      {
+        params: options,
+      }
+    ) as Promise<Value<ProductResponse[]>>;
   },
 
   createProduct: async (

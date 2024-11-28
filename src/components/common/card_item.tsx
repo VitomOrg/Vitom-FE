@@ -56,11 +56,11 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
               </div>
               <div className="flex items-center gap-2 ml-3">
                 <CircleDollarSign className="w-5 h-5 text-primary" />
-                <span className="text-lg text-background">{data.price}</span>
+                <span className="text-lg text-foreground">{data.price}</span>
               </div>
               <div className="flex items-center gap-2 ml-3">
                 <HeartIcon className="w-5 h-5 text-red-500" />
-                <span className="text-lg text-background">
+                <span className="text-lg text-foreground">
                   {data.totalLiked}
                 </span>
               </div>
@@ -73,7 +73,7 @@ const CardItem: React.FC<CardItemProps> = ({ data }) => {
                 </Button> */}
                 <Button
                   className="space-x-2"
-                  onClick={() => navigation(data.id)}
+                  onClick={() => navigation(`/products/${data.id}`)}
                 >
                   <ClipboardList className="size-4" />
                   <span>View</span>

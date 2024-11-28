@@ -1,5 +1,7 @@
 export const QueryKey = {
   LIST_PRODUCT: "list-product",
+  LIST_PRODUCT_FAVORITE: "list-product-favorite",
+  LIST_PRODUCT_PAYMENT: "list-product-payment",
   DETAIL_PRODUCT: "detail-product",
 
   LIST_REVIEW: "list-review",
